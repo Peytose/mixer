@@ -61,11 +61,18 @@ extension Color {
     static let Offwhite2 = Color(red: 245/255, green: 246/255, blue: 250/255)
     static let QRCodeBackground = Color(red: 15/255, green: 18/255, blue: 28/255)
 
-    //MARK: - Other Gradients
+    //MARK: - Chosen Gradients
+    static let mixerPurpleGradient = LinearGradient(gradient: Gradient(colors: [Color.gradientPurple1, Color.gradientPurple2]), startPoint: .top, endPoint: .bottom)
+//    static let mixerPurpleGradient2 = LinearGradient(gradient: Gradient(colors: [Color.mixerIndigo, Color.mixerPurple]), startPoint: .top, endPoint: .bottom)
+    static let profileGradient = LinearGradient(gradient: Gradient(stops: [.init(color: Color.black, location: 0), .init(color: .clear, location: 1)]), startPoint:.top, endPoint: .bottom)
+    
+    static let gradientPurple1 = Color(red: 112/255, green: 63/255, blue: 213/255)
+    static let gradientPurple2 = Color(red: 76/255, green: 20/255, blue: 178/255)
     
     //MARK: Chosen Colors
-    
-    static let mixerIndigo = Color(red: 90/255, green: 60/255, blue: 196/255) //MARK: The main purple we are using (its more of an indigo)
+    static let mixerPurple = Color(red: 90/255, green: 60/255, blue: 196/255) //MARK: The main purple we are using (its more of an indigo)
+    static let mixerIndigo = Color(red: 124/255, green: 65/255, blue: 254/255) //MARK: The main purple we are using (its more of an indigo)
+    static let mixerBlue = Color(red: 25/255, green: 99/255, blue: 221/255) //MARK: The main purple we are using (its more of an indigo)
     
     //MARK: Font Colors
     static let mainFont = Color(red: 221/255, green: 222/255, blue: 224/255) //MARK: A replacement for white font meant to be easier to read

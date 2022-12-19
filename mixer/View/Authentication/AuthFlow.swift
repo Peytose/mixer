@@ -81,9 +81,9 @@ struct AuthFlow: View {
             showHeaderItems = newValue == AuthViewModel.Screen.allCases.first ? false : true
         }
         .alert(item: $viewModel.alertItem, content: { $0.alert })
-        .onOpenURL { url in
-            viewModel.verifyEmail(url: url)
-        }
+//        .onOpenURL { url in
+//            viewModel.verifyEmail(url: url)
+//        }
     }
 }
 
