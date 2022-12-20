@@ -69,7 +69,7 @@ extension SearchPageView {
             
                     ForEach(Array(results.enumerated()), id: \.offset) { index, user in
                         if index != 0 { Divider() }
-                        NavigationLink(destination: UserProfileView()) {
+                        NavigationLink(destination: UserProfileView(user: user)) {
                             HStack(spacing: 22) {
                                 Image(user.image)
                                     .resizable()
@@ -124,7 +124,7 @@ extension SearchPageView {
         if text.isEmpty {
             return users
         } else {
-            return users.filter { $0.name.contains(text) }
+            return users.filter { $0.name.localizedCaseInsensitiveContains(text) }
         }
         
     }
@@ -134,7 +134,7 @@ extension SearchPageView {
         if text.isEmpty {
             return suggestionsData2
         } else {
-            return suggestionsData2.filter { $0.text.contains(text) }
+            return suggestionsData2.filter { $0.text.localizedCaseInsensitiveContains(text) }
         }
         
     }

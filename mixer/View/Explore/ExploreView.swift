@@ -9,7 +9,12 @@ import SwiftUI
 
 struct ExploreView: View {
     var body: some View {
-        Text("Explore View")
+        ZStack {
+            Color.lifXBackground
+                .ignoresSafeArea()
+
+            Text("Explore View")
+        }
     }
 }
 

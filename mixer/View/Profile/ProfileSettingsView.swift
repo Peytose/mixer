@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct UserProfileView: View {
+struct ProfileSettingsView: View {
     @StateObject var viewModel = UserProfileViewModel()
     
     var body: some View {
@@ -147,9 +147,9 @@ struct UserProfileView: View {
 }
 
 
-struct UserProfileView_Previews: PreviewProvider {
+struct ProfileSettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        UserProfileView()
+        ProfileSettingsView()
             .preferredColorScheme(.dark)
     }
 }
