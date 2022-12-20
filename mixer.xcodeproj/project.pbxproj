@@ -61,6 +61,8 @@
 		A6430457294FC50C0058C0F0 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6430456294FC50C0058C0F0 /* AvatarView.swift */; };
 		A6430459294FC6D00058C0F0 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6430458294FC6D00058C0F0 /* NavigationBar.swift */; };
 		A643045B294FC72F0058C0F0 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A643045A294FC72F0058C0F0 /* Model.swift */; };
+		A6B9E64E295185F9009C936E /* SearchPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B9E64D295185F9009C936E /* SearchPageView.swift */; };
+		A6B9E65029518627009C936E /* MockUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B9E64F29518627009C936E /* MockUser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -112,6 +114,8 @@
 		A6430456294FC50C0058C0F0 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		A6430458294FC6D00058C0F0 /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		A643045A294FC72F0058C0F0 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		A6B9E64D295185F9009C936E /* SearchPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPageView.swift; sourceTree = "<group>"; };
+		A6B9E64F29518627009C936E /* MockUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +214,7 @@
 			children = (
 				9C3BADE0291F5843009C8043 /* User.swift */,
 				9C93319329203D8B0079E039 /* Notification.swift */,
+				A6B9E64F29518627009C936E /* MockUser.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -282,6 +287,7 @@
 			isa = PBXGroup;
 			children = (
 				9C93318429201C760079E039 /* SearchView.swift */,
+				A6B9E64D295185F9009C936E /* SearchPageView.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -518,6 +524,7 @@
 				9C567A9C293116B300EA5FCB /* GetProfilePicture.swift in Sources */,
 				9C93318B29201CA00079E039 /* MapView.swift in Sources */,
 				9C93318D29201D010079E039 /* MockData.swift in Sources */,
+				A6B9E64E295185F9009C936E /* SearchPageView.swift in Sources */,
 				9C567A9E2934F83100EA5FCB /* PhotoPicker.swift in Sources */,
 				A6430451294FC3380058C0F0 /* HexagonBlobView.swift in Sources */,
 				A6430457294FC50C0058C0F0 /* AvatarView.swift in Sources */,
@@ -528,6 +535,7 @@
 				9C93318329201C3F0079E039 /* MainTabView.swift in Sources */,
 				9C9331A92925D0D20079E039 /* SignUpTextField.swift in Sources */,
 				9C567AA02934FCFF00EA5FCB /* GetUsername.swift in Sources */,
+				A6B9E65029518627009C936E /* MockUser.swift in Sources */,
 				A643045B294FC72F0058C0F0 /* Model.swift in Sources */,
 				9C9331B729272D7F0079E039 /* GetNumber.swift in Sources */,
 				9C9331A72925BC2F0079E039 /* GetName.swift in Sources */,
