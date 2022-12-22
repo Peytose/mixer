@@ -12,6 +12,7 @@ struct EventView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var model: Model
+    @StateObject var parentViewModel: ExplorePageViewModel
     @State var appear = [false, false, false]
     var isAnimated = true
     @State private var showingOptions = false
@@ -36,9 +37,9 @@ struct EventView: View {
         .zIndex(1)
         .preferredColorScheme(.dark)
         .onAppear { fadeIn() }
-        .onChange(of: model.showDetail) { show in
-            fadeOut()
-        }
+//        .onChange(of: model.showDetail) { show in
+//            fadeOut()
+//        }
         .overlay{
             closeButton
         }
@@ -179,6 +180,7 @@ struct EventView: View {
         VStack(alignment: .leading, spacing: 25) {
             Text("Description")
                 .font(.title).bold()
+                .padding(.bottom, -10)
             
 //            Text(viewModel.event.description)
             Text("Neon Party at Theta Chi, need I say more?")
@@ -328,8 +330,8 @@ struct EventView: View {
         Button {
             isAnimated ?
             withAnimation(.closeCard) {
-//                parentViewModel.showEventView.toggle()
-//                parentViewModel.showNavigationBar.toggle()
+                parentViewModel.showEventView.toggle()
+                parentViewModel.showNavigationBar.toggle()
             }
             : presentationMode.wrappedValue.dismiss()
         } label: { XDismissButton() }
@@ -346,7 +348,7 @@ struct EventView_Previews: PreviewProvider {
     @Namespace static var namespace
     
     static var previews: some View {
-        EventView()
+        EventView(parentViewModel: ExplorePageViewModel())
             .environmentObject(Model())
     }
 }

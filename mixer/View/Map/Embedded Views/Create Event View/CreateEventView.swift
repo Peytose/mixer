@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CreateEventView: View {
     @Environment(\.dismiss) var dismiss
-    @StateObject private var viewModel = CreateEventViewModel()
+    @StateObject var viewModel = CreateEventViewModel()
     
     var body: some View {
         NavigationView {
@@ -17,57 +17,51 @@ struct CreateEventView: View {
                 Color.mixerBackground
                     .ignoresSafeArea()
                 
-                List {
-                    mainDetailsSection
-                    
-                    visibilitySection
-                    
-                    if viewModel.isInviteOnly == InviteOnly.yes {
-                        inviteLimitSection
+                    List {
+                        mainDetailsSection
                         
-                        guestInviteLimitSection
+                        addressSection
+                        
+                            Section(header: Text("Map Preview")) {
+                                MapSnapshotView(location: viewModel.coordinates, span: 0.001, delay: 0)
+                                    .cornerRadius(12)
+                                    .padding(.bottom, 40)
+                            }
+                            .listRowBackground(Color.clear)
                     }
-                    
-                    flyerSection
-                }
-                .tint(.mixerIndigo)
-                .preferredColorScheme(.dark)
-                .scrollContentBackground(.hidden)
-                
-//                if viewModel.isLoading { LoadingView() }
+                    .tint(.mixerIndigo)
+                    .preferredColorScheme(.dark)
+                    .scrollContentBackground(.hidden)
+                    .scrollIndicators(.hidden)
             }
             .overlay(alignment: .bottom, content: {
-                Button {
-                    let impact = UIImpactFeedbackGenerator(style: .light)
-                    impact.impactOccurred()
-//                    viewModel.createEvent()
-                    
-                } label: { CreateEventButton() }
+                NavigationLink(destination: EventVisibilityView()) {
+                    NextButton()
+                }
             })
             .navigationBarTitle(Text("Create an Event"), displayMode: .inline)
-            .navigationBarItems(trailing: Button(action: {
-                dismiss()
-            }, label: {
-                Image(systemName: "xmark")
-                    .font(.system(size: 14, weight: .bold))
-                    .foregroundColor(.secondary)
-                    .padding(7)
-                    .background(.ultraThinMaterial, in: Circle())
-                    .backgroundStyle(cornerRadius: 18)
-            }))
-//            .sheet(isPresented: $viewModel.isShowingPhotoPicker) { PhotoPicker(image: $viewModel.flyer) }
-            .alert(item: $viewModel.alertItem, content: { $0.alert })
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading, content: {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                    .foregroundColor(.blue)
+                })
+            }
         }
     }
     
     var mainDetailsSection: some View {
         Section(header: Text("Main Details")) {
-            TextField("Event name*", text: $viewModel.title)
+            TextField("Event Title*", text: $viewModel.title)
                 .foregroundColor(Color.mainFont)
-            
-            TextField("Event theme/description*", text: $viewModel.description)
+                .font(.body.weight(.semibold))
+
+            TextField("Event Description/Theme*", text: $viewModel.description, axis: .vertical)
                 .foregroundColor(Color.mainFont)
-            
+                .font(.body.weight(.semibold))
+                .lineLimit(4)
+
             EventDatePicker(text: "Start date*", selection: $viewModel.startDate)
             
             EventDatePicker(text: "End date*", selection: $viewModel.endDate)
@@ -82,71 +76,24 @@ struct CreateEventView: View {
         .listRowBackground(Color.mixerSecondaryBackground)
     }
     
-    var visibilitySection: some View {
-        Section(header: Text("Visibility")) {
+    var addressSection: some View {
+        Section(header: Text("Location Details")) {
+            Text("Theta Chi House: 528 Beacon St")
+                .font(.body.weight(.semibold))
             
-            Picker("Invite only", selection: self.$viewModel.isInviteOnly.animation()) {
-                Text("Public").tag(InviteOnly.no)
-                Text("Invite Only").tag(InviteOnly.yes)
-            }
-            .pickerStyle(.segmented)
-            .padding()
+            Toggle("Use different address", isOn: $viewModel.isAddress.animation())
+                .font(.body.weight(.semibold))
             
-            //MARK: Archive: Event theme input field
-        }
-        .listRowBackground(Color.mixerSecondaryBackground)
-    }
-    
-    var inviteLimitSection: some View {
-        Section {
-            Toggle("Invite Limit?", isOn: $viewModel.isInviteLimit.animation())
-            
-            if viewModel.isInviteLimit == true {
-                TextField("Maximum Guest Invites*", text: $viewModel.guestLimit)
+            if viewModel.isAddress {
+                TextField("Address", text: $viewModel.address)
                     .foregroundColor(Color.mainFont)
-                    .keyboardType(.numberPad)
+                    .font(.body.weight(.semibold))
             }
-        } header: {
-            Text("Invites per brother")
-        }
-        .listRowBackground(Color.mixerSecondaryBackground)
-    }
-    
-    var guestInviteLimitSection: some View {
-        Section {
-            Toggle("Guest Invites?", isOn: $viewModel.isGuestInviteLimit.animation())
 
-            if viewModel.isGuestInviteLimit {
-                TextField("Maximum Invites per Guest*", text: $viewModel.guestLimitForGuests)
-                    .foregroundColor(Color.mainFont)
-                    .keyboardType(.numberPad)
-            }
-        } header: {
-            Text("Allow guests to invite guests")
         }
         .listRowBackground(Color.mixerSecondaryBackground)
     }
     
-    var flyerSection: some View {
-        Section(header: Text("Flyer")) {
-            HStack {
-                Image("kingfisher-2.jpg")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 100)
-                
-                Spacer()
-                
-                HStack {
-                    Text("Choose image")
-                    Image(systemName: "chevron.right")
-                }
-            }
-            .foregroundColor(.secondary)
-        }
-        .listRowBackground(Color.mixerSecondaryBackground)
-        .onTapGesture { viewModel.isShowingPhotoPicker = true }
-    }
 }
 
 
@@ -166,23 +113,6 @@ fileprivate struct EventDatePicker: View {
                    selection: selection,
                    displayedComponents: [.date, .hourAndMinute])
         .datePickerStyle(.automatic)
-        .padding(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
-    }
-}
-
-
-fileprivate struct CreateEventButton: View {
-    var body: some View {
-        Rectangle()
-            .fill(Color.mixerPurpleGradient)
-            .cornerRadius(30)
-            .frame(width: 160, height: 50)
-            .shadow(radius: 15)
-            .shadow(radius: 5, y: 10)
-            .overlay(content: {
-                Text("Create Event")
-                    .foregroundColor(Color.white)
-                    .font(.system(size: 22, weight: .medium, design: .rounded))
-            })
+        .padding(EdgeInsets(top: 12, leading: 0, bottom: 12, trailing: -5))
     }
 }

@@ -12,7 +12,7 @@ struct MainTabView: View {
     
     var body: some View {
         TabView {
-            ExploreView()
+            ExplorePageView()
                 .tabItem { TabViewItem(type: .social) }
 
             
@@ -40,6 +40,7 @@ struct MainTabView_Previews: PreviewProvider {
     static var previews: some View {
 //        MainTabView(user: Mockdata.user)
         MainTabView()
+            .environmentObject(Model())
     }
 }
 

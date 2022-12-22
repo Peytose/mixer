@@ -56,7 +56,7 @@ struct MapView: View {
         })
         //        .sheet(isPresented: $viewModel.isShowingQRCodeView, content: { QRCodeView(viewModel: QRCodeViewModel(user: UserProfile(record: viewModel.existingProfileRecord!), hostManager: hostManager, eventManager: eventManager, isHost: viewModel.isHost)) })
         //        .sheet(isPresented: $viewModel.isShowingHostView, content: { HostOrganizationView(viewModel: HostOrganizationViewModel(host: hostManager.selectedHost!, namespace: namespace)) })
-                .sheet(isPresented: $viewModel.isShowingAddEventView, content: { CreateEventView() })
+                .fullScreenCover(isPresented: $viewModel.isShowingAddEventView, content: { CreateEventView() })
         //        .sheet(isPresented: $viewModel.isShowingEventUsersListView, content: { EventListHostView(viewModel: EventListHostViewModel(host: viewModel.hostOrganization!)) })
     }
 }

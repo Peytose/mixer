@@ -30,7 +30,17 @@ enum InviteOnly: String {
     }
 }
 
-extension CreateEventView {
+enum isPrivate: String {
+    case yes, no
+    
+    var stringVersion: String {
+        switch self {
+            case .yes: return "Private"
+            case .no: return "Public"
+        }
+    }
+}
+
     @MainActor final class CreateEventViewModel: ObservableObject {
         @Published var title                    = ""
         @Published var description              = ""
@@ -38,13 +48,14 @@ extension CreateEventView {
         @Published var endDate                  = Date()
         @Published var selectedWetDry: WetOrDry = .dry
         @Published var isInviteOnly: InviteOnly = .no
+        @Published var isPrivate:    isPrivate  = .no
         @Published var theme                    = ""
         @Published var themeDescription         = ""
         @Published var guestLimit               = ""
         @Published var guestLimitForGuests      = ""
-
+        @Published var address                  = ""
         
-        @Published var flyer                    = UIImage(named: "kingfisher-2.jpg")
+        @Published var flyer                    = PlaceholderImage.event
         
         @Published var showEndDate              = false
         @Published var includeDescription       = false
@@ -53,8 +64,12 @@ extension CreateEventView {
         @Published var isLoading                = false
         @Published var isInviteLimit            = false
         @Published var isGuestInviteLimit       = false
+        @Published var includeInviteList        = false
+        @Published var isAddress                = false
         @Published var alertItem: AlertItem?
         
+        let coordinates = CLLocationCoordinate2D(latitude: 42.3507046, longitude: -71.0909822)
+
         
 //        private func isValidEvent() -> Bool {
 //            guard !title.isEmpty,
@@ -147,4 +162,3 @@ extension CreateEventView {
         private func showLoadingView() { isLoading = true }
         private func hideLoadingView() { isLoading = false }
     }
-}

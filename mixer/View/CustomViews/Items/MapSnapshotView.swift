@@ -12,6 +12,7 @@ struct MapSnapshotView: View {
  // Apple Park, California
     let location: CLLocationCoordinate2D
     var span: CLLocationDegrees = 0.01
+    var delay: CGFloat = 0.3
     
     @State private var snapshotImage: UIImage? = nil
     
@@ -26,7 +27,7 @@ struct MapSnapshotView: View {
             }
         }
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
                 generateSnapshot(width: 350, height: 220)
             }
         }

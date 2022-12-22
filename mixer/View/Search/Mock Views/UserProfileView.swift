@@ -240,11 +240,7 @@ extension UserProfileView {
             Button(action: {
                 presentationMode.wrappedValue.dismiss()
             }, label: {
-                Image(systemName: "arrow.left")
-                    .foregroundColor(Color.mainFont)
-                    .font(.system(size: 24))
-                    .shadow(radius: 10)
-                
+                BackArrowButton()
             })
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding(30)
