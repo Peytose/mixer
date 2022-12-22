@@ -10,7 +10,7 @@ import SwiftUI
 struct ExploreView: View {
     var body: some View {
         ZStack {
-            Color.lifXBackground
+            Color.mixerBackground
                 .ignoresSafeArea()
 
             Text("Explore View")

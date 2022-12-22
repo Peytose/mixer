@@ -21,7 +21,7 @@ struct EventCard: View {
         CustomStickyStackView {
             Label {
                 Rectangle()
-                    .fill(Color.lifXBackground)
+                    .fill(Color.mixerBackground)
                     .ignoresSafeArea()
                     .overlay {
                         VStack {

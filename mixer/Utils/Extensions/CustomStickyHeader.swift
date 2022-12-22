@@ -35,7 +35,7 @@ struct CustomStickyStackView<Title: View,Content: View>: View {
                 .lineLimit(1)
                 .frame(width: 40, height: .infinity, alignment: .topLeading)
                 .padding(.leading)
-                .background(Color.lifXBackground)
+                .background(Color.mixerBackground)
                 .zIndex(1)
             
             VStack {
@@ -43,7 +43,7 @@ struct CustomStickyStackView<Title: View,Content: View>: View {
                     .padding(.horizontal, 10)
                     .padding(.vertical, 5)
             }
-            .background(Color.lifXBackground)
+            .background(Color.mixerBackground)
             // Moving Content Upward....
             .offset(y: topOffset >= 120 ? 0 : -(-topOffset + 120))
             .zIndex(0)

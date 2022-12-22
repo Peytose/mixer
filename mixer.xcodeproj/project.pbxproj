@@ -67,6 +67,15 @@
 		A6B9E65729518A3C009C936E /* EventCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B9E65629518A3C009C936E /* EventCardView.swift */; };
 		A6B9E65929518AB2009C936E /* CustomStickyHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B9E65829518AB2009C936E /* CustomStickyHeader.swift */; };
 		A6B9E65B2951933D009C936E /* Profile2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B9E65A2951933D009C936E /* Profile2View.swift */; };
+		A6B9E65D29539729009C936E /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B9E65C29539728009C936E /* MapViewModel.swift */; };
+		A6B9E6622953A47C009C936E /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = A6B9E6612953A47C009C936E /* CodeScanner */; };
+		A6B9E6692953A889009C936E /* MapClusterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B9E6682953A889009C936E /* MapClusterView.swift */; };
+		A6B9E6732953B549009C936E /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B9E6722953B549009C936E /* EventView.swift */; };
+		A6B9E6762953B6DA009C936E /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B9E6752953B6DA009C936E /* LogoView.swift */; };
+		A6B9E6782953B8A3009C936E /* MapSnapshotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B9E6772953B8A3009C936E /* MapSnapshotView.swift */; };
+		A6B9E67A2953B95E009C936E /* Animation+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B9E6792953B95E009C936E /* Animation+Ext.swift */; };
+		A6B9E67C2953B9A3009C936E /* XDismissButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B9E67B2953B9A3009C936E /* XDismissButton.swift */; };
+		A6B9E67F2953BB88009C936E /* HostHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B9E67E2953BB88009C936E /* HostHomeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -124,6 +133,14 @@
 		A6B9E65629518A3C009C936E /* EventCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCardView.swift; sourceTree = "<group>"; };
 		A6B9E65829518AB2009C936E /* CustomStickyHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStickyHeader.swift; sourceTree = "<group>"; };
 		A6B9E65A2951933D009C936E /* Profile2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile2View.swift; sourceTree = "<group>"; };
+		A6B9E65C29539728009C936E /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		A6B9E6682953A889009C936E /* MapClusterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapClusterView.swift; sourceTree = "<group>"; };
+		A6B9E6722953B549009C936E /* EventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
+		A6B9E6752953B6DA009C936E /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
+		A6B9E6772953B8A3009C936E /* MapSnapshotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSnapshotView.swift; sourceTree = "<group>"; };
+		A6B9E6792953B95E009C936E /* Animation+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+Ext.swift"; sourceTree = "<group>"; };
+		A6B9E67B2953B9A3009C936E /* XDismissButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XDismissButton.swift; sourceTree = "<group>"; };
+		A6B9E67E2953BB88009C936E /* HostHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostHomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +152,7 @@
 				9C3BADE6291F59E7009C8043 /* FirebaseAuth in Frameworks */,
 				9C9331BA29272E0F0079E039 /* iPhoneNumberField in Frameworks */,
 				9C3BADF6291F59E7009C8043 /* FirebaseStorage in Frameworks */,
+				A6B9E6622953A47C009C936E /* CodeScanner in Frameworks */,
 				9C93319B29242A9F0079E039 /* FirebaseDynamicLinks in Frameworks */,
 				9C3BADFD291F5C70009C8043 /* Kingfisher in Frameworks */,
 				9C3BADEE291F59E7009C8043 /* FirebaseFunctions in Frameworks */,
@@ -222,7 +240,7 @@
 			children = (
 				9C3BADE0291F5843009C8043 /* User.swift */,
 				9C93319329203D8B0079E039 /* Notification.swift */,
-				A6B9E64F29518627009C936E /* MockUser.swift */,
+				A6B9E66E2953B49E009C936E /* Mock Models */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -248,6 +266,7 @@
 				9C567A9D2934F83100EA5FCB /* PhotoPicker.swift */,
 				A6430449294FBFB00058C0F0 /* DesignCodeExtensions.swift */,
 				A6B9E65829518AB2009C936E /* CustomStickyHeader.swift */,
+				A6B9E6792953B95E009C936E /* Animation+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -255,6 +274,7 @@
 		9C3BADCC291F552F009C8043 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				A6B9E6742953B6CF009C936E /* Small Items */,
 				A6B9E65529518A24009C936E /* Items */,
 				A643044D294FC2CC0058C0F0 /* Blobs */,
 				9C9331B52926D4F90079E039 /* Buttons */,
@@ -268,8 +288,8 @@
 		9C3BADCD291F5545009C8043 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				9C93318A29201CA00079E039 /* MapView.swift */,
-				A6430444294FBDA00058C0F0 /* Create Event View */,
+				A6B9E66F2953B4B6009C936E /* Mock Views */,
+				A6B9E65F2953A3FD009C936E /* Embedded Views */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -278,9 +298,7 @@
 			isa = PBXGroup;
 			children = (
 				9C93318829201C990079E039 /* ProfileView.swift */,
-				A643044B294FC2960058C0F0 /* ProfileSettingsView.swift */,
-				A6430454294FC4470058C0F0 /* UserProfileViewModel.swift */,
-				A6B9E65A2951933D009C936E /* Profile2View.swift */,
+				A6B9E66C2953B40C009C936E /* Mock Views */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -288,6 +306,7 @@
 		9C3BADCF291F5572009C8043 /* Explore */ = {
 			isa = PBXGroup;
 			children = (
+				A6B9E6702953B4D0009C936E /* Mock Views */,
 				9C93318629201C7B0079E039 /* ExploreView.swift */,
 			);
 			path = Explore;
@@ -297,8 +316,7 @@
 			isa = PBXGroup;
 			children = (
 				9C93318429201C760079E039 /* SearchView.swift */,
-				A6B9E64D295185F9009C936E /* SearchPageView.swift */,
-				A6B9E651295189D2009C936E /* UserProfileView.swift */,
+				A6B9E66D2953B420009C936E /* Mock Views */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -313,6 +331,7 @@
 		9C3BADD2291F55AC009C8043 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				A6B9E66B2953B3F9009C936E /* Mock View Models */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -320,6 +339,7 @@
 		9C3BADD3291F55B1009C8043 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				A6B9E66A2953B3E5009C936E /* Mock View Models */,
 				9C93318E29203CE60079E039 /* ProfileViewModel.swift */,
 			);
 			path = Profile;
@@ -408,6 +428,7 @@
 			isa = PBXGroup;
 			children = (
 				9C9331B32926D4CB0079E039 /* ContinueSignUpButton.swift */,
+				A6B9E67B2953B9A3009C936E /* XDismissButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -434,8 +455,101 @@
 			isa = PBXGroup;
 			children = (
 				A6B9E65629518A3C009C936E /* EventCardView.swift */,
+				A6B9E6772953B8A3009C936E /* MapSnapshotView.swift */,
 			);
 			path = Items;
+			sourceTree = "<group>";
+		};
+		A6B9E65F2953A3FD009C936E /* Embedded Views */ = {
+			isa = PBXGroup;
+			children = (
+				A6B9E6682953A889009C936E /* MapClusterView.swift */,
+				A6430444294FBDA00058C0F0 /* Create Event View */,
+			);
+			path = "Embedded Views";
+			sourceTree = "<group>";
+		};
+		A6B9E66A2953B3E5009C936E /* Mock View Models */ = {
+			isa = PBXGroup;
+			children = (
+				A6430454294FC4470058C0F0 /* UserProfileViewModel.swift */,
+			);
+			path = "Mock View Models";
+			sourceTree = "<group>";
+		};
+		A6B9E66B2953B3F9009C936E /* Mock View Models */ = {
+			isa = PBXGroup;
+			children = (
+				A6B9E65C29539728009C936E /* MapViewModel.swift */,
+			);
+			path = "Mock View Models";
+			sourceTree = "<group>";
+		};
+		A6B9E66C2953B40C009C936E /* Mock Views */ = {
+			isa = PBXGroup;
+			children = (
+				A6B9E65A2951933D009C936E /* Profile2View.swift */,
+				A643044B294FC2960058C0F0 /* ProfileSettingsView.swift */,
+			);
+			path = "Mock Views";
+			sourceTree = "<group>";
+		};
+		A6B9E66D2953B420009C936E /* Mock Views */ = {
+			isa = PBXGroup;
+			children = (
+				A6B9E651295189D2009C936E /* UserProfileView.swift */,
+				A6B9E64D295185F9009C936E /* SearchPageView.swift */,
+			);
+			path = "Mock Views";
+			sourceTree = "<group>";
+		};
+		A6B9E66E2953B49E009C936E /* Mock Models */ = {
+			isa = PBXGroup;
+			children = (
+				A6B9E64F29518627009C936E /* MockUser.swift */,
+			);
+			path = "Mock Models";
+			sourceTree = "<group>";
+		};
+		A6B9E66F2953B4B6009C936E /* Mock Views */ = {
+			isa = PBXGroup;
+			children = (
+				9C93318A29201CA00079E039 /* MapView.swift */,
+			);
+			path = "Mock Views";
+			sourceTree = "<group>";
+		};
+		A6B9E6702953B4D0009C936E /* Mock Views */ = {
+			isa = PBXGroup;
+			children = (
+				A6B9E67D2953BB6C009C936E /* HostHomeView */,
+				A6B9E6712953B529009C936E /* EventView */,
+			);
+			path = "Mock Views";
+			sourceTree = "<group>";
+		};
+		A6B9E6712953B529009C936E /* EventView */ = {
+			isa = PBXGroup;
+			children = (
+				A6B9E6722953B549009C936E /* EventView.swift */,
+			);
+			path = EventView;
+			sourceTree = "<group>";
+		};
+		A6B9E6742953B6CF009C936E /* Small Items */ = {
+			isa = PBXGroup;
+			children = (
+				A6B9E6752953B6DA009C936E /* LogoView.swift */,
+			);
+			path = "Small Items";
+			sourceTree = "<group>";
+		};
+		A6B9E67D2953BB6C009C936E /* HostHomeView */ = {
+			isa = PBXGroup;
+			children = (
+				A6B9E67E2953BB88009C936E /* HostHomeView.swift */,
+			);
+			path = HostHomeView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -464,6 +578,7 @@
 				9C3BADFC291F5C70009C8043 /* Kingfisher */,
 				9C93319A29242A9F0079E039 /* FirebaseDynamicLinks */,
 				9C9331B929272E0F0079E039 /* iPhoneNumberField */,
+				A6B9E6612953A47C009C936E /* CodeScanner */,
 			);
 			productName = mixer;
 			productReference = 9C3BADB6291F54B4009C8043 /* mixer.app */;
@@ -497,6 +612,7 @@
 				9C3BADE4291F59E7009C8043 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				9C3BADFB291F5C70009C8043 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				9C9331B829272E0F0079E039 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */,
+				A6B9E6602953A47C009C936E /* XCRemoteSwiftPackageReference "CodeScanner" */,
 			);
 			productRefGroup = 9C3BADB7291F54B4009C8043 /* Products */;
 			projectDirPath = "";
@@ -528,11 +644,13 @@
 				A643044C294FC2960058C0F0 /* ProfileSettingsView.swift in Sources */,
 				A6B9E65729518A3C009C936E /* EventCardView.swift in Sources */,
 				9C93318729201C7B0079E039 /* ExploreView.swift in Sources */,
+				A6B9E6732953B549009C936E /* EventView.swift in Sources */,
 				A6430446294FBDBF0058C0F0 /* CreateEventView.swift in Sources */,
 				A643044F294FC3080058C0F0 /* BlobView.swift in Sources */,
 				9C93318529201C760079E039 /* SearchView.swift in Sources */,
 				9C3BADF8291F5A38009C8043 /* ImageUploader.swift in Sources */,
 				9C567A9A293023B700EA5FCB /* GetGender.swift in Sources */,
+				A6B9E67C2953B9A3009C936E /* XDismissButton.swift in Sources */,
 				9C3BADDF291F57EE009C8043 /* AuthViewModel.swift in Sources */,
 				9C567A9C293116B300EA5FCB /* GetProfilePicture.swift in Sources */,
 				9C93318B29201CA00079E039 /* MapView.swift in Sources */,
@@ -546,6 +664,7 @@
 				9C9331AB2925D2ED0079E039 /* Color+Ext.swift in Sources */,
 				9C93319D29255D8D0079E039 /* AlertItem.swift in Sources */,
 				9C567A98292FFF1800EA5FCB /* String+Ext.swift in Sources */,
+				A6B9E67A2953B95E009C936E /* Animation+Ext.swift in Sources */,
 				9C93318329201C3F0079E039 /* MainTabView.swift in Sources */,
 				9C9331A92925D0D20079E039 /* SignUpTextField.swift in Sources */,
 				9C567AA02934FCFF00EA5FCB /* GetUsername.swift in Sources */,
@@ -557,15 +676,20 @@
 				9C9331B22926D3560079E039 /* GetEmail.swift in Sources */,
 				9C9331BC292739700079E039 /* GetCode.swift in Sources */,
 				9C3BADBC291F54B4009C8043 /* ContentView.swift in Sources */,
+				A6B9E6692953A889009C936E /* MapClusterView.swift in Sources */,
 				9C93318F29203CE60079E039 /* ProfileViewModel.swift in Sources */,
 				9C3BADE1291F5843009C8043 /* User.swift in Sources */,
 				9C3BADFA291F5A62009C8043 /* UserService.swift in Sources */,
+				A6B9E67F2953BB88009C936E /* HostHomeView.swift in Sources */,
+				A6B9E6762953B6DA009C936E /* LogoView.swift in Sources */,
 				9C567A96292FF77300EA5FCB /* GetBirthday.swift in Sources */,
 				9C3BADBA291F54B4009C8043 /* mixerApp.swift in Sources */,
 				9C9331B42926D4CB0079E039 /* ContinueSignUpButton.swift in Sources */,
 				A6430455294FC4470058C0F0 /* UserProfileViewModel.swift in Sources */,
+				A6B9E65D29539729009C936E /* MapViewModel.swift in Sources */,
 				A643044A294FBFB00058C0F0 /* DesignCodeExtensions.swift in Sources */,
 				9C93319229203D370079E039 /* NotificationsViewModel.swift in Sources */,
+				A6B9E6782953B8A3009C936E /* MapSnapshotView.swift in Sources */,
 				A6B9E65929518AB2009C936E /* CustomStickyHeader.swift in Sources */,
 				9C3BADD7291F55D1009C8043 /* Constants.swift in Sources */,
 				A6B9E65B2951933D009C936E /* Profile2View.swift in Sources */,
@@ -811,6 +935,14 @@
 				kind = branch;
 			};
 		};
+		A6B9E6602953A47C009C936E /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/CodeScanner";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -858,6 +990,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9C9331B829272E0F0079E039 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */;
 			productName = iPhoneNumberField;
+		};
+		A6B9E6612953A47C009C936E /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A6B9E6602953A47C009C936E /* XCRemoteSwiftPackageReference "CodeScanner" */;
+			productName = CodeScanner;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

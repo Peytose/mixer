@@ -20,14 +20,11 @@ extension Color {
     static let tertiaryLabel = Color(UIColor.tertiaryLabel)
     static let quaternaryLabel = Color(UIColor.quaternaryLabel)
     
-    static let lifXLightGray = Color(red: 28/255, green: 27/255, blue: 32/255)
-
     // MARK: - Background Colors
     static let systemBackground = Color(UIColor.systemBackground)
     static let secondarySystemBackground = Color(UIColor.secondarySystemBackground)
     static let tertiarySystemBackground = Color(UIColor.tertiarySystemBackground)
     
-    static let lifXBackground = Color(red: 18/255, green: 17/255, blue: 22/255)
     static let SlightlyDarkerBlueBackground = Color(red: 8/255, green: 8/255, blue: 10/255)
     static let SlightlyBlueBackground = Color(red: 10/255, green: 10/255, blue: 12/255)
     static let SpotifyDarkGray = Color(red: 18/255, green: 18/255, blue: 18/255)
@@ -74,6 +71,10 @@ extension Color {
     static let mixerIndigo = Color(red: 124/255, green: 65/255, blue: 254/255) //MARK: The main purple we are using (its more of an indigo)
     static let mixerBlue = Color(red: 25/255, green: 99/255, blue: 221/255) //MARK: The main purple we are using (its more of an indigo)
     
+    //MARK: Chosen Background Colors
+    static let mixerBackground = Color(red: 18/255, green: 17/255, blue: 22/255)
+    static let mixerSecondaryBackground = Color(red: 28/255, green: 27/255, blue: 32/255)
+
     //MARK: Font Colors
     static let mainFont = Color(red: 221/255, green: 222/255, blue: 224/255) //MARK: A replacement for white font meant to be easier to read
     

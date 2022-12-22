@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainTabView: View {
-    let user: User
+//    let user: User
     
     var body: some View {
         TabView {
@@ -38,8 +38,8 @@ struct MainTabView: View {
 
 struct MainTabView_Previews: PreviewProvider {
     static var previews: some View {
-        MainTabView(user: Mockdata.user)
-//        MainTabView()
+//        MainTabView(user: Mockdata.user)
+        MainTabView()
     }
 }
 
