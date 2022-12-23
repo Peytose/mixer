@@ -138,7 +138,7 @@ struct ProfileSettingsView: View {
 //            viewModel.getProfile()
 //        }
         .overlay(
-            NavigationBar(title: "Profile", showSearchView: .constant(false), onSocialPage: false, contentHasScrolled: $viewModel.contentHasScrolled, showNavigationBar: $viewModel.showNavigationBar)
+            NavigationBar(title: "Profile", onSocialPage: false, contentHasScrolled: $viewModel.contentHasScrolled, showNavigationBar: $viewModel.showNavigationBar)
         )
 //        .sheet(isPresented: $viewModel.isShowingPhotoPicker) { PhotoPicker(image: $viewModel.avatar) }
 //        .alert(item: $viewModel.alertItem, content: { $0.alert })

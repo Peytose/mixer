@@ -20,11 +20,6 @@ struct MapView: View {
                 .ignoresSafeArea()
             
             VStack(spacing: 10) {
-                AddEventButton()
-                    .onTapGesture {
-                        viewModel.isShowingAddEventView.toggle()
-                    }
-                
                 EventUsersListButton()
             }
             .frame(maxWidth:.infinity, maxHeight: .infinity, alignment: .topTrailing)
@@ -34,7 +29,7 @@ struct MapView: View {
             
             UserQRCodeButton()
                 .frame(maxHeight: .infinity, alignment: .bottom)
-                .padding(.bottom, 30)
+                .padding(.bottom, 20)
                 .onTapGesture {
                     withAnimation() {
                         viewModel.isShowingQRCodeView.toggle()
@@ -47,13 +42,25 @@ struct MapView: View {
                 withAnimation() {
                 }
             }
-            .foregroundColor(.white)
+            .foregroundColor(Color.mainFont)
             .symbolVariant(.fill)
-            .tint(.mixerIndigo)
+            .tint(Color.mixerSecondaryBackground)
             .labelStyle(.iconOnly)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .padding(EdgeInsets(top: 0, leading: 0, bottom: 30, trailing: 20))
+            .clipShape(Circle())
+            .shadow(radius: 5, y: 10)
+            .padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 20))
         })
+        .overlay(alignment: .bottomTrailing, content: {
+            AddEventButton()
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: 100, trailing: 20))
+                .onTapGesture {
+                    let impact = UIImpactFeedbackGenerator(style: .medium)
+                    impact.impactOccurred()
+                    
+                    viewModel.isShowingAddEventView.toggle()
+                }
+        })
+        
         //        .sheet(isPresented: $viewModel.isShowingQRCodeView, content: { QRCodeView(viewModel: QRCodeViewModel(user: UserProfile(record: viewModel.existingProfileRecord!), hostManager: hostManager, eventManager: eventManager, isHost: viewModel.isHost)) })
         //        .sheet(isPresented: $viewModel.isShowingHostView, content: { HostOrganizationView(viewModel: HostOrganizationViewModel(host: hostManager.selectedHost!, namespace: namespace)) })
                 .fullScreenCover(isPresented: $viewModel.isShowingAddEventView, content: { CreateEventView() })
@@ -72,12 +79,13 @@ struct MapView_Previews: PreviewProvider {
 
 fileprivate struct AddEventButton: View {
     var body: some View {
-        Image(systemName: "plus.app")
-            .font(.system(size: 20, weight: .bold))
-            .frame(width: 40, height: 40)
-            .foregroundColor(.secondary)
-            .background(.ultraThinMaterial)
-            .backgroundStyle(cornerRadius: 14, opacity: 0.4)
+        Image(systemName: "plus")
+            .font(.title.weight(.medium))
+            .foregroundColor(Color.white)
+            .padding(20)
+            .background(Color.mixerPurpleGradient)
+            .clipShape(Circle())
+            .shadow(radius: 5, y: 10)
     }
 }
 
@@ -85,11 +93,12 @@ fileprivate struct AddEventButton: View {
 fileprivate struct EventUsersListButton: View {
     var body: some View {
         Image(systemName: "list.bullet.clipboard")
-            .font(.system(size: 20, weight: .bold))
-            .frame(width: 40, height: 40)
-            .foregroundColor(.secondary)
-            .background(.ultraThinMaterial)
-            .backgroundStyle(cornerRadius: 14, opacity: 0.4)
+            .font(.title2.weight(.medium))
+            .foregroundColor(Color.mainFont)
+            .padding(9)
+            .background(Color.mixerSecondaryBackground)
+            .clipShape(Circle())
+            .shadow(radius: 5, y: 10)
     }
 }
 

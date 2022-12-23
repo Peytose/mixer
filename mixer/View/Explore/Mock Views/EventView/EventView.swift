@@ -20,7 +20,8 @@ struct EventView: View {
     @Namespace var namespace
     
     let coordinates = CLLocationCoordinate2D(latitude: 42.3507046, longitude: -71.0909822)
-    
+    let link = URL(string: "https://mixer.llc")!
+
     var body: some View {
         ZStack {
             ScrollView {
@@ -142,6 +143,18 @@ struct EventView: View {
                             .lineLimit(1)
                             .minimumScaleFactor(0.75)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        Spacer()
+                        ShareLink(item: link, message: Text("Join this party!")) {
+                            Image(systemName: "square.and.arrow.up")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(Color.white)
+                                .frame(width: 20, height: 20)
+                                .padding(7)
+                                .background(.ultraThinMaterial)
+                                .backgroundStyle(cornerRadius: 18, opacity: 0.4)
+                        }
                     }
                     .foregroundColor(.primary.opacity(0.7))
                     
@@ -178,13 +191,44 @@ struct EventView: View {
     
     var content: some View {
         VStack(alignment: .leading, spacing: 25) {
-            Text("Description")
+            
+            HStack(spacing: 30) {
+                VStack(alignment: .leading) {
+                    Text("20")
+                        .font(.title3.weight(.semibold))
+
+                    Text("January")
+                        .foregroundColor(.secondary)
+                }
+                
+                VStack(alignment: .leading) {
+                    Text("Tuesday")
+                        .font(.title3.weight(.semibold))
+
+                    Text("10:00 PM - 1:00 AM")
+                        .foregroundColor(.secondary)
+                }
+                                
+                Image(systemName: "drop.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 22, height: 22)
+                    .padding(10)
+                    .background(.ultraThinMaterial)
+                    .backgroundStyle(cornerRadius: 10, opacity: 0.6)
+                    .cornerRadius(10)
+                    .padding(.leading, 35)
+            }
+            .font(.headline)
+
+            Text("About this event")
                 .font(.title).bold()
                 .padding(.bottom, -10)
             
 //            Text(viewModel.event.description)
             Text("Neon Party at Theta Chi, need I say more?")
-                .font(.title3).fontWeight(.medium)
+                .font(.headline)
+                .foregroundColor(.secondary)
             
             Text("Event Details")
                 .font(.title).bold()
@@ -223,15 +267,13 @@ struct EventView: View {
                         Text("528 Beacon St, Boston MA")
                             .foregroundColor(.secondary)
                     }
-                    .fontWeight(.semibold)
                 }
                 
                 HStack(spacing: 12) {
                     PaddedImage(image: "figure.dance")
                     
 //                    Text("Theme: \(viewModel.event.theme)")
-                    Text("Neon")
-                        .fontWeight(.semibold)
+                    Text("Neon/Black light")
                 }
                 
                 HStack(spacing: 12) {
@@ -239,16 +281,16 @@ struct EventView: View {
                     
 //                    Text("\(viewModel.event.wetOrDry)")
                     Text("Wet Party")
-                        .fontWeight(.semibold)
                 }
                 
                 HStack(spacing: 12) {
                     PaddedImage(image: "tshirt.fill")
                     
                     Text("General Party Clothes (Wear neon if possible)")
-                        .fontWeight(.semibold)
                 }
             }
+            .font(.headline)
+
             
             Text("Where you'll be")
                 .font(.title).bold()
@@ -380,7 +422,7 @@ private struct PaddedImage: View {
                 .frame(width: 22, height: 22)
                 .padding(10)
                 .background(.ultraThinMaterial)
-                .backgroundStyle(cornerRadius: 10, opacity: 0.5)
+                .backgroundStyle(cornerRadius: 10, opacity: 0.6)
                 .cornerRadius(10)
             
         }

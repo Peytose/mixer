@@ -43,6 +43,8 @@ struct ExplorePageView: View {
                                 .background(
                                     Image("Blob 1")
                                         .offset(x: 305, y: 150)
+                                        .opacity(0.8)
+                                        .blur(radius: 10)
                                         .accessibility(hidden: true)
                                 )
                                 .padding(.leading)
@@ -146,16 +148,12 @@ struct ExplorePageView: View {
             }
             .ignoresSafeArea()
             .overlay(
-                NavigationBar(title: "Explore", showSearchView: $viewModel.showSearchView, contentHasScrolled: $viewModel.contentHasScrolled, showNavigationBar: $viewModel.showNavigationBar)
+                NavigationBar(title: "Explore", contentHasScrolled: $viewModel.contentHasScrolled, showNavigationBar: $viewModel.showNavigationBar, showLocation: true)
                     .opacity(viewModel.headerOffsets.0 < 70 ? 0 : 1)
             )
             .sheet(isPresented: $viewModel.showHostView) {
                 HostOrganizationView()
             }
-//            .fullScreenCover(isPresented: $viewModel.showEventView, content: {
-//                EventView(parentViewModel: viewModel)
-//            })
-
         .statusBar(hidden: viewModel.showEventView)
         }
     }

@@ -72,7 +72,7 @@ extension Color {
     static let mixerBlue = Color(red: 25/255, green: 99/255, blue: 221/255) //MARK: The main purple we are using (its more of an indigo)
     
     //MARK: Chosen Background Colors
-    static let mixerBackground = Color(red: 18/255, green: 17/255, blue: 22/255)
+    static let mixerBackground = Color(red: 15/255, green: 14/255, blue: 18/255)
     static let mixerSecondaryBackground = Color(red: 28/255, green: 27/255, blue: 32/255)
 
     //MARK: Font Colors

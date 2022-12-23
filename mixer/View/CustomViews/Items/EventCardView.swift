@@ -52,22 +52,6 @@ struct EventCard: View {
         } contentView: {
             VStack {
                 VStack {
-                    HStack {
-                        Spacer()
-                        
-                        ShareLink(item: link, message: Text("Join this party!")) {
-                            Image(systemName: "square.and.arrow.up")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .foregroundColor(Color.white)
-                                .frame(width: 20, height: 20)
-                                .padding(7)
-                                .background(.ultraThinMaterial)
-                                .backgroundStyle(cornerRadius: 18, opacity: 0.4)
-                        }
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                    .padding(10)
                     
                     Spacer()
                     
