@@ -35,7 +35,9 @@ struct EventFlyerUploadView: View {
         .preferredColorScheme(.dark)
         .ignoresSafeArea()
         .overlay(alignment: .bottom, content: {
-                NextButton(text: "Create Event")
+            NavigationLink(destination: ReviewCreatedEventView()) {
+                NextButton()
+            }
         })
         .navigationBarTitle(Text("Upload a flyer"), displayMode: .large)
         .navigationBarBackButtonHidden(true)
@@ -60,7 +62,6 @@ struct EventFlyerUploadView: View {
                     .frame(width: 350, height: 420)
                     
             }
-            .foregroundColor(.white)
             .padding()
             .onTapGesture {
                 let impact = UIImpactFeedbackGenerator(style: .medium)

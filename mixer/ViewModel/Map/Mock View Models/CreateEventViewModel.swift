@@ -19,13 +19,13 @@ enum WetOrDry: String {
     }
 }
 
-enum InviteOnly: String {
+enum UseCustomAddress: String {
     case yes, no
-    
+
     var stringVersion: String {
         switch self {
-            case .yes: return "Invite Only"
-            case .no: return "Public"
+            case .yes: return "Custom Address"
+            case .no: return "Default Address"
         }
     }
 }
@@ -42,30 +42,29 @@ enum isPrivate: String {
 }
 
     @MainActor final class CreateEventViewModel: ObservableObject {
-        @Published var title                    = ""
-        @Published var description              = ""
-        @Published var startDate                = Date()
-        @Published var endDate                  = Date()
-        @Published var selectedWetDry: WetOrDry = .dry
-        @Published var isInviteOnly: InviteOnly = .no
-        @Published var isPrivate:    isPrivate  = .no
-        @Published var theme                    = ""
-        @Published var themeDescription         = ""
-        @Published var guestLimit               = ""
-        @Published var guestLimitForGuests      = ""
-        @Published var address                  = ""
+        @Published var title                             = ""
+        @Published var description                       = ""
+        @Published var startDate                         = Date()
+        @Published var endDate                           = Date()
+        @Published var selectedWetDry: WetOrDry          = .dry
+        @Published var selectedAddress: UseCustomAddress = .no
+        @Published var isPrivate:    isPrivate           = .no
+        @Published var theme                             = ""
+        @Published var themeDescription                  = ""
+        @Published var guestLimit                        = ""
+        @Published var guestLimitForGuests               = ""
+        @Published var address                           = ""
         
-        @Published var flyer                    = PlaceholderImage.event
+        @Published var flyer                             = PlaceholderImage.event
         
-        @Published var showEndDate              = false
-        @Published var includeDescription       = false
-        @Published var hasFlyer                 = false
-        @Published var isShowingPhotoPicker     = false
-        @Published var isLoading                = false
-        @Published var isInviteLimit            = false
-        @Published var isGuestInviteLimit       = false
-        @Published var includeInviteList        = false
-        @Published var isAddress                = false
+        @Published var showEndDate                       = false
+        @Published var includeDescription                = false
+        @Published var hasFlyer                          = false
+        @Published var isShowingPhotoPicker              = false
+        @Published var isLoading                         = false
+        @Published var isInviteLimit                     = false
+        @Published var isGuestInviteLimit                = false
+        @Published var includeInviteList                 = false
         @Published var alertItem: AlertItem?
         
         let coordinates = CLLocationCoordinate2D(latitude: 42.3507046, longitude: -71.0909822)

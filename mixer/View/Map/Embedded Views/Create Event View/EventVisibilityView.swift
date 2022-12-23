@@ -23,17 +23,14 @@ struct EventVisibilityView: View {
                 VStack(alignment: .leading, spacing: 20) {
                     Text("Description")
                         .font(.title).bold()
-                        .padding(.bottom, -10)
+                        .padding(.bottom, -15)
                     
                     Text(viewModel.isPrivate == .yes ? "Only invited attendees can view and attend a Private Party" : "Anyone can view a Public Party and join its guestlist")
                         .font(.title3).fontWeight(.medium)
-                        .frame(width: 350)
-                        .padding(.leading, -10)
-                    
-                    
                 }
-                .padding(.leading, -20)
-                
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(EdgeInsets(top: 0, leading: 21, bottom: 0, trailing: 10))
+
                 List {
                     if viewModel.isPrivate == .yes {
                         inviteLimitSection

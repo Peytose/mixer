@@ -20,12 +20,14 @@ struct CreateEventView: View {
                     List {
                         mainDetailsSection
                         
+                        dateSection
+                        
                         addressSection
                         
                             Section(header: Text("Map Preview")) {
                                 MapSnapshotView(location: viewModel.coordinates, span: 0.001, delay: 0)
                                     .cornerRadius(12)
-                                    .padding(.bottom, 40)
+                                    .padding(.bottom, 60)
                             }
                             .listRowBackground(Color.clear)
                     }
@@ -39,7 +41,7 @@ struct CreateEventView: View {
                     NextButton()
                 }
             })
-            .navigationBarTitle(Text("Create an Event"), displayMode: .inline)
+            .navigationBarTitle(Text("Create an Event"), displayMode: .large)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading, content: {
                     Button("Cancel") {
@@ -56,12 +58,22 @@ struct CreateEventView: View {
             TextField("Event Title*", text: $viewModel.title)
                 .foregroundColor(Color.mainFont)
                 .font(.body.weight(.semibold))
-
-            TextField("Event Description/Theme*", text: $viewModel.description, axis: .vertical)
+            
+            TextField("Event Theme*", text: $viewModel.theme, axis: .vertical)
                 .foregroundColor(Color.mainFont)
                 .font(.body.weight(.semibold))
                 .lineLimit(4)
 
+            TextField("Event/Theme Description*", text: $viewModel.description, axis: .vertical)
+                .foregroundColor(Color.mainFont)
+                .font(.body.weight(.semibold))
+                .lineLimit(4)
+        }
+        .listRowBackground(Color.mixerSecondaryBackground)
+    }
+    
+    var dateSection: some View {
+        Section(header: Text("Date Details")) {
             EventDatePicker(text: "Start date*", selection: $viewModel.startDate)
             
             EventDatePicker(text: "End date*", selection: $viewModel.endDate)
@@ -71,22 +83,27 @@ struct CreateEventView: View {
                 Text("Wet").tag(WetOrDry.wet)
             }
             .pickerStyle(.segmented)
-            .padding()
+            .padding(.vertical, 8)
         }
         .listRowBackground(Color.mixerSecondaryBackground)
     }
     
     var addressSection: some View {
         Section(header: Text("Location Details")) {
-            Text("Theta Chi House: 528 Beacon St")
-                .font(.body.weight(.semibold))
+            Picker("Wet or Dry", selection: $viewModel.selectedAddress) {
+                Text("Default Address").tag(UseCustomAddress.no)
+                Text("Custom Address").tag(UseCustomAddress.yes)
+            }
+            .pickerStyle(.segmented)
+            .padding(.vertical, 8)
             
-            Toggle("Use different address", isOn: $viewModel.isAddress.animation())
-                .font(.body.weight(.semibold))
-            
-            if viewModel.isAddress {
+            if viewModel.selectedAddress == .yes {
                 TextField("Address", text: $viewModel.address)
                     .foregroundColor(Color.mainFont)
+                    .font(.body.weight(.semibold))
+                
+            } else {
+                Text("Theta Chi House - 528 Beacon St")
                     .font(.body.weight(.semibold))
             }
 
@@ -113,6 +130,6 @@ fileprivate struct EventDatePicker: View {
                    selection: selection,
                    displayedComponents: [.date, .hourAndMinute])
         .datePickerStyle(.automatic)
-        .padding(EdgeInsets(top: 12, leading: 0, bottom: 12, trailing: -5))
+        .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: -5))
     }
 }

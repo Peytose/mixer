@@ -84,6 +84,7 @@
 		A6B9E68C29544F21009C936E /* NextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B9E68B29544F21009C936E /* NextButton.swift */; };
 		A6B9E68E29546440009C936E /* BackArrowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B9E68D29546440009C936E /* BackArrowButton.swift */; };
 		A6B9E690295464A8009C936E /* EventFlyerUploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B9E68F295464A8009C936E /* EventFlyerUploadView.swift */; };
+		A6BAEF612955064200410DED /* ReviewCreatedEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6BAEF602955064200410DED /* ReviewCreatedEventView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -157,6 +158,7 @@
 		A6B9E68B29544F21009C936E /* NextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextButton.swift; sourceTree = "<group>"; };
 		A6B9E68D29546440009C936E /* BackArrowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackArrowButton.swift; sourceTree = "<group>"; };
 		A6B9E68F295464A8009C936E /* EventFlyerUploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventFlyerUploadView.swift; sourceTree = "<group>"; };
+		A6BAEF602955064200410DED /* ReviewCreatedEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCreatedEventView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -459,6 +461,7 @@
 				A6430445294FBDBF0058C0F0 /* CreateEventView.swift */,
 				A6B9E68929544ECA009C936E /* EventVisibilityView.swift */,
 				A6B9E68F295464A8009C936E /* EventFlyerUploadView.swift */,
+				A6BAEF602955064200410DED /* ReviewCreatedEventView.swift */,
 			);
 			path = "Create Event View";
 			sourceTree = "<group>";
@@ -682,6 +685,7 @@
 				9C93318529201C760079E039 /* SearchView.swift in Sources */,
 				9C3BADF8291F5A38009C8043 /* ImageUploader.swift in Sources */,
 				9C567A9A293023B700EA5FCB /* GetGender.swift in Sources */,
+				A6BAEF612955064200410DED /* ReviewCreatedEventView.swift in Sources */,
 				A6B9E6862953E792009C936E /* FeaturedHostCard.swift in Sources */,
 				A6B9E67C2953B9A3009C936E /* XDismissButton.swift in Sources */,
 				9C3BADDF291F57EE009C8043 /* AuthViewModel.swift in Sources */,
