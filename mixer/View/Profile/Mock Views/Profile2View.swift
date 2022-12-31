@@ -10,23 +10,24 @@ import SwiftUI
 
 
 struct UserProfilePrototypeView: View {
+    init() {
+        UINavigationBar.changeAppearance(clear: true)
+    }
     
     enum ProfilePrototypeContext: String, CaseIterable {
         case current = "Going to"
         case upcoming = "Events attended"
     }
-    
 //    @StateObject var viewModel = ProfileViewModel()
     @State var shareUsername = false
     @State var profileContext: ProfilePrototypeContext = .current
-    @State var showSettings = false
+    @State var showSettingsView = false
 
     @Namespace var animation
     @Namespace var namespace
     
     var body: some View {
-        ZStack {
-            if !showSettings {
+            ZStack {
                 Color.mixerBackground
                 
                 ScrollView(showsIndicators: false) {
@@ -48,7 +49,7 @@ struct UserProfilePrototypeView: View {
                                 HStack {
                                     PaddedImage(image: "graduationcap.fill")
                                     
-//                                    Text(viewModel.university)
+                                    //                                    Text(viewModel.university)
                                     Text("MIT")
                                 }
                                 
@@ -66,7 +67,7 @@ struct UserProfilePrototypeView: View {
                                 
                             }
                             .font(.headline.weight(.semibold))
-
+                            .padding(.bottom, -70)
                             
                             LazyVStack(pinnedViews: [.sectionHeaders]) {
                                 Section(content: {
@@ -83,61 +84,50 @@ struct UserProfilePrototypeView: View {
                                                 .offset(y: 100)
                                         }                                }
                                 }, header: {
-                                        HStack {
-                                            ForEach(ProfilePrototypeContext.allCases, id: \.self) { [self] context in
-                                                VStack(spacing: 8) {
-                                                    Text(context.rawValue)
-                                                        .fontWeight(.semibold)
-                                                        .foregroundColor(profileContext == context ? .white : .gray)
-
-                                                    ZStack{
-                                                        if profileContext == context {
-                                                            RoundedRectangle(cornerRadius: 4, style: .continuous)
-                                                                .fill(Color.mixerIndigo)
-                                                                .matchedGeometryEffect(id: "TAB", in: animation)
-                                                        }
-                                                        else {
-                                                            RoundedRectangle(cornerRadius: 4, style: .continuous)
-                                                                .fill(.clear)
-                                                        }
+                                    HStack {
+                                        ForEach(ProfilePrototypeContext.allCases, id: \.self) { [self] context in
+                                            VStack(spacing: 8) {
+                                                Text(context.rawValue)
+                                                    .fontWeight(.semibold)
+                                                    .foregroundColor(profileContext == context ? .white : .gray)
+                                                
+                                                ZStack{
+                                                    if profileContext == context {
+                                                        RoundedRectangle(cornerRadius: 4, style: .continuous)
+                                                            .fill(Color.mixerIndigo)
+                                                            .matchedGeometryEffect(id: "TAB", in: animation)
                                                     }
-                                                    .frame(height: 4)
+                                                    else {
+                                                        RoundedRectangle(cornerRadius: 4, style: .continuous)
+                                                            .fill(.clear)
+                                                    }
                                                 }
-                                                .contentShape(Rectangle())
-                                                .onTapGesture {
-                                                    withAnimation(.easeInOut) {
-                                                        self.profileContext = context
-                                                    }
+                                                .frame(height: 4)
+                                            }
+                                            .contentShape(Rectangle())
+                                            .onTapGesture {
+                                                withAnimation(.easeInOut) {
+                                                    self.profileContext = context
                                                 }
                                             }
                                         }
-                                        .padding(.bottom, 0)
+                                    }
                                     .background(Color.mixerBackground)
-                                    .offset(y: 70)
+                                    .offset(y: 80)
                                 })
                             }
-                            .offset(y: -50)
                         }
                         .padding(.horizontal)
                     }
                     .frame(maxHeight: .infinity, alignment: .top)
-                    .padding(.bottom, 150)
                 }
-            } else {
-                ProfileSettingsView()
-                    .transition(.move(edge: .bottom))
-                    .offset(y: 40)
-                
             }
-        }
-        .ignoresSafeArea()
-        .preferredColorScheme(.dark)
-//        .task {
-//            viewModel.getProfile()
-//        }
-        .overlay {
-            navigationBarButtons
-        }
+            .ignoresSafeArea()
+            .preferredColorScheme(.dark)
+            .sheet(isPresented: $showSettingsView, content: {
+                ProfileSettingsView()
+                    .preferredColorScheme(.dark)
+            })
     }
 }
 
@@ -193,38 +183,33 @@ extension UserProfilePrototypeView {
                                         .minimumScaleFactor(0.75)
                                 }
                                 
-//                                ShareLink(item: URL(string: "\(viewModel.firstName) \(viewModel.lastName)")!) {
+                                ShareLink(item: URL(string: "https://mixer.llc")!) {
                                     Text("@johndoe")
                                         .fontWeight(.semibold)
                                         .foregroundColor(.blue)
-//                                }
+                                }
                             }
                         }
                         .padding(.top, 75)
                     }
             }
+            .overlay(alignment: .topTrailing) {
+                Button(action: {
+                    let impact = UIImpactFeedbackGenerator(style: .light)
+                    impact.impactOccurred()
+                    withAnimation(.spring()) {
+                        showSettingsView.toggle()
+                    }
+                }, label: {
+                    Image(systemName: "gearshape.fill")
+                        .foregroundColor(Color.mainFont)
+                        .font(.system(size: 28))
+                        .shadow(radius: 10)
+                })
+                .padding(EdgeInsets(top: 60, leading: 0, bottom: 0, trailing: 30))
+            }
         }
         .padding(.bottom, 230)
-    }
-    
-    var navigationBarButtons: some View {
-        ZStack {
-            Button(action: {
-                let impact = UIImpactFeedbackGenerator(style: .light)
-                impact.impactOccurred()
-                withAnimation(.spring()) {
-                    showSettings.toggle()
-                }
-            }, label: {
-                Image(systemName: showSettings ? "person.fill" : "gearshape.fill")
-                    .foregroundColor(Color.mainFont)
-                    .font(.system(size: 28))
-                    .shadow(radius: 10)
-
-            })
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-            .padding(EdgeInsets(top: 15, leading: 0, bottom: 0, trailing: 20))
-        }
     }
 }
 
@@ -240,5 +225,21 @@ private struct PaddedImage: View {
                 .background(.ultraThinMaterial)
                 .backgroundStyle(cornerRadius: 10, opacity: 0.5)
         }
+    }
+}
+
+extension UINavigationBar {
+    static func changeAppearance(clear: Bool) {
+        let appearance = UINavigationBarAppearance()
+        
+        if clear {
+            appearance.configureWithTransparentBackground()
+        } else {
+            appearance.configureWithDefaultBackground()
+        }
+        
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
 }

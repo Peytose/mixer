@@ -92,13 +92,13 @@ fileprivate struct AddEventButton: View {
 
 fileprivate struct EventUsersListButton: View {
     var body: some View {
-        Image(systemName: "list.bullet.clipboard")
+        Image(systemName: "list.clipboard")
             .font(.title2.weight(.medium))
             .foregroundColor(Color.mainFont)
-            .padding(9)
+            .padding(12)
             .background(Color.mixerSecondaryBackground)
             .clipShape(Circle())
-            .shadow(radius: 5, y: 10)
+            .shadow(radius: 5, y: 8)
     }
 }
 

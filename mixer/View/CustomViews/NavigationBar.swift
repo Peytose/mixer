@@ -31,30 +31,36 @@ struct NavigationBar: View {
                 Text(title)
                     .animatableFont(size: contentHasScrolled ? 22 : 34, weight: .bold)
                     .foregroundStyle(.primary)
-                    .padding(.leading, 20)
                     .padding(.top, 20)
                     .opacity(contentHasScrolled ? 0.7 : 1)
                 
                 Spacer()
-                
-                if showLocation {
-                    HStack {
-                        Image(systemName: "mappin.and.ellipse")
-                            .imageScale(.medium)
-                            .symbolRenderingMode(.palette)
-                            .foregroundStyle(.primary, Color.mixerIndigo)
-                            .padding(.top, 26)
-                            .opacity(contentHasScrolled ? 0.7 : 1)
-                        Text("Boston, MA")
-                            .animatableFont(size: contentHasScrolled ? 22 : 30, weight: .bold)
-                            .foregroundStyle(.primary)
-                            .padding(.trailing, 20)
-                            .padding(.top, 24)
-                            .opacity(contentHasScrolled ? 0.7 : 1)
-                    }
-                }
+
+                Image("mock-user")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 40, height: 40)
+                    .clipShape(Circle())
+
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .padding(.horizontal, 20)
+            .overlay {
+                HStack(alignment: .center) {
+                    Image(systemName: "mappin.and.ellipse")
+                        .symbolRenderingMode(.palette)
+                        .foregroundStyle(Color.primary, Color.blue)
+                    
+                    
+                    Text("Boston, MA")
+                        .font(.title3.weight(.semibold))
+                        .foregroundStyle(.primary)
+                        .opacity(contentHasScrolled ? 0.7 : 1)
+                }
+                .padding(.top, 20)
+
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            
         }
         .offset(y: showNavigationBar ? 0 : -120)
         .offset(y: contentHasScrolled ? -16 : 0)

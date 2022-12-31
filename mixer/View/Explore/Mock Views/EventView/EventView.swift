@@ -17,6 +17,7 @@ struct EventView: View {
     var isAnimated = true
     @State private var showingOptions = false
     @State private var selection = "None"
+    @State var showFullFlyer = false
     @Namespace var namespace
     
     let coordinates = CLLocationCoordinate2D(latitude: 42.3507046, longitude: -71.0909822)
@@ -31,9 +32,27 @@ struct EventView: View {
                     .padding(.vertical, 80)
 //                HostOrganizationView()
             }
+            .padding(.bottom, 70)
             .coordinateSpace(name: "scroll")
             .background(Color.mixerBackground)
             .ignoresSafeArea()
+            
+            if showFullFlyer {
+                Rectangle()
+                    .fill(Color.clear)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                    .backgroundBlur(radius: 10, opaque: true)
+                    .ignoresSafeArea()
+                
+                Image("theta-chi-party-poster")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 370, height: 435)
+                    .overlay{
+                        flyerCloseButton
+                    }
+            }
+            
         }
         .zIndex(1)
         .preferredColorScheme(.dark)
@@ -43,6 +62,60 @@ struct EventView: View {
 //        }
         .overlay{
             closeButton
+        }
+        .overlay(alignment: .bottom) {
+            HStack(spacing: -5) {
+                Button(action: {
+                    let impact = UIImpactFeedbackGenerator(style: .light)
+                    impact.impactOccurred()
+                    
+                }, label: {
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(Color.mixerPurpleGradient)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 55)
+                        .padding(.horizontal, 10)
+                })
+                .overlay {
+                    HStack {
+                        Image(systemName: "list.clipboard")
+                            .imageScale(.large)
+                            .foregroundColor(.white)
+                        
+                        Text("Get on the Guestlist")
+                            .font(.title3.weight(.semibold))
+                    }
+                }
+                
+                Button(action: {
+                    let impact = UIImpactFeedbackGenerator(style: .light)
+                    impact.impactOccurred()
+                    showingOptions.toggle()
+                    
+                }, label: {
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(.ultraThinMaterial)
+                        .backgroundStyle(cornerRadius: 12, opacity: 0.5)
+                        .frame(maxWidth: 60)
+                        .frame(height: 56)
+                        .padding(.horizontal, 10)
+                })
+                .overlay {
+                    Image(systemName: "ellipsis")
+                        .imageScale(.large)
+                }
+                .confirmationDialog("Select an option", isPresented: $showingOptions, titleVisibility: .hidden) {
+                                Button("Share Event") {
+                                    selection = "Red"
+                                }
+
+                                Button("Report") {
+                                    selection = "Green"
+                                }
+                            }
+            }
+            .padding(.bottom, 90)
+            .opacity(showFullFlyer ? 0 : 1)
         }
     }
     
@@ -87,6 +160,13 @@ struct EventView: View {
                         RoundedRectangle(cornerRadius: 20)
                             .frame(width: 370, height: 435)
                     )
+                    .onLongPressGesture {
+                        let impact = UIImpactFeedbackGenerator(style: .heavy)
+                        impact.impactOccurred()
+                        withAnimation() {
+                            showFullFlyer.toggle()
+                        }
+                    }
             )
             .background(
                 ZStack {
@@ -112,37 +192,38 @@ struct EventView: View {
                 RoundedRectangle(cornerRadius: 20)
             )
             .overlay(
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 3) {
                     
                     HStack {
 //                        Text(viewModel.host.name)
-                        Text("theta chi".capitalized)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Text("MIT Theta Chi")
                             .font(.title3).bold()
                             .foregroundColor(.primary.opacity(0.7))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.75)
                         
                         Spacer()
                         
-                        Image(systemName: "person.3.fill")
-                            .symbolRenderingMode(.hierarchical)
-                        
-                        Text("156 going")
-                            .font(.body.weight(.semibold))
+                        Text("Invite Only Event".capitalized)
+                            .font(.title3).bold()
+                            .foregroundColor(.primary.opacity(0.7))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.75)
                     }
                     
 //                    Text(viewModel.event.title)
                     Text("Neon Party")
                         .font(.title).bold()
-                        .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(.primary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.65)
                     
                     HStack {
-//                        Text("\(viewModel.event.inviteOnly) Party")
-                        Text("invite only".capitalized)
+                        Image(systemName: "person.3.fill")
+                            .symbolRenderingMode(.hierarchical)
+                        
+                        Text("156 going")
                             .font(.body.weight(.semibold))
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.75)
-                            .frame(maxWidth: .infinity, alignment: .leading)
                         
                         Spacer()
                         ShareLink(item: link, message: Text("Join this party!")) {
@@ -160,18 +241,37 @@ struct EventView: View {
                     
                     Divider()
                         .foregroundColor(.secondary)
+                        .padding(.vertical, 4)
                     
-                    HStack {
-//                        LogoView(image: Image(uiImage: viewModel.host.crestImage))
-                        LogoView(image: Image("theta-chi-crest"))
+                    HStack(spacing: 30) {
+                                                
+                        VStack(alignment: .leading) {
+                            Text("Friday, Jan 20")
+                                .font(.title3.weight(.semibold))
+
+                            Text("10:00 PM - 1:00 AM")
+                                .foregroundColor(.secondary)
+                        }
+
+                        VStack(alignment: .center) {
+                            Image(systemName: "drop.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 22, height: 22)
+//                                .padding(10)
+                                .background(.ultraThinMaterial)
+                                .backgroundStyle(cornerRadius: 10, opacity: 0.6)
+                                .cornerRadius(10)
+
+                            Text("Wet")
+                                .foregroundColor(.secondary)
+                        }
                         
-//                        Text("Party organized by \(viewModel.event.creatorName)")
-                        Text("Party organized by Jose Martinez")
-                            .font(.footnote.weight(.medium))
-                            .foregroundStyle(.secondary)
                     }
+                    .font(.headline)
                 }
-                    .padding(20)
+//                    .padding(20)
+                    .padding(EdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20))
                     .background(
                         Rectangle()
                             .fill(.ultraThinMaterial)
@@ -191,42 +291,14 @@ struct EventView: View {
     
     var content: some View {
         VStack(alignment: .leading, spacing: 25) {
-            
-            HStack(spacing: 30) {
-                VStack(alignment: .leading) {
-                    Text("20")
-                        .font(.title3.weight(.semibold))
 
-                    Text("January")
-                        .foregroundColor(.secondary)
-                }
-                
-                VStack(alignment: .leading) {
-                    Text("Tuesday")
-                        .font(.title3.weight(.semibold))
-
-                    Text("10:00 PM - 1:00 AM")
-                        .foregroundColor(.secondary)
-                }
-                                
-                Image(systemName: "drop.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 22, height: 22)
-                    .padding(10)
-                    .background(.ultraThinMaterial)
-                    .backgroundStyle(cornerRadius: 10, opacity: 0.6)
-                    .cornerRadius(10)
-                    .padding(.leading, 35)
-            }
-            .font(.headline)
 
             Text("About this event")
                 .font(.title).bold()
                 .padding(.bottom, -10)
             
 //            Text(viewModel.event.description)
-            Text("Neon Party at Theta Chi, need I say more?")
+            Text("Neon Party at Theta Chi, need we say more?")
                 .font(.headline)
                 .foregroundColor(.secondary)
             
@@ -297,65 +369,7 @@ struct EventView: View {
             
             MapSnapshotView(location: coordinates)
                 .cornerRadius(12)
-            
-            HStack {
-                Button(action: {
-                    let impact = UIImpactFeedbackGenerator(style: .light)
-                    impact.impactOccurred()
-                    
-                }, label: {
-                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .fill(Color.mixerPurpleGradient)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 60)
-                        .padding(.horizontal, 10)
-                })
-                .overlay {
-                    Text("Get on the Guestlist")
-                        .font(.title3.weight(.semibold))
-                }
-                .padding(.top, 20)
-                .padding(.bottom, 10)
-                
-                Button(action: {
-                    let impact = UIImpactFeedbackGenerator(style: .light)
-                    impact.impactOccurred()
-                    showingOptions.toggle()
-                    
-                }, label: {
-                    Image(systemName: "ellipsis")
-                        .imageScale(.large)
-                        .foregroundColor(.mixerIndigo)
-                        .bold()
-                        .padding(26)
-                        .padding(.horizontal, -5)
-                        .background(.ultraThinMaterial)
-                        .backgroundStyle(cornerRadius: 10, opacity: 0.5)
-//                        .background {
-//                            RoundedRectangle(cornerRadius: 12, style: .continuous)
-//                                .fill(Color.lifXLightGray)
-//                                .frame(height: 60)
-//                                .padding(.horizontal, -20)
-//
-//                        }
-
-                   
-                })
-                .confirmationDialog("Select a color", isPresented: $showingOptions, titleVisibility: .visible) {
-                                Button("Share Event") {
-                                    selection = "Red"
-                                }
-
-                                Button("Report") {
-                                    selection = "Green"
-                                }
-                                .foregroundColor(.red)
-                            }
-                .padding(.top, 20)
-                .padding(.bottom, 10)
-            }
-            
-            
+    
         }
         .padding()
     }
@@ -380,6 +394,17 @@ struct EventView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             .padding(20)
             .padding(.top, 30)
+            .ignoresSafeArea()
+    }
+    
+    var flyerCloseButton: some View {
+        Button {
+            withAnimation() {
+                showFullFlyer.toggle()
+            }
+        } label: { XDismissButton() }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+            .padding(.trailing)
             .ignoresSafeArea()
     }
 }

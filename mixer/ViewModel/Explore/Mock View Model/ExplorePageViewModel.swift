@@ -33,6 +33,7 @@ final class ExplorePageViewModel: ObservableObject {
                     VStack(spacing: 8) {
 
                         Text(context.rawValue)
+                            .font(.headline)
                             .fontWeight(.semibold)
                             .foregroundColor(exploreContext == context ? .white : .gray)
 
@@ -50,7 +51,7 @@ final class ExplorePageViewModel: ObservableObject {
                         .padding(.horizontal,8)
                         .frame(height: 4)
                     }
-                    .padding(.leading)
+//                    .padding(.leading)
                     .contentShape(Rectangle())
                     .onTapGesture {
                         withAnimation(.easeInOut) {

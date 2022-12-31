@@ -33,6 +33,7 @@ struct MainTabView: View {
         }
         .preferredColorScheme(.dark)
         .accentColor(Color.mainFont)
+        .toolbarBackground(Color.black, for: .tabBar)
     }
 }
 
