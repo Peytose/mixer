@@ -93,7 +93,8 @@ struct UserProfileView: View {
                                             .frame(height: 200)
                                             .padding(.horizontal, -10)
                                             .offset(y: 100)
-                                    }                                }
+                                    }
+                                }
                             }, header: {
                                     HStack {
                                         ForEach(ProfileContext.allCases, id: \.self) { [self] context in

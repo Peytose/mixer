@@ -20,102 +20,71 @@ struct EventView: View {
     @State var showFullFlyer = false
     @Namespace var namespace
     
+    @State private var currentAmount = 0.0
+    @State private var finalAmount = 1.0
+    
     let coordinates = CLLocationCoordinate2D(latitude: 42.3507046, longitude: -71.0909822)
     let link = URL(string: "https://mixer.llc")!
-
+    
     var body: some View {
-        ZStack {
-            ScrollView {
-                cover
-                
-                content
-                    .padding(.vertical, 80)
-//                HostOrganizationView()
-            }
-            .padding(.bottom, 70)
-            .coordinateSpace(name: "scroll")
-            .background(Color.mixerBackground)
-            .ignoresSafeArea()
-            
-            if showFullFlyer {
-                Rectangle()
-                    .fill(Color.clear)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                    .backgroundBlur(radius: 10, opaque: true)
-                    .ignoresSafeArea()
-                
-                Image("theta-chi-party-poster")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 370, height: 435)
-                    .overlay{
-                        flyerCloseButton
-                    }
-            }
-            
-        }
-        .zIndex(1)
-        .preferredColorScheme(.dark)
-        .onAppear { fadeIn() }
-//        .onChange(of: model.showDetail) { show in
-//            fadeOut()
-//        }
-        .overlay{
-            closeButton
-        }
-        .overlay(alignment: .bottom) {
-            HStack(spacing: -5) {
-                Button(action: {
-                    let impact = UIImpactFeedbackGenerator(style: .light)
-                    impact.impactOccurred()
-                    
-                }, label: {
-                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .fill(Color.mixerPurpleGradient)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 55)
-                        .padding(.horizontal, 10)
-                })
-                .overlay {
-                    HStack {
-                        Image(systemName: "list.clipboard")
-                            .imageScale(.large)
-                            .foregroundColor(.white)
+        NavigationView {
+            GeometryReader { proxy in
+                ZStack {
+                    ScrollView(showsIndicators: false) {
+                        cover
                         
-                        Text("Get on the Guestlist")
-                            .font(.title3.weight(.semibold))
+                        content
+                            .padding(.vertical, 80)
+                        //                HostOrganizationView()
                     }
-                }
-                
-                Button(action: {
-                    let impact = UIImpactFeedbackGenerator(style: .light)
-                    impact.impactOccurred()
-                    showingOptions.toggle()
+//                    .padding(.bottom, 120)
+                    .coordinateSpace(name: "scroll")
+                    .background(Color.mixerBackground)
+                    .ignoresSafeArea()
                     
-                }, label: {
-                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .fill(.ultraThinMaterial)
-                        .backgroundStyle(cornerRadius: 12, opacity: 0.5)
-                        .frame(maxWidth: 60)
-                        .frame(height: 56)
-                        .padding(.horizontal, 10)
-                })
-                .overlay {
-                    Image(systemName: "ellipsis")
-                        .imageScale(.large)
+                    if showFullFlyer {
+                        FlyerPopUpView()
+                            .transition(.scale(scale: 0.3).combined(with: .opacity))
+                            .zIndex(1)
+                    }
+                    
                 }
-                .confirmationDialog("Select an option", isPresented: $showingOptions, titleVisibility: .hidden) {
-                                Button("Share Event") {
-                                    selection = "Red"
-                                }
-
-                                Button("Report") {
-                                    selection = "Green"
-                                }
+                .zIndex(1)
+                .preferredColorScheme(.dark)
+                .onAppear { fadeIn() }
+                
+//                .customPopupView(isPresented: $showFullFlyer, popupView: { FlyerPopUpView() })
+                .overlay{
+                    closeButton
+                }
+                .overlay(alignment: .bottom) {
+                    HStack(spacing: -5) {
+                        Button(action: {
+                            let impact = UIImpactFeedbackGenerator(style: .light)
+                            impact.impactOccurred()
+                            
+                        }, label: {
+                            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                .fill(Color.mixerPurpleGradient)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 55)
+                                .padding(.horizontal, 10)
+                        })
+                        .overlay {
+                            HStack {
+                                Image(systemName: "list.clipboard")
+                                    .imageScale(.large)
+                                    .foregroundColor(.white)
+                                
+                                Text("Get On The Guest List")
+                                    .font(.title3.weight(.semibold))
                             }
+                        }
+                    }
+                    .padding(.bottom, 10)
+                    .opacity(showFullFlyer ? 0 : 1)
+                }
             }
-            .padding(.bottom, 90)
-            .opacity(showFullFlyer ? 0 : 1)
         }
     }
     
@@ -149,9 +118,10 @@ struct EventView: View {
             .frame(maxWidth: .infinity)
             .frame(height: scrollY > 0 ? 500 + scrollY : 500)
             .background(
-//                Image(uiImage: viewModel.event.flyerImage)
+                //                Image(uiImage: viewModel.event.flyerImage)
                 Image("theta-chi-party-poster")
                     .resizable()
+                    .frame(width: proxy.size.width, height: proxy.size.height)
                     .aspectRatio(contentMode: .fit)
                     .matchedGeometryEffect(id: "background 1", in: namespace)
                     .offset(y: scrollY > 0 ? -scrollY : 0)
@@ -160,17 +130,20 @@ struct EventView: View {
                         RoundedRectangle(cornerRadius: 20)
                             .frame(width: 370, height: 435)
                     )
-                    .onLongPressGesture {
+                    .modifier(ImageModifier(contentSize: CGSize(width: proxy.size.width, height: proxy.size.height)))
+                    .scaleEffect(finalAmount + currentAmount)
+                    .onLongPressGesture(minimumDuration: 0.1) {
                         let impact = UIImpactFeedbackGenerator(style: .heavy)
                         impact.impactOccurred()
                         withAnimation() {
                             showFullFlyer.toggle()
                         }
                     }
+                
             )
             .background(
                 ZStack {
-//                    Image(uiImage: viewModel.event.flyerImage)
+                    //                    Image(uiImage: viewModel.event.flyerImage)
                     Image("theta-chi-party-poster")
                         .resizable()
                         .aspectRatio(contentMode: .fill)
@@ -178,10 +151,9 @@ struct EventView: View {
                         .offset(y: scrollY > 0 ? -scrollY : 0)
                         .scaleEffect(scrollY > 0 ? scrollY / 500 + 1 : 1)
                         .blur(radius: scrollY > 0 ? scrollY / 20 : 0)
-                        .opacity(0.9                                    )
-                        .accessibility(hidden: true)
+                        .opacity(0.9)
                     
-                    Rectangle()
+                    Rectangle() 
                         .fill(Color.clear)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                         .backgroundBlur(radius: 10, opaque: true)
@@ -195,7 +167,7 @@ struct EventView: View {
                 VStack(alignment: .leading, spacing: 3) {
                     
                     HStack {
-//                        Text(viewModel.host.name)
+                        //                        Text(viewModel.host.name)
                         Text("MIT Theta Chi")
                             .font(.title3).bold()
                             .foregroundColor(.primary.opacity(0.7))
@@ -204,14 +176,14 @@ struct EventView: View {
                         
                         Spacer()
                         
-                        Text("Invite Only Event".capitalized)
+                        Text("Invite Only Party".capitalized)
                             .font(.title3).bold()
                             .foregroundColor(.primary.opacity(0.7))
-                            .lineLimit(1)
+                            .lineLimit(2)
                             .minimumScaleFactor(0.75)
                     }
                     
-//                    Text(viewModel.event.title)
+                    //                    Text(viewModel.event.title)
                     Text("Neon Party")
                         .font(.title).bold()
                         .foregroundColor(.primary)
@@ -226,6 +198,9 @@ struct EventView: View {
                             .font(.body.weight(.semibold))
                         
                         Spacer()
+                        
+                        
+                        
                         ShareLink(item: link, message: Text("Join this party!")) {
                             Image(systemName: "square.and.arrow.up")
                                 .resizable()
@@ -235,6 +210,27 @@ struct EventView: View {
                                 .padding(7)
                                 .background(.ultraThinMaterial)
                                 .backgroundStyle(cornerRadius: 18, opacity: 0.4)
+                            
+                        }
+                        
+                        Button {
+                            let impact = UIImpactFeedbackGenerator(style: .light)
+                            impact.impactOccurred()
+                            showingOptions.toggle()
+                        } label: {
+                            Image(systemName: "ellipsis")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(Color.white)
+                                .frame(width: 19, height: 19)
+                                .padding(7)
+                                .background(.ultraThinMaterial)
+                                .backgroundStyle(cornerRadius: 18, opacity: 0.4)
+                        }
+                        .confirmationDialog("Select an option", isPresented: $showingOptions, titleVisibility: .hidden) {
+                            Button("Report") {
+                                selection = "Green"
+                            }
                         }
                     }
                     .foregroundColor(.primary.opacity(0.7))
@@ -243,35 +239,37 @@ struct EventView: View {
                         .foregroundColor(.secondary)
                         .padding(.vertical, 4)
                     
-                    HStack(spacing: 30) {
-                                                
+                    HStack {
+                        
                         VStack(alignment: .leading) {
-                            Text("Friday, Jan 20")
+                            Text("Friday, January 20")
                                 .font(.title3.weight(.semibold))
-
+                            
                             Text("10:00 PM - 1:00 AM")
                                 .foregroundColor(.secondary)
                         }
-
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.75)
+                        
+                        Spacer()
+                        
                         VStack(alignment: .center) {
                             Image(systemName: "drop.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 22, height: 22)
-//                                .padding(10)
+                            //                                .padding(10)
                                 .background(.ultraThinMaterial)
                                 .backgroundStyle(cornerRadius: 10, opacity: 0.6)
                                 .cornerRadius(10)
-
-                            Text("Wet")
+                            
+                            Text("Wet Event")
                                 .foregroundColor(.secondary)
                         }
-                        
                     }
                     .font(.headline)
                 }
-//                    .padding(20)
-                    .padding(EdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20))
+                    .padding(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 15))
                     .background(
                         Rectangle()
                             .fill(.ultraThinMaterial)
@@ -281,9 +279,6 @@ struct EventView: View {
                     .padding(20)
                     .offset(y: 100)
             )
-            .overlay {
-                hostLogo
-            }
             .offset(y: scrollY > 0 ? -scrollY * 1.8 : 0)
         }
         .frame(height: 500)
@@ -291,13 +286,12 @@ struct EventView: View {
     
     var content: some View {
         VStack(alignment: .leading, spacing: 25) {
-
-
             Text("About this event")
                 .font(.title).bold()
                 .padding(.bottom, -10)
+            //                .offset(y: -200)
             
-//            Text(viewModel.event.description)
+            //            Text(viewModel.event.description)
             Text("Neon Party at Theta Chi, need we say more?")
                 .font(.headline)
                 .foregroundColor(.secondary)
@@ -307,13 +301,17 @@ struct EventView: View {
             
             VStack(alignment: .leading) {
                 HStack(spacing: 12) {
-                    PaddedImage(image: "clipboard.fill")
+                    PaddedImage(image: "person.fill")
                     
-                    VStack(alignment: .leading) {
-//                        Text("\(viewModel.event.inviteOnly)")
-                        Text("Invite Only")
-                    }
-                    .fontWeight(.semibold)
+                    Text("MIT Theta Chi Fraternity")
+                        .fontWeight(.semibold)
+                    
+                }
+                
+                HStack(spacing: 12) {
+                    PaddedImage(image: "clipboard.fill")
+                    Text("Invite Only Event")
+                        .fontWeight(.semibold)
                 }
                 
                 HStack(spacing: 12) {
@@ -321,7 +319,7 @@ struct EventView: View {
                     VStack(alignment: .leading) {
                         //                        Text("\(viewModel.event.startDate.formatDate(format: "EE, MMM d"))")
                         //                        Text("\(viewModel.event.startDate, style: .time) - \(viewModel.event.endDate, style: .time)")
-                        Text("Fri, Jan 20")
+                        Text("Friday, January 20")
                         Text("10:00 PM - 1:00 AM")
                             .foregroundColor(.secondary)
                     }
@@ -332,10 +330,10 @@ struct EventView: View {
                     PaddedImage(image: "mappin")
                     
                     VStack(alignment: .leading) {
-//                        Text("\(viewModel.host.name)")
+                        //                        Text("\(viewModel.host.name)")
                         Text("theta chi".capitalized)
                         
-//                        Text("\(viewModel.host.address)")
+                        //                        Text("\(viewModel.host.address)")
                         Text("528 Beacon St, Boston MA")
                             .foregroundColor(.secondary)
                     }
@@ -344,14 +342,14 @@ struct EventView: View {
                 HStack(spacing: 12) {
                     PaddedImage(image: "figure.dance")
                     
-//                    Text("Theme: \(viewModel.event.theme)")
+                    //                    Text("Theme: \(viewModel.event.theme)")
                     Text("Neon/Black light")
                 }
                 
                 HStack(spacing: 12) {
                     PaddedImage(image: "drop.fill")
                     
-//                    Text("\(viewModel.event.wetOrDry)")
+                    //                    Text("\(viewModel.event.wetOrDry)")
                     Text("Wet Party")
                 }
                 
@@ -362,34 +360,66 @@ struct EventView: View {
                 }
             }
             .font(.headline)
-
+            
             
             Text("Where you'll be")
                 .font(.title).bold()
             
             MapSnapshotView(location: coordinates)
                 .cornerRadius(12)
-    
+            
+            Text("Friends Attending")
+                .font(.title).bold()
+                .padding(.bottom)
+            
+            ForEach(Array(results.enumerated()), id: \.offset) { index, user in
+                if index != 0 { Divider() }
+                NavigationLink(destination: UserProfileView(user: user)) {
+                    HStack(spacing: 15) {
+                        Image(user.image)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .clipShape(Circle())
+                            .frame(width: 40, height: 40)
+                        
+                        VStack(alignment: .leading) {
+                            HStack {
+                                Text(user.name)
+                                    .font(.system(size: 18, weight: .semibold, design: .default))
+                                    .lineLimit(1)
+                                
+                                    .foregroundColor(.white)
+                                Text(user.school)
+                                    .font(.system(size: 18, weight: .semibold, design: .default))
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                    .padding(.vertical, -16)
+                }
+            }
+            
         }
         .padding()
+        .padding(.leading, 4)
+        .padding(.bottom, 100)
     }
     
-    var hostLogo: some View {
-//        LogoView(image: Image(uiImage: viewModel.host.universityImage))
-        LogoView(image: Image("2560px-MIT_logo.svg"))
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .padding(20)
-            .padding(.top, 30)
-            .ignoresSafeArea()
-    }
     var closeButton: some View {
         Button {
-            isAnimated ?
-            withAnimation(.closeCard) {
-                parentViewModel.showEventView.toggle()
-                parentViewModel.showNavigationBar.toggle()
+            if showFullFlyer {
+                withAnimation() {
+                    showFullFlyer.toggle()
+                }
+            } else {
+                isAnimated ?
+                withAnimation() {
+                    parentViewModel.showEventView.toggle()
+                    parentViewModel.showNavigationBar.toggle()
+                }
+                : presentationMode.wrappedValue.dismiss()
             }
-            : presentationMode.wrappedValue.dismiss()
+            
         } label: { XDismissButton() }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             .padding(20)
@@ -397,61 +427,72 @@ struct EventView: View {
             .ignoresSafeArea()
     }
     
-    var flyerCloseButton: some View {
-        Button {
-            withAnimation() {
-                showFullFlyer.toggle()
+    var results: [MockUser] {
+        return users
+    }
+    
+    
+    struct EventView_Previews: PreviewProvider {
+        @Namespace static var namespace
+        
+        static var previews: some View {
+            EventView(parentViewModel: ExplorePageViewModel())
+                .environmentObject(Model())
+        }
+    }
+    
+    
+    private struct Details: View {
+        var image: String
+        var text: String
+        
+        var body: some View {
+            HStack {
+                Image(systemName: image)
+                
+                Text(text)
+                    .font(.title3.weight(.semibold))
+                
             }
-        } label: { XDismissButton() }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-            .padding(.trailing)
-            .ignoresSafeArea()
+        }
     }
-}
-
-
-
-struct EventView_Previews: PreviewProvider {
-    @Namespace static var namespace
     
-    static var previews: some View {
-        EventView(parentViewModel: ExplorePageViewModel())
-            .environmentObject(Model())
+    
+    private struct PaddedImage: View {
+        var image: String
+        var body: some View {
+            HStack {
+                Image(systemName: image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 22, height: 22)
+                    .padding(10)
+                    .background(.ultraThinMaterial)
+                    .backgroundStyle(cornerRadius: 10, opacity: 0.6)
+                    .cornerRadius(10)
+                
+            }
+        }
     }
-}
-
-
-private struct Details: View {
-    var image: String
-    var text: String
     
-    var body: some View {
-        HStack {
-            Image(systemName: image)
-            
-            Text(text)
-                .font(.title3.weight(.semibold))
-            
+    private struct FlyerPopUpView: View {
+        var body: some View {
+            GeometryReader { proxy in
+                ZStack {
+                    Rectangle()
+                        .fill(Color.clear)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                        .backgroundBlur(radius: 10, opaque: true)
+                        .ignoresSafeArea()
+                    
+                    Image("theta-chi-party-poster")
+                        .resizable()
+                        .frame(width: 370, height: 435)
+                        .frame(width: proxy.size.width, height: proxy.size.height)
+                        .aspectRatio(contentMode: .fit)
+                        .modifier(ImageModifier(contentSize: CGSize(width: proxy.size.width, height: proxy.size.height)))
+                }
+            }
         }
     }
 }
-
-
-private struct PaddedImage: View {
-    var image: String
-    var body: some View {
-        HStack {
-            Image(systemName: image)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 22, height: 22)
-                .padding(10)
-                .background(.ultraThinMaterial)
-                .backgroundStyle(cornerRadius: 10, opacity: 0.6)
-                .cornerRadius(10)
-            
-        }
-    }
-}
-
-

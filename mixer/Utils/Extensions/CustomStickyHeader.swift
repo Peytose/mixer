@@ -33,14 +33,16 @@ struct CustomStickyStackView<Title: View,Content: View>: View {
             titleView
                 .font(.callout)
                 .lineLimit(1)
-                .frame(width: 40, height: .infinity, alignment: .topLeading)
-                .padding(.leading)
+                .frame(width: 40, alignment: .topLeading)
+                .frame(maxHeight: .infinity)
+                .padding(.horizontal, 6)
                 .background(Color.mixerBackground)
                 .zIndex(1)
             
             VStack {
                 contentView
-                    .padding(.horizontal, 10)
+//                    .padding(.horizontal, 10)
+                    .padding(.trailing, 6)
                     .padding(.vertical, 5)
             }
             .background(Color.mixerBackground)

@@ -24,25 +24,40 @@ struct EventCard: View {
                     .fill(Color.mixerBackground)
                     .ignoresSafeArea()
                     .overlay {
-                        VStack {
+                        VStack(alignment: .center, spacing: 8) {
                             //                            Text(event.startDate.formatDate(format: "MMM").capitalized)
-                            Text("Jan")
-                                .font(.title3.weight(.semibold))
-                                .foregroundColor(.secondary)
+                            VStack {
+                                Text("Jan")
+                                    .font(.headline.weight(.regular))
+                                    .foregroundColor(.secondary)
+                                
+                                Text("24")
+                                    .font(.title.weight(.bold))
+                            }
                             
                             //                            Text(event.startDate.formatDate(format: "d"))
-                            Text("24")
-                                .font(.title2.weight(.bold))
+                            
                             
                             //                            LogoView(image: Image(uiImage: host.universityImage), padding: 6)
-                            Image("mit-logo")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 26, height: 26)
-                                .cornerRadius(10)
-                                .padding(6)
-                                .background(.ultraThinMaterial)
-                                .backgroundStyle(cornerRadius: 18, opacity: 0.4)
+//                            Image("mit-logo")
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fit)
+//                                .frame(width: 26, height: 26)
+//                                .cornerRadius(10)
+//                                .padding(6)
+//                                .background(.ultraThinMaterial)
+//                                .backgroundStyle(cornerRadius: 18, opacity: 0.4)
+                            VStack(spacing: 2) {
+//                                Text("MIT")
+//                                    .font(.title3.weight(.bold))
+//                                    .foregroundColor(.secondary)
+                                
+                                Text("Wet")
+                                    .font(.title3.weight(.bold))
+                                    .minimumScaleFactor(0.9)
+                            }
+                            
+                            
                         }
                         .padding(.top, 10)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -63,7 +78,7 @@ struct EventCard: View {
                         //                            .matchedGeometryEffect(id: "description1", in: namespace)
                         
                         //                        Text(event.title)
-                        HStack {
+                        HStack(alignment: .bottom) {
                             Text("Neon Party")
                                 .font(.title).bold()
                                 .lineLimit(2)
@@ -75,10 +90,10 @@ struct EventCard: View {
                              Spacer()
                             
                             Text("Friday, 10:00 PM")
-                                .font(.title2.weight(.semibold))
+                                .font(.title3.weight(.semibold))
                                 .foregroundColor(.secondary)
-                                .minimumScaleFactor(0.5)
-                                .lineLimit(2)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.75)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -115,17 +130,17 @@ struct EventCard: View {
                         .matchedGeometryEffect(id: "description5", in: namespace)
                     
                 )
-                VStack(alignment: .leading, spacing: 20) {
+                VStack(alignment: .leading, spacing: 10) {
                     HStack(spacing: 20) {
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text("Party")
-                                .font(.title.weight(.semibold))
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("MIT Party")
+                                .font(.title2.weight(.semibold))
 //                                .foregroundColor(Color.mixerIndigo)
                                 .minimumScaleFactor(0.75)
                                 .matchedGeometryEffect(id: "description1", in: namespace)
                             
                             Text("By MIT Theta Chi")
-                                .font(.footnote.weight(.semibold))
+                                .font(.footnote)
                                 .foregroundColor(.secondary)
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.3)
@@ -135,38 +150,45 @@ struct EventCard: View {
                         
                         Spacer()
                         
-                        VStack(spacing: 5) {
+                        VStack(spacing: 6) {
                             Image(systemName: "person.3.fill")
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 18, height: 18)
                                 .symbolRenderingMode(.hierarchical)
-                                .imageScale(.large)
                             
                             Text("156 Going")
-                                .font(.footnote.weight(.semibold))
+                                .font(.footnote)
                                 .foregroundColor(.secondary)
+                                .offset(y: 1)
                         }
-                        .padding(.bottom, -8)
-                        
-                        Button {
-                            
-                        } label: {
-                            VStack(spacing: 5) {
-                                Image(systemName: "bell")
-                                    .imageScale(.large)
+//                        .padding(.bottom, -8)
+
+                        ShareLink(item: link) {
+                            VStack(spacing: 6) {
+                                Image(systemName: "square.and.arrow.up")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 18, height: 18)
                                 
-                                Text("Remind Me")
-                                    .font(.footnote.weight(.semibold))
+                                
+                                Text("Share Event")
+                                    .font(.footnote)
                                     .foregroundColor(.secondary)
+                                    .offset(y: 1)
+
                             }
-                            .padding(.bottom, -8)
+//                            .padding(.bottom, -8)
                         }
                         .buttonStyle(.plain)
                     }
                         //                    Text("Hosted by \(host.name.capitalized)")
                         Text("Neon Party at Theta Chi this Friday night, need we say more?")
-                            .font(.subheadline.weight(.semibold))
-                            .foregroundColor(.secondary)
+                            .font(.subheadline)
+                            .foregroundColor(.white.opacity(0.7))
                             .lineLimit(3)
                             .minimumScaleFactor(0.75)
+                            .frame(maxWidth: .infinity, alignment: .leading)
 
                 }
                 .padding(.trailing)

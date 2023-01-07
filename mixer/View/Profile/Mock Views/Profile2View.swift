@@ -10,9 +10,6 @@ import SwiftUI
 
 
 struct UserProfilePrototypeView: View {
-    init() {
-        UINavigationBar.changeAppearance(clear: true)
-    }
     
     enum ProfilePrototypeContext: String, CaseIterable {
         case current = "Going to"
@@ -73,13 +70,13 @@ struct UserProfilePrototypeView: View {
                                 Section(content: {
                                     if profileContext == .current {
                                         ForEach((1...3).reversed(), id: \.self) { event in
-                                            EventCard(namespace: namespace)         .frame(height: 200)
+                                            EventCard(namespace: namespace)         .frame(height: 380)
                                                 .padding(.horizontal, -10)
                                                 .offset(y: 100)
                                         }
                                     } else {
                                         ForEach((1...15).reversed(), id: \.self) { event in
-                                            EventCard(namespace: namespace)         .frame(height: 200)
+                                            EventCard(namespace: namespace)         .frame(height: 380)
                                                 .padding(.horizontal, -10)
                                                 .offset(y: 100)
                                         }                                }
@@ -225,21 +222,5 @@ private struct PaddedImage: View {
                 .background(.ultraThinMaterial)
                 .backgroundStyle(cornerRadius: 10, opacity: 0.5)
         }
-    }
-}
-
-extension UINavigationBar {
-    static func changeAppearance(clear: Bool) {
-        let appearance = UINavigationBarAppearance()
-        
-        if clear {
-            appearance.configureWithTransparentBackground()
-        } else {
-            appearance.configureWithDefaultBackground()
-        }
-        
-        UINavigationBar.appearance().standardAppearance = appearance
-        UINavigationBar.appearance().compactAppearance = appearance
-        UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
 }

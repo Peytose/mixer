@@ -124,13 +124,17 @@ fileprivate struct UserQRCodeButton: View {
 }
 
 
-fileprivate struct BlurredStatusBar: View {
+struct BlurredStatusBar: View {
+    var height: CGFloat = 50
+    var color: Color = Color.clear
+    var blurRadius: CGFloat = 5
     var body: some View {
         VStack {
             Rectangle()
-                .fill(Color.clear)
-                .frame(maxWidth: .infinity, maxHeight: 50, alignment: .top)
-                .backgroundBlur(radius: 5, opaque: true)
+                .fill(color)
+                .frame(maxWidth: .infinity, maxHeight: height, alignment: .top)
+                .backgroundBlur(radius: blurRadius, opaque: true)
+                .blur(radius: 2)
                 .ignoresSafeArea()
             
             Spacer()

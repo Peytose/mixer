@@ -10,8 +10,15 @@ import CloudKit
 import SwiftUI
 
 enum ExploreContext: String, CaseIterable {
-    case current = "Currently Throwing"
+    case current = "Happening Today"
     case upcoming = "Upcoming Events"
+}
+
+
+final class EventManager: ObservableObject {
+    @Published var events: [MockEvent] = []
+    @Published var currentEvents: [MockEvent] = []
+    var selectedEvent: MockEvent?
 }
 
 final class ExplorePageViewModel: ObservableObject {
@@ -21,6 +28,7 @@ final class ExplorePageViewModel: ObservableObject {
     @Published var contentHasScrolled = false
     @Published var showCurrentEvent = false
     @Published var expandMenu = false
+    @Published var isRefreshing = false
     @Published var showNavigationBar = true
     @Namespace private var namespace
     @Published var exploreContext: ExploreContext = .current
@@ -33,15 +41,16 @@ final class ExplorePageViewModel: ObservableObject {
                     VStack(spacing: 8) {
 
                         Text(context.rawValue)
-                            .font(.headline)
-                            .fontWeight(.semibold)
+                            .font(.title3.weight(.semibold))
                             .foregroundColor(exploreContext == context ? .white : .gray)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.75)
 
                         ZStack{
                             if exploreContext == context {
                                 RoundedRectangle(cornerRadius: 4, style: .continuous)
                                     .fill(Color.mixerIndigo)
-                                    .matchedGeometryEffect(id: "TAB", in: animation)
+//                                    .matchedGeometryEffect(id: "TAB", in: animation)
                             }
                             else {
                                 RoundedRectangle(cornerRadius: 4, style: .continuous)
