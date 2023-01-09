@@ -9,20 +9,15 @@ import SwiftUI
 import MapKit
 
 struct EventView: View {
-    @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var model: Model
     @StateObject var parentViewModel: ExplorePageViewModel
-    @State var appear = [false, false, false]
-    var isAnimated = true
+    @State private var appear = [false, false, false]
     @State private var showingOptions = false
-    @State private var selection = "None"
-    @State var showFullFlyer = false
-    @Namespace var namespace
-    
+    @State private var showFullFlyer = false
     @State private var currentAmount = 0.0
     @State private var finalAmount = 1.0
     
+    @Namespace var namespace
+
     let coordinates = CLLocationCoordinate2D(latitude: 42.3507046, longitude: -71.0909822)
     let link = URL(string: "https://mixer.llc")!
     
@@ -34,10 +29,7 @@ struct EventView: View {
                         cover
                         
                         content
-                            .padding(.vertical, 80)
-                        //                HostOrganizationView()
                     }
-//                    .padding(.bottom, 120)
                     .coordinateSpace(name: "scroll")
                     .background(Color.mixerBackground)
                     .ignoresSafeArea()
@@ -49,40 +41,33 @@ struct EventView: View {
                     }
                     
                 }
-                .zIndex(1)
                 .preferredColorScheme(.dark)
                 .onAppear { fadeIn() }
-                
-//                .customPopupView(isPresented: $showFullFlyer, popupView: { FlyerPopUpView() })
-                .overlay{
+                .overlay {
                     closeButton
                 }
                 .overlay(alignment: .bottom) {
-                    HStack(spacing: -5) {
-                        Button(action: {
-                            let impact = UIImpactFeedbackGenerator(style: .light)
-                            impact.impactOccurred()
+                    Button(action: {
+                        let impact = UIImpactFeedbackGenerator(style: .light)
+                        impact.impactOccurred()
+                    }, label: {
+                        HStack {
+                            Image(systemName: "list.clipboard")
+                                .imageScale(.large)
                             
-                        }, label: {
-                            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                .fill(Color.mixerPurpleGradient)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 55)
-                                .padding(.horizontal, 10)
-                        })
-                        .overlay {
-                            HStack {
-                                Image(systemName: "list.clipboard")
-                                    .imageScale(.large)
-                                    .foregroundColor(.white)
-                                
-                                Text("Get On The Guest List")
-                                    .font(.title3.weight(.semibold))
-                            }
+                            Text("Get On The Guest List")
+                                .font(.title3.weight(.semibold))
                         }
-                    }
-                    .padding(.bottom, 10)
-                    .opacity(showFullFlyer ? 0 : 1)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background {
+                            Capsule()
+                                .fill(Color.mixerPurpleGradient)
+                        }
+                        .padding(.bottom, 10)
+                        .opacity(showFullFlyer ? 0 : 1)
+                        
+                    })
                 }
             }
         }
@@ -113,26 +98,24 @@ struct EventView: View {
             let scrollY = proxy.frame(in: .named("scroll")).minY
             
             VStack {
-                Spacer()
             }
             .frame(maxWidth: .infinity)
-            .frame(height: scrollY > 0 ? 500 + scrollY : 500)
+            .frame(height: scrollY > 0 ? 500 + scrollY : 500)  //MARK: Change Flyer Height
             .background(
-                //                Image(uiImage: viewModel.event.flyerImage)
                 Image("theta-chi-party-poster")
                     .resizable()
                     .frame(width: proxy.size.width, height: proxy.size.height)
                     .aspectRatio(contentMode: .fit)
                     .matchedGeometryEffect(id: "background 1", in: namespace)
                     .offset(y: scrollY > 0 ? -scrollY : 0)
-                    .accessibility(hidden: true)
                     .mask(
                         RoundedRectangle(cornerRadius: 20)
-                            .frame(width: 370, height: 435)
+                            .frame(width: proxy.size.width - 40, height: proxy.size.height - 50)
                     )
+                    .scaleEffect(scrollY > 0 ? scrollY / 500 + 1 : 1)
                     .modifier(ImageModifier(contentSize: CGSize(width: proxy.size.width, height: proxy.size.height)))
                     .scaleEffect(finalAmount + currentAmount)
-                    .onLongPressGesture(minimumDuration: 0.1) {
+                    .onLongPressGesture(minimumDuration: 0.5) {
                         let impact = UIImpactFeedbackGenerator(style: .heavy)
                         impact.impactOccurred()
                         withAnimation() {
@@ -143,7 +126,6 @@ struct EventView: View {
             )
             .background(
                 ZStack {
-                    //                    Image(uiImage: viewModel.event.flyerImage)
                     Image("theta-chi-party-poster")
                         .resizable()
                         .aspectRatio(contentMode: .fill)
@@ -153,7 +135,7 @@ struct EventView: View {
                         .blur(radius: scrollY > 0 ? scrollY / 20 : 0)
                         .opacity(0.9)
                     
-                    Rectangle() 
+                    Rectangle()
                         .fill(Color.clear)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                         .backgroundBlur(radius: 10, opaque: true)
@@ -165,9 +147,7 @@ struct EventView: View {
             )
             .overlay(
                 VStack(alignment: .leading, spacing: 3) {
-                    
                     HStack {
-                        //                        Text(viewModel.host.name)
                         Text("MIT Theta Chi")
                             .font(.title3).bold()
                             .foregroundColor(.primary.opacity(0.7))
@@ -183,7 +163,6 @@ struct EventView: View {
                             .minimumScaleFactor(0.75)
                     }
                     
-                    //                    Text(viewModel.event.title)
                     Text("Neon Party")
                         .font(.title).bold()
                         .foregroundColor(.primary)
@@ -229,7 +208,6 @@ struct EventView: View {
                         }
                         .confirmationDialog("Select an option", isPresented: $showingOptions, titleVisibility: .hidden) {
                             Button("Report") {
-                                selection = "Green"
                             }
                         }
                     }
@@ -401,8 +379,8 @@ struct EventView: View {
             
         }
         .padding()
-        .padding(.leading, 4)
-        .padding(.bottom, 100)
+        .padding(EdgeInsets(top: 80, leading: 0, bottom: 180, trailing: 0))
+        
     }
     
     var closeButton: some View {
@@ -412,12 +390,10 @@ struct EventView: View {
                     showFullFlyer.toggle()
                 }
             } else {
-                isAnimated ?
                 withAnimation() {
                     parentViewModel.showEventView.toggle()
                     parentViewModel.showNavigationBar.toggle()
                 }
-                : presentationMode.wrappedValue.dismiss()
             }
             
         } label: { XDismissButton() }
@@ -437,7 +413,7 @@ struct EventView: View {
         
         static var previews: some View {
             EventView(parentViewModel: ExplorePageViewModel())
-                .environmentObject(Model())
+            //                .environmentObject(Model())
         }
     }
     
