@@ -18,9 +18,11 @@ struct EventView: View {
     @State private var finalAmount = 1.0
     @State private var showHost = false
     @Binding var tabBarVisibility: TabBarVisibility
-
+    
     @Namespace var namespace
     
+    var event: MockEvent
+
     let coordinates = CLLocationCoordinate2D(latitude: 42.3507046, longitude: -71.0909822)
     let link = URL(string: "https://mixer.llc")!
     
@@ -86,7 +88,7 @@ struct EventView: View {
                             Button(action: {
                                 showHost.toggle()
                             }, label: {
-                                Text("MIT Theta Chi")
+                                Text(event.hostName)
                                     .font(.title3).bold()
                                     .foregroundColor(.primary.opacity(0.7))
                                     .lineLimit(1)
@@ -95,14 +97,14 @@ struct EventView: View {
                             
                             Spacer()
                             
-                            Text("Invite Only Party".capitalized)
+                            Text("\(event.visibility) Party".capitalized)
                                 .font(.title3).bold()
                                 .foregroundColor(.primary.opacity(0.7))
                                 .lineLimit(2)
                                 .minimumScaleFactor(0.75)
                         }
                         
-                        Text("Neon Party")
+                        Text(event.title)
                             .font(.title).bold()
                             .foregroundColor(.primary)
                             .lineLimit(1)
@@ -112,7 +114,7 @@ struct EventView: View {
                             Image(systemName: "person.3.fill")
                                 .symbolRenderingMode(.hierarchical)
                             
-                            Text("156 going")
+                            Text("\(event.attendance) going")
                                 .font(.body.weight(.semibold))
                             
                             Spacer()
@@ -159,10 +161,10 @@ struct EventView: View {
                         HStack {
                             
                             VStack(alignment: .leading) {
-                                Text("Friday, January 20")
+                                Text(event.date)
                                     .font(.title3.weight(.semibold))
                                 
-                                Text("10:00 PM - 1:00 AM")
+                                Text(event.duration)
                                     .foregroundColor(.secondary)
                             }
                             .lineLimit(1)
@@ -179,7 +181,7 @@ struct EventView: View {
                                     .backgroundStyle(cornerRadius: 10, opacity: 0.6)
                                     .cornerRadius(10)
                                 
-                                Text("Wet Event")
+                                Text("\(event.wetOrDry) Event")
                                     .foregroundColor(.secondary)
                             }
                         }
@@ -197,13 +199,8 @@ struct EventView: View {
                         .offset(y: 100)
                         .background(
                             ZStack {
-                                Rectangle()
-                                    .fill(Color.clear)
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                                    .backgroundBlur(radius: 10, opaque: true)
-                                    .ignoresSafeArea()
                                 
-                                    Image("theta-chi-party-poster")
+                                Image(event.flyer)
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                         .matchedGeometryEffect(id: "background 2", in: namespace)
@@ -214,8 +211,16 @@ struct EventView: View {
                                         .mask(
                                             RoundedRectangle(cornerRadius: 20)
                                         )
+                                                                        
+                                Rectangle()
+                                    .fill(Color.clear)
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                                    .backgroundBlur(radius: 10, opaque: true)
+                                    .mask(
+                                        RoundedRectangle(cornerRadius: 20)
+                                    )
                                     
-                                Image("theta-chi-party-poster")
+                                Image(event.flyer)
                                     .resizable()
                                     .frame(width: proxy.size.width, height: proxy.size.height)
                                     .aspectRatio(contentMode: .fit)
@@ -252,10 +257,8 @@ struct EventView: View {
             Text("About this event")
                 .font(.title).bold()
                 .padding(.bottom, -10)
-            //                .offset(y: -200)
-            
-            //            Text(viewModel.event.description)
-            Text("Neon Party at Theta Chi, need we say more?")
+
+            Text(event.description)
                 .font(.headline)
                 .foregroundColor(.secondary)
             
@@ -274,7 +277,7 @@ struct EventView: View {
                                 .fontWeight(.semibold)
                                 .foregroundColor(.secondary) +
                             
-                            Text("MIT Theta Chi")
+                            Text(event.fullHostName)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.primary)
                         }
@@ -283,17 +286,15 @@ struct EventView: View {
                 
                 HStack(spacing: 12) {
                     PaddedImage(image: "clipboard.fill")
-                    Text("Invite Only Event")
+                    Text("\(event.visibility) Event")
                         .fontWeight(.semibold)
                 }
                 
                 HStack(spacing: 12) {
                     PaddedImage(image: "calendar")
                     VStack(alignment: .leading) {
-                        //                        Text("\(viewModel.event.startDate.formatDate(format: "EE, MMM d"))")
-                        //                        Text("\(viewModel.event.startDate, style: .time) - \(viewModel.event.endDate, style: .time)")
-                        Text("Friday, January 20")
-                        Text("10:00 PM - 1:00 AM")
+                        Text(event.date)
+                        Text(event.duration)
                             .foregroundColor(.secondary)
                     }
                     .fontWeight(.semibold)
@@ -301,27 +302,27 @@ struct EventView: View {
                 
                 HStack(spacing: 12) {
                     PaddedImage(image: "mappin")
-                    
-                    VStack(alignment: .leading) {
-                        //                        Text("\(viewModel.host.name)")
-                        Text("theta chi".capitalized)
-                        
-                        //                        Text("\(viewModel.host.address)")
-                        Text("528 Beacon St, Boston MA")
-                            .foregroundColor(.secondary)
-                    }
+                    Button(action: {
+                        let latitude = 42.3507046
+                        let longitude = -71.0909822
+                        let url = URL(string: "maps://?saddr=&daddr=\(latitude),\(longitude)")
+                        if UIApplication.shared.canOpenURL(url!) {
+                            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+                        }
+                    }, label: {
+                        Text("\(event.address)")
+                            .foregroundColor(.blue)
+                    })
                 }
                 
                 HStack(spacing: 12) {
                     PaddedImage(image: "figure.dance")
-                    
-                    //                    Text("Theme: \(viewModel.event.theme)")
                     HStack {
                         Text("Event Theme: ")
                             .fontWeight(.semibold)
                             .foregroundColor(.secondary) +
                         
-                        Text("Neon/Black light")
+                        Text(event.theme)
                             .fontWeight(.semibold)
                             .foregroundColor(.primary)
                     }
@@ -330,14 +331,13 @@ struct EventView: View {
                 HStack(spacing: 12) {
                     PaddedImage(image: "drop.fill")
                     
-                    //                    Text("\(viewModel.event.wetOrDry)")
-                    Text("Wet Party")
+                    Text("\(event.wetOrDry) Party")
                 }
                 
                 HStack(spacing: 12) {
                     PaddedImage(image: "tshirt.fill")
                     
-                    Text("General Party Clothes (Wear neon if possible)")
+                    Text(event.attireDescription)
                 }
             }
             .font(.headline)
@@ -353,7 +353,7 @@ struct EventView: View {
                 .font(.title).bold()
                 .padding(.bottom)
             
-            ForEach(Array(results.enumerated()), id: \.offset) { index, user in
+            ForEach(Array(results.enumerated().prefix(9)), id: \.offset) { index, user in
                 if index != 0 { Divider() }
                 NavigationLink(destination: UserProfileView(user: user)) {
                     HStack(spacing: 15) {
@@ -382,8 +382,7 @@ struct EventView: View {
             
         }
         .padding()
-        .padding(EdgeInsets(top: 80, leading: 0, bottom: 150, trailing: 0))
-        
+        .padding(EdgeInsets(top: 80, leading: 0, bottom: 130, trailing: 0))
     }
     
     var closeButton: some View {
@@ -434,11 +433,10 @@ struct EventView: View {
         return users
     }
     
-    
     struct EventView_Previews: PreviewProvider {
         @Namespace static var namespace
         static var previews: some View {
-            EventView(parentViewModel: ExplorePageViewModel(), tabBarVisibility: .constant(.visible))
+            EventView(parentViewModel: ExplorePageViewModel(), tabBarVisibility: .constant(.visible), event: events[1])
                 .preferredColorScheme(.dark)
         }
     }

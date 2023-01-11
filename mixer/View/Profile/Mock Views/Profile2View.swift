@@ -15,6 +15,10 @@ struct UserProfilePrototypeView: View {
         case current = "Going to"
         case upcoming = "Events attended"
     }
+    
+    var event: [MockEvent] {
+        return events
+    }
 
     @State var shareUsername = false
     @State var profileContext: ProfilePrototypeContext = .current
@@ -64,22 +68,29 @@ struct UserProfilePrototypeView: View {
                                 
                             }
                             .font(.headline.weight(.semibold))
-                            .padding(.bottom, -70)
+                            .padding(.bottom, -80)
                             
                             LazyVStack(pinnedViews: [.sectionHeaders]) {
                                 Section(content: {
                                     if profileContext == .current {
-                                        ForEach((1...3).reversed(), id: \.self) { event in
-                                            EventCard(namespace: namespace)         .frame(height: 380)
-                                                .padding(.horizontal, -10)
-                                                .offset(y: 100)
+                                        ForEach(Array(events.enumerated().prefix(3)), id: \.offset) { index, event in
+                                            LazyVGrid(columns: [GridItem(.adaptive(minimum: 300), spacing: 20)]) {
+                                                EventCard(event: event, namespace: namespace)
+                                                    .frame(height: 380)
+                                                    .padding(.horizontal, -15)
+                                                    .offset(y: 100)
+                                            }
                                         }
                                     } else {
-                                        ForEach((1...15).reversed(), id: \.self) { event in
-                                            EventCard(namespace: namespace)         .frame(height: 380)
-                                                .padding(.horizontal, -10)
-                                                .offset(y: 100)
-                                        }                                }
+                                        ForEach(Array(events.enumerated().prefix(0)), id: \.offset) { index, event in
+                                            LazyVGrid(columns: [GridItem(.adaptive(minimum: 300), spacing: 20)]) {
+                                                EventCard(event: event, namespace: namespace)
+                                                    .frame(height: 380)
+                                                    .padding(.horizontal, -15)
+                                                    .offset(y: 100)
+                                            }
+                                        }
+                                    }
                                 }, header: {
                                     HStack {
                                         ForEach(ProfilePrototypeContext.allCases, id: \.self) { [self] context in
@@ -117,6 +128,7 @@ struct UserProfilePrototypeView: View {
                         .padding(.horizontal)
                     }
                     .frame(maxHeight: .infinity, alignment: .top)
+                    .padding(.bottom, 200)
                 }
             }
             .ignoresSafeArea()

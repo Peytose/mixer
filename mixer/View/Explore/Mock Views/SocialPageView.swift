@@ -10,10 +10,16 @@ import TabBar
 
 struct ExplorePageView: View {
     @StateObject private var viewModel = ExplorePageViewModel()
+    @StateObject private var eventManager = EventManager()
+
     @EnvironmentObject var model: Model
     @Namespace var namespace
     @Binding var tabBarVisibility: TabBarVisibility
-
+    
+    var event: [MockEvent] {
+        return events
+    }
+    
     var body: some View {
             ZStack {
                 Rectangle()
@@ -120,29 +126,34 @@ struct ExplorePageView: View {
                         LazyVStack(pinnedViews: [.sectionHeaders]) {
                             Section(content: {
                                 if viewModel.exploreContext == .current {
-                                    
-                                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 300), spacing: 20)]) {
-                                        EventCard(namespace: namespace)
-                                            .frame(height: 380)
-                                            .onTapGesture {
-                                                withAnimation(.openCard) {
-                                                    viewModel.showEventView = true
-                                                    viewModel.showNavigationBar = false
-                                                    tabBarVisibility = .invisible
+                                    ForEach(Array(events.enumerated().prefix(2)), id: \.offset) { index, event in
+                                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 300), spacing: 20)]) {
+                                            EventCard(event: event, namespace: namespace)
+                                                .frame(height: 380)
+                                                .onTapGesture {
+                                                    withAnimation(.openCard) {
+                                                        viewModel.showEventView = true
+                                                        viewModel.showNavigationBar = false
+                                                        eventManager.selectedEvent = event
+                                                        tabBarVisibility = .invisible
+                                                    }
                                                 }
-                                            }
+                                        }
                                     }
                                 } else {
-                                    ForEach((1...4).reversed(), id: \.self) { event in
-                                        EventCard(namespace: namespace)
-                                            .frame(height: 380)
-                                            .onTapGesture {
-                                                withAnimation(.openCard) {
-                                                    viewModel.showEventView = true
-                                                    viewModel.showNavigationBar = false
-                                                    tabBarVisibility = .invisible
+                                    ForEach(Array(events.enumerated()), id: \.offset) { index, event in
+                                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 300), spacing: 20)]) {
+                                            EventCard(event: event, namespace: namespace)
+                                                .frame(height: 380)
+                                                .onTapGesture {
+                                                    withAnimation(.openCard) {
+                                                        viewModel.showEventView = true
+                                                        viewModel.showNavigationBar = false
+                                                        eventManager.selectedEvent = event
+                                                        tabBarVisibility = .invisible
+                                                    }
                                                 }
-                                            }
+                                        }
                                     }
                                 }
                             }, header: {
@@ -157,9 +168,8 @@ struct ExplorePageView: View {
                 .padding(.top, 40)
                 .coordinateSpace(name: "scroll")
                 
-                
                 if viewModel.showEventView {
-                    EventView(parentViewModel: viewModel, tabBarVisibility: $tabBarVisibility)
+                    EventView(parentViewModel: viewModel, tabBarVisibility: $tabBarVisibility, event: eventManager.selectedEvent!)
                         .transition(.move(edge: .bottom).combined(with: .scale(scale: 1.3)))
                         .zIndex(2)
                 }

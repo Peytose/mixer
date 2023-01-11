@@ -34,7 +34,7 @@ struct MainTabView: View {
             }
         }
     }
-    @State private var selection: Item = .first
+    @State private var selection: Item = .second
     @State private var visibility: TabBarVisibility = .visible
     
     var body: some View {
@@ -53,7 +53,7 @@ struct MainTabView: View {
             UserProfilePrototypeView()
                 .tabItem(for: Item.fourth)
         }
-        .tabBar(style: CustomTabBarStyle(height: selection == .second ? 250 : 300))
+        .tabBar(style: CustomTabBarStyle(height: selection == .second ? 300 : 370))
         .tabItem(style: CustomTabItemStyle())
         .preferredColorScheme(.dark)
     }

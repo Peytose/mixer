@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct EventCard: View {
+    @EnvironmentObject var model: Model
 
+    var event: MockEvent
     var namespace: Namespace.ID
     let link = URL(string: "https://mixer.llc")!
 
-    @EnvironmentObject var model: Model
-
     var body: some View {
         CustomStickyStackView {
-
             Label {
                 Rectangle()
                     .fill(Color.mixerBackground)
@@ -24,19 +23,19 @@ struct EventCard: View {
                     .overlay {
                         VStack(alignment: .center, spacing: 8) {
                             VStack {
-                                Text("Jan")
+                                Text(event.stickyMonth)
                                     .font(.headline.weight(.regular))
                                     .foregroundColor(.secondary)
 
-                                Text("24")
+                                Text(event.stickyDay)
                                     .font(.title.weight(.bold))
                             }
 
-                            VStack(spacing: 2) {
-                                Text("Wet")
-                                    .font(.title3.weight(.bold))
-                                    .minimumScaleFactor(0.9)
-                            }
+//                            VStack(spacing: 2) {
+//                                Text(event.wetOrDry)
+//                                    .font(.title3.weight(.bold))
+//                                    .minimumScaleFactor(0.9)
+//                            }
                         }
                         .padding(.top, 10)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -50,20 +49,20 @@ struct EventCard: View {
                     
                     VStack(alignment: .leading, spacing: 0) {
                         HStack(alignment: .center) {
-                            Text("Neon Party")
+                            Text(event.title)
                                 .font(.title).bold()
-                                .lineLimit(2)
-                                .minimumScaleFactor(0.75)
                                 .foregroundColor(.white)
+                                .lineLimit(2)
 
                              Spacer()
 
-                            Text("Friday, 10:00 PM")
+                            Text(event.shortDate)
                                 .font(.title3.weight(.semibold))
                                 .foregroundColor(.secondary)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.75)
+                                .lineLimit(2)
                         }
+                        .minimumScaleFactor(0.75)
+
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 15)
@@ -81,7 +80,7 @@ struct EventCard: View {
                     )
                 }
                 .background(
-                    Image("theta-chi-party-poster")
+                    Image(event.flyer)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                 )
@@ -92,11 +91,11 @@ struct EventCard: View {
                 VStack(alignment: .leading, spacing: 10) {
                     HStack(spacing: 20) {
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("MIT Party")
+                            Text("\(event.wetOrDry) \(event.type)")
                                 .font(.title2.weight(.semibold))
                                 .minimumScaleFactor(0.75)
 
-                            Text("By MIT Theta Chi")
+                            Text("By \(event.hostName)")
                                 .font(.footnote)
                                 .foregroundColor(.secondary)
                                 .lineLimit(1)
@@ -114,7 +113,7 @@ struct EventCard: View {
                                 .frame(width: 18, height: 18)
                                 .symbolRenderingMode(.hierarchical)
                             
-                            Text("156 Going")
+                            Text("\(event.attendance) Going")
                                 .font(.footnote)
                                 .foregroundColor(.secondary)
                                 .offset(y: 1)
@@ -131,13 +130,12 @@ struct EventCard: View {
                                     .font(.footnote)
                                     .foregroundColor(.secondary)
                                     .offset(y: 1)
-                                
                             }
                         }
                         .buttonStyle(.plain)
                     }
                     
-                    Text("Neon Party at Theta Chi this Friday night, need we say more?")
+                    Text(event.description)
                         .font(.subheadline)
                         .foregroundColor(.white.opacity(0.7))
                         .lineLimit(3)
@@ -153,7 +151,7 @@ struct RandomItem_Previews: PreviewProvider {
     @Namespace static var namespace
 
     static var previews: some View {
-        EventCard(namespace: namespace)
+        EventCard(event: events[1], namespace: namespace)
             .environmentObject(Model())
     }
 }
