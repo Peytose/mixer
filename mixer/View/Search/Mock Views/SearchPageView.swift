@@ -15,37 +15,35 @@ struct SearchPageView: View {
 //    @EnvironmentObject private var hostManager: HostManager
     
     var body: some View {
-        NavigationView {
-            ScrollView {
-                ZStack {
-                    Color.mixerBackground
-                        .ignoresSafeArea()
-                        
-                    Image("Blob 1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 300, height: 300, alignment: .top)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                        .opacity(0.8)
-                        .offset(x: -40, y: -355)
-                        .ignoresSafeArea()
-                        .zIndex(0)
-                    
-                    content
-                        .padding(.top, 10)
-                }
-                .navigationTitle("Search Mixer")
-                .navigationBarTitleDisplayMode(.large)
-                .searchable(text: $text, prompt: "Search Users") {
-                    ForEach(suggestions) { suggestion in
-                            Text(suggestion.text)
-                                .searchCompletion(suggestion.text)
-                    }
-                }
-            .preferredColorScheme(.dark)
+        ScrollView {
+            ZStack {
+                Color.mixerBackground
+                    .ignoresSafeArea()
+                
+                Image("Blob 1")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 300, height: 300, alignment: .top)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                    .opacity(0.8)
+                    .offset(x: -40, y: -355)
+                    .ignoresSafeArea()
+                    .zIndex(0)
+                
+                content
+                    .padding(.top, 10)
             }
-            .background(Color.mixerBackground)
+            .navigationTitle("Search Mixer")
+            .navigationBarTitleDisplayMode(.large)
+            .searchable(text: $text, prompt: "Search Users") {
+                ForEach(suggestions) { suggestion in
+                    Text(suggestion.text)
+                        .searchCompletion(suggestion.text)
+                }
+            }
+            .preferredColorScheme(.dark)
         }
+        .background(Color.mixerBackground)
         .accentColor(.white)
         
     }

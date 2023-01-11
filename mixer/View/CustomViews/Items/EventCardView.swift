@@ -78,7 +78,7 @@ struct EventCard: View {
                         //                            .matchedGeometryEffect(id: "description1", in: namespace)
                         
                         //                        Text(event.title)
-                        HStack(alignment: .bottom) {
+                        HStack(alignment: .center) {
                             Text("Neon Party")
                                 .font(.title).bold()
                                 .lineLimit(2)

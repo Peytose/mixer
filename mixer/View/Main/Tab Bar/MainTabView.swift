@@ -6,34 +6,56 @@
 //
 
 import SwiftUI
+import TabBar
 
 struct MainTabView: View {
-//    let user: User
+    //    let user: User
+    enum Item: Int, Tabbable {
+        case first = 0
+        case second
+        case third
+        case fourth
+        
+        var icon: String {
+            switch self {
+                case .first: return "person.3"
+                case .second: return "map"
+                case .third: return "magnifyingglass"
+                case .fourth: return "person"
+            }
+        }
+        
+        var title: String {
+            switch self {
+                case .first: return "Social"
+                case .second: return "Map"
+                case .third: return "Search"
+                case .fourth: return "Profile"
+            }
+        }
+    }
+    @State private var selection: Item = .second
+    @State private var visibility: TabBarVisibility = .visible
     
     var body: some View {
-        TabView {
-            ExplorePageView()
-                .tabItem { TabViewItem(type: .social) }
-
+        TabBar(selection: $selection, visibility: .constant(visibility)) {
+            ExplorePageView(tabBarVisibility: $visibility)
+                .tabItem(for: Item.first)
             
             MapView()
-                .tabItem { TabViewItem(type: .map) }
-
+                .tabItem(for: Item.second)
             
-            
-            SearchPageView()
-                .tabItem { TabViewItem(type: .search) }
-
-//            ProfileView(user: user)
-//                .tabItem { TabViewItem(type: .profile) }
+            NavigationView {
+                SearchPageView()
+            }
+            .tabItem(for: Item.third)
             
             UserProfilePrototypeView()
-                .tabItem { TabViewItem(type: .profile) }
-
+                .tabItem(for: Item.fourth)
         }
+        .tabBar(style: CustomTabBarStyle())
+        .tabItem(style: CustomTabItemStyle())
         .preferredColorScheme(.dark)
-        .accentColor(Color.mainFont)
-        .toolbarBackground(Color.black, for: .tabBar)
     }
 }
 

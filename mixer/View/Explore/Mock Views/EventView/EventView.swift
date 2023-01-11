@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MapKit
+import TabBar
 
 struct EventView: View {
     @StateObject var parentViewModel: ExplorePageViewModel
@@ -15,61 +16,42 @@ struct EventView: View {
     @State private var showFullFlyer = false
     @State private var currentAmount = 0.0
     @State private var finalAmount = 1.0
-    
-    @Namespace var namespace
+    @State private var showHost = false
+    @Binding var tabBarVisibility: TabBarVisibility
 
+    @Namespace var namespace
+    
     let coordinates = CLLocationCoordinate2D(latitude: 42.3507046, longitude: -71.0909822)
     let link = URL(string: "https://mixer.llc")!
     
     var body: some View {
         NavigationView {
-            GeometryReader { proxy in
-                ZStack {
-                    ScrollView(showsIndicators: false) {
-                        cover
-                        
-                        content
-                    }
-                    .coordinateSpace(name: "scroll")
-                    .background(Color.mixerBackground)
-                    .ignoresSafeArea()
+            ZStack {
+                ScrollView(showsIndicators: false) {
+                    cover
                     
-                    if showFullFlyer {
-                        FlyerPopUpView()
-                            .transition(.scale(scale: 0.3).combined(with: .opacity))
-                            .zIndex(1)
-                    }
-                    
+                    content
                 }
-                .preferredColorScheme(.dark)
-                .onAppear { fadeIn() }
-                .overlay {
-                    closeButton
-                }
-                .overlay(alignment: .bottom) {
-                    Button(action: {
-                        let impact = UIImpactFeedbackGenerator(style: .light)
-                        impact.impactOccurred()
-                    }, label: {
-                        HStack {
-                            Image(systemName: "list.clipboard")
-                                .imageScale(.large)
-                            
-                            Text("Get On The Guest List")
-                                .font(.title3.weight(.semibold))
-                        }
-                        .foregroundColor(.white)
-                        .padding()
-                        .background {
-                            Capsule()
-                                .fill(Color.mixerPurpleGradient)
-                        }
-                        .padding(.bottom, 10)
-                        .opacity(showFullFlyer ? 0 : 1)
-                        
-                    })
+                .coordinateSpace(name: "scroll")
+                .background(Color.mixerBackground)
+                .ignoresSafeArea()
+                
+                joinButton
+                
+                if showFullFlyer {
+                    FlyerPopUpView()
+                        .transition(.scale(scale: 0.01))
+                        .zIndex(1)
                 }
             }
+            .preferredColorScheme(.dark)
+            .onAppear { fadeIn() }
+            .overlay {
+                closeButton
+            }
+            .sheet(isPresented: $showHost) {
+                HostOrganizationView(parentViewModel: ExplorePageViewModel())
+        }
         }
     }
     
@@ -98,166 +80,169 @@ struct EventView: View {
             let scrollY = proxy.frame(in: .named("scroll")).minY
             
             VStack {
+                ZStack {
+                    VStack(alignment: .leading, spacing: 3) {
+                        HStack {
+                            Button(action: {
+                                showHost.toggle()
+                            }, label: {
+                                Text("MIT Theta Chi")
+                                    .font(.title3).bold()
+                                    .foregroundColor(.primary.opacity(0.7))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.75)
+                            })
+                            
+                            Spacer()
+                            
+                            Text("Invite Only Party".capitalized)
+                                .font(.title3).bold()
+                                .foregroundColor(.primary.opacity(0.7))
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.75)
+                        }
+                        
+                        Text("Neon Party")
+                            .font(.title).bold()
+                            .foregroundColor(.primary)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.65)
+                        
+                        HStack {
+                            Image(systemName: "person.3.fill")
+                                .symbolRenderingMode(.hierarchical)
+                            
+                            Text("156 going")
+                                .font(.body.weight(.semibold))
+                            
+                            Spacer()
+                            
+                            
+                            
+                            ShareLink(item: link, message: Text("Join this party!")) {
+                                Image(systemName: "square.and.arrow.up")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(Color.white)
+                                    .frame(width: 20, height: 20)
+                                    .padding(7)
+                                    .background(.ultraThinMaterial)
+                                    .backgroundStyle(cornerRadius: 18, opacity: 0.4)
+                                
+                            }
+                            
+                            Button {
+                                let impact = UIImpactFeedbackGenerator(style: .light)
+                                impact.impactOccurred()
+                                showingOptions.toggle()
+                            } label: {
+                                Image(systemName: "ellipsis")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(Color.white)
+                                    .frame(width: 19, height: 19)
+                                    .padding(7)
+                                    .background(.ultraThinMaterial)
+                                    .backgroundStyle(cornerRadius: 18, opacity: 0.4)
+                            }
+                            .confirmationDialog("Select an option", isPresented: $showingOptions, titleVisibility: .hidden) {
+                                Button("Report") {
+                                }
+                            }
+                        }
+                        .foregroundColor(.primary.opacity(0.7))
+                        
+                        Divider()
+                            .foregroundColor(.secondary)
+                            .padding(.vertical, 4)
+                        
+                        HStack {
+                            
+                            VStack(alignment: .leading) {
+                                Text("Friday, January 20")
+                                    .font(.title3.weight(.semibold))
+                                
+                                Text("10:00 PM - 1:00 AM")
+                                    .foregroundColor(.secondary)
+                            }
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.75)
+                            
+                            Spacer()
+                            
+                            VStack(alignment: .center) {
+                                Image(systemName: "drop.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 22, height: 22)
+                                    .background(.ultraThinMaterial)
+                                    .backgroundStyle(cornerRadius: 10, opacity: 0.6)
+                                    .cornerRadius(10)
+                                
+                                Text("Wet Event")
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                        .font(.headline)
+                    }
+                        .padding(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 15))
+                        .background(
+                            Rectangle()
+                                .fill(.ultraThinMaterial)
+                                .backgroundStyle(cornerRadius: 30)
+                        )
+                        .frame(maxHeight: .infinity, alignment: .bottom)
+                        .frame(maxWidth: .infinity)
+                        .padding(20)
+                        .offset(y: 100)
+                        .background(
+                            ZStack {
+                                Rectangle()
+                                    .fill(Color.clear)
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                                    .backgroundBlur(radius: 10, opaque: true)
+                                    .ignoresSafeArea()
+                                
+                                    Image("theta-chi-party-poster")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .matchedGeometryEffect(id: "background 2", in: namespace)
+                                        .offset(y: scrollY > 0 ? -scrollY : 0)
+                                        .scaleEffect(scrollY > 0 ? scrollY / 500 + 1 : 1)
+                                        .blur(radius: scrollY > 0 ? scrollY / 20 : 0)
+                                        .opacity(0.9)
+                                        .mask(
+                                            RoundedRectangle(cornerRadius: 20)
+                                        )
+                                    
+                                Image("theta-chi-party-poster")
+                                    .resizable()
+                                    .frame(width: proxy.size.width, height: proxy.size.height)
+                                    .aspectRatio(contentMode: .fit)
+                                    .matchedGeometryEffect(id: "background 1", in: namespace)
+                                    .offset(y: scrollY > 0 ? -scrollY : 0)
+                                    .mask(
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .frame(width: proxy.size.width - 40, height: proxy.size.height - 50)
+                                    )
+                                    .scaleEffect(scrollY > 0 ? scrollY / 500 + 1 : 1)
+                                    .modifier(ImageModifier(contentSize: CGSize(width: proxy.size.width, height: proxy.size.height)))
+                                    .scaleEffect(finalAmount + currentAmount)
+                                    .onLongPressGesture(minimumDuration: 0.5) {
+                                        let impact = UIImpactFeedbackGenerator(style: .heavy)
+                                        impact.impactOccurred()
+                                        withAnimation() {
+                                            showFullFlyer.toggle()
+                                        }
+                                }
+                                    .zIndex(2)
+                            }
+                        )
+                    .offset(y: scrollY > 0 ? -scrollY * 1.8 : 0)
+                }
             }
             .frame(maxWidth: .infinity)
             .frame(height: scrollY > 0 ? 500 + scrollY : 500)  //MARK: Change Flyer Height
-            .background(
-                Image("theta-chi-party-poster")
-                    .resizable()
-                    .frame(width: proxy.size.width, height: proxy.size.height)
-                    .aspectRatio(contentMode: .fit)
-                    .matchedGeometryEffect(id: "background 1", in: namespace)
-                    .offset(y: scrollY > 0 ? -scrollY : 0)
-                    .mask(
-                        RoundedRectangle(cornerRadius: 20)
-                            .frame(width: proxy.size.width - 40, height: proxy.size.height - 50)
-                    )
-                    .scaleEffect(scrollY > 0 ? scrollY / 500 + 1 : 1)
-                    .modifier(ImageModifier(contentSize: CGSize(width: proxy.size.width, height: proxy.size.height)))
-                    .scaleEffect(finalAmount + currentAmount)
-                    .onLongPressGesture(minimumDuration: 0.5) {
-                        let impact = UIImpactFeedbackGenerator(style: .heavy)
-                        impact.impactOccurred()
-                        withAnimation() {
-                            showFullFlyer.toggle()
-                        }
-                    }
-                
-            )
-            .background(
-                ZStack {
-                    Image("theta-chi-party-poster")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .matchedGeometryEffect(id: "background 2", in: namespace)
-                        .offset(y: scrollY > 0 ? -scrollY : 0)
-                        .scaleEffect(scrollY > 0 ? scrollY / 500 + 1 : 1)
-                        .blur(radius: scrollY > 0 ? scrollY / 20 : 0)
-                        .opacity(0.9)
-                    
-                    Rectangle()
-                        .fill(Color.clear)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                        .backgroundBlur(radius: 10, opaque: true)
-                        .ignoresSafeArea()
-                }
-            )
-            .mask(
-                RoundedRectangle(cornerRadius: 20)
-            )
-            .overlay(
-                VStack(alignment: .leading, spacing: 3) {
-                    HStack {
-                        Text("MIT Theta Chi")
-                            .font(.title3).bold()
-                            .foregroundColor(.primary.opacity(0.7))
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.75)
-                        
-                        Spacer()
-                        
-                        Text("Invite Only Party".capitalized)
-                            .font(.title3).bold()
-                            .foregroundColor(.primary.opacity(0.7))
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.75)
-                    }
-                    
-                    Text("Neon Party")
-                        .font(.title).bold()
-                        .foregroundColor(.primary)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.65)
-                    
-                    HStack {
-                        Image(systemName: "person.3.fill")
-                            .symbolRenderingMode(.hierarchical)
-                        
-                        Text("156 going")
-                            .font(.body.weight(.semibold))
-                        
-                        Spacer()
-                        
-                        
-                        
-                        ShareLink(item: link, message: Text("Join this party!")) {
-                            Image(systemName: "square.and.arrow.up")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .foregroundColor(Color.white)
-                                .frame(width: 20, height: 20)
-                                .padding(7)
-                                .background(.ultraThinMaterial)
-                                .backgroundStyle(cornerRadius: 18, opacity: 0.4)
-                            
-                        }
-                        
-                        Button {
-                            let impact = UIImpactFeedbackGenerator(style: .light)
-                            impact.impactOccurred()
-                            showingOptions.toggle()
-                        } label: {
-                            Image(systemName: "ellipsis")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .foregroundColor(Color.white)
-                                .frame(width: 19, height: 19)
-                                .padding(7)
-                                .background(.ultraThinMaterial)
-                                .backgroundStyle(cornerRadius: 18, opacity: 0.4)
-                        }
-                        .confirmationDialog("Select an option", isPresented: $showingOptions, titleVisibility: .hidden) {
-                            Button("Report") {
-                            }
-                        }
-                    }
-                    .foregroundColor(.primary.opacity(0.7))
-                    
-                    Divider()
-                        .foregroundColor(.secondary)
-                        .padding(.vertical, 4)
-                    
-                    HStack {
-                        
-                        VStack(alignment: .leading) {
-                            Text("Friday, January 20")
-                                .font(.title3.weight(.semibold))
-                            
-                            Text("10:00 PM - 1:00 AM")
-                                .foregroundColor(.secondary)
-                        }
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.75)
-                        
-                        Spacer()
-                        
-                        VStack(alignment: .center) {
-                            Image(systemName: "drop.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 22, height: 22)
-                            //                                .padding(10)
-                                .background(.ultraThinMaterial)
-                                .backgroundStyle(cornerRadius: 10, opacity: 0.6)
-                                .cornerRadius(10)
-                            
-                            Text("Wet Event")
-                                .foregroundColor(.secondary)
-                        }
-                    }
-                    .font(.headline)
-                }
-                    .padding(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 15))
-                    .background(
-                        Rectangle()
-                            .fill(.ultraThinMaterial)
-                            .backgroundStyle(cornerRadius: 30)
-                    )
-                    .frame(maxHeight: .infinity, alignment: .bottom)
-                    .padding(20)
-                    .offset(y: 100)
-            )
-            .offset(y: scrollY > 0 ? -scrollY * 1.8 : 0)
         }
         .frame(height: 500)
     }
@@ -281,9 +266,19 @@ struct EventView: View {
                 HStack(spacing: 12) {
                     PaddedImage(image: "person.fill")
                     
-                    Text("MIT Theta Chi Fraternity")
-                        .fontWeight(.semibold)
-                    
+                    Button(action: {
+                        showHost.toggle()
+                    }, label: {
+                        HStack {
+                            Text("Hosted by ")
+                                .fontWeight(.semibold)
+                                .foregroundColor(.secondary) +
+                            
+                            Text("MIT Theta Chi")
+                                .fontWeight(.semibold)
+                                .foregroundColor(.primary)
+                        }
+                    })
                 }
                 
                 HStack(spacing: 12) {
@@ -321,7 +316,15 @@ struct EventView: View {
                     PaddedImage(image: "figure.dance")
                     
                     //                    Text("Theme: \(viewModel.event.theme)")
-                    Text("Neon/Black light")
+                    HStack {
+                        Text("Event Theme: ")
+                            .fontWeight(.semibold)
+                            .foregroundColor(.secondary) +
+                        
+                        Text("Neon/Black light")
+                            .fontWeight(.semibold)
+                            .foregroundColor(.primary)
+                    }
                 }
                 
                 HStack(spacing: 12) {
@@ -379,7 +382,7 @@ struct EventView: View {
             
         }
         .padding()
-        .padding(EdgeInsets(top: 80, leading: 0, bottom: 180, trailing: 0))
+        .padding(EdgeInsets(top: 80, leading: 0, bottom: 150, trailing: 0))
         
     }
     
@@ -393,14 +396,38 @@ struct EventView: View {
                 withAnimation() {
                     parentViewModel.showEventView.toggle()
                     parentViewModel.showNavigationBar.toggle()
+                    tabBarVisibility = .visible
                 }
             }
             
         } label: { XDismissButton() }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             .padding(20)
-            .padding(.top, 30)
+            .padding(.top, 35)
             .ignoresSafeArea()
+    }
+    
+    var joinButton: some View {
+        Button(action: {
+            let impact = UIImpactFeedbackGenerator(style: .light)
+            impact.impactOccurred()
+        }, label: {
+            HStack {
+                Image(systemName: "list.clipboard")
+                    .imageScale(.large)
+                
+                Text("Join Guestlist")
+                    .font(.title3.weight(.semibold))
+            }
+            .foregroundColor(.white)
+            .padding()
+            .background {
+                Capsule()
+                    .fill(Color.mixerPurpleGradient)
+            }
+        })
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+        .padding(.bottom, 8)
     }
     
     var results: [MockUser] {
@@ -410,29 +437,11 @@ struct EventView: View {
     
     struct EventView_Previews: PreviewProvider {
         @Namespace static var namespace
-        
         static var previews: some View {
-            EventView(parentViewModel: ExplorePageViewModel())
-            //                .environmentObject(Model())
+            EventView(parentViewModel: ExplorePageViewModel(), tabBarVisibility: .constant(.visible))
+                .preferredColorScheme(.dark)
         }
     }
-    
-    
-    private struct Details: View {
-        var image: String
-        var text: String
-        
-        var body: some View {
-            HStack {
-                Image(systemName: image)
-                
-                Text(text)
-                    .font(.title3.weight(.semibold))
-                
-            }
-        }
-    }
-    
     
     private struct PaddedImage: View {
         var image: String
@@ -446,7 +455,6 @@ struct EventView: View {
                     .background(.ultraThinMaterial)
                     .backgroundStyle(cornerRadius: 10, opacity: 0.6)
                     .cornerRadius(10)
-                
             }
         }
     }

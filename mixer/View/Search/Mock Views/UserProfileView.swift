@@ -78,59 +78,59 @@ struct UserProfileView: View {
                         }
                         .font(.headline)
                         
-                        LazyVStack(pinnedViews: [.sectionHeaders]) {
-                            Section(content: {
-                                if profileContext == .current {
-                                    ForEach((1...1).reversed(), id: \.self) { event in
-                                        EventCard(namespace: namespace)
-                                            .frame(height: 200)
-                                            .padding(.horizontal, -10)
-                                            .offset(y: 100)
-                                    }
-                                } else {
-                                    ForEach((1...3).reversed(), id: \.self) { event in
-                                        EventCard(namespace: namespace)
-                                            .frame(height: 200)
-                                            .padding(.horizontal, -10)
-                                            .offset(y: 100)
-                                    }
-                                }
-                            }, header: {
-                                    HStack {
-                                        ForEach(ProfileContext.allCases, id: \.self) { [self] context in
-                                            VStack(spacing: 8) {
-
-                                                Text(context.rawValue)
-                                                    .fontWeight(.semibold)
-                                                    .foregroundColor(profileContext == context ? .white : .gray)
-
-                                                ZStack{
-                                                    if profileContext == context {
-                                                        RoundedRectangle(cornerRadius: 4, style: .continuous)
-                                                            .fill(Color.mixerIndigo)
-                                                            .matchedGeometryEffect(id: "TAB", in: animation)
-                                                    }
-                                                    else {
-                                                        RoundedRectangle(cornerRadius: 4, style: .continuous)
-                                                            .fill(.clear)
-                                                    }
-                                                }
-                                                .frame(height: 4)
-                                            }
-                                            .contentShape(Rectangle())
-                                            .onTapGesture {
-                                                withAnimation(.easeInOut) {
-                                                    self.profileContext = context
-                                                }
-                                            }
-                                        }
-                                    }
-                                    .padding(.bottom, 0)
-                                .background(Color.mixerBackground)
-                                .offset(y: 70)
-                            })
-                        }
-                        .offset(y: -50)
+//                        LazyVStack(pinnedViews: [.sectionHeaders]) {
+//                            Section(content: {
+//                                if profileContext == .current {
+//                                    ForEach((1...1).reversed(), id: \.self) { event in
+//                                        EventCard(namespace: namespace)
+//                                            .frame(height: 200)
+//                                            .padding(.horizontal, -10)
+//                                            .offset(y: 100)
+//                                    }
+//                                } else {
+//                                    ForEach((1...3).reversed(), id: \.self) { event in
+//                                        EventCard(namespace: namespace)
+//                                            .frame(height: 200)
+//                                            .padding(.horizontal, -10)
+//                                            .offset(y: 100)
+//                                    }
+//                                }
+//                            }, header: {
+//                                    HStack {
+//                                        ForEach(ProfileContext.allCases, id: \.self) { [self] context in
+//                                            VStack(spacing: 8) {
+//
+//                                                Text(context.rawValue)
+//                                                    .fontWeight(.semibold)
+//                                                    .foregroundColor(profileContext == context ? .white : .gray)
+//
+//                                                ZStack{
+//                                                    if profileContext == context {
+//                                                        RoundedRectangle(cornerRadius: 4, style: .continuous)
+//                                                            .fill(Color.mixerIndigo)
+//                                                            .matchedGeometryEffect(id: "TAB", in: animation)
+//                                                    }
+//                                                    else {
+//                                                        RoundedRectangle(cornerRadius: 4, style: .continuous)
+//                                                            .fill(.clear)
+//                                                    }
+//                                                }
+//                                                .frame(height: 4)
+//                                            }
+//                                            .contentShape(Rectangle())
+//                                            .onTapGesture {
+//                                                withAnimation(.easeInOut) {
+//                                                    self.profileContext = context
+//                                                }
+//                                            }
+//                                        }
+//                                    }
+//                                    .padding(.bottom, 0)
+//                                .background(Color.mixerBackground)
+//                                .offset(y: 70)
+//                            })
+//                        }
+//                        .offset(y: -50)
 
                         
                     }
@@ -233,7 +233,6 @@ extension UserProfileView {
                     .foregroundColor(Color.mainFont)
                     .font(.system(size: 28))
                     .shadow(radius: 10)
- 
             })
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             .padding(30)

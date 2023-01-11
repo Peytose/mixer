@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import TabBar
 
 struct ExplorePageView: View {
     @StateObject private var viewModel = ExplorePageViewModel()
     @EnvironmentObject var model: Model
     @Namespace var namespace
-    
+    @Binding var tabBarVisibility: TabBarVisibility
+
     var body: some View {
             ZStack {
                 Rectangle()
@@ -39,18 +41,6 @@ struct ExplorePageView: View {
                                 Circle()
                                     .fill(.clear)
                                     .frame(width: 40, height: 40)
-                                
-                                Spacer()
-                                
-                                HStack {
-                                    Image(systemName: "mappin.and.ellipse")
-                                        .symbolRenderingMode(.palette)
-                                        .foregroundStyle(Color.primary, Color.blue)
-                                    
-                                    Text("Boston, MA")
-                                        .font(.title2.weight(.semibold))
-                                        .foregroundColor(.white)
-                                }
                                 
                                 Spacer()
                                 
@@ -120,11 +110,6 @@ struct ExplorePageView: View {
                                             .onTapGesture {
                                                 viewModel.showHostView.toggle()
                                             }
-                                        //                                            .onTapGesture {
-                                        //                                                hostManager.selectedHost = host
-                                        //                                                if let _ = hostManager.selectedHost { viewModel.showHostView = true }
-                                        //                                                viewModel.expandMenu = false
-                                        //                                            }
                                     }
                                 }
                             }
@@ -141,15 +126,9 @@ struct ExplorePageView: View {
                                             .frame(height: 380)
                                             .onTapGesture {
                                                 withAnimation(.openCard) {
-                                                    //                                                    hostManager.selectedHost = host
                                                     viewModel.showEventView = true
                                                     viewModel.showNavigationBar = false
-                                                    
-                                                    //                                                    eventManager.selectedEvent = event
-                                                    //                                                    if let _ = eventManager.selectedEvent {
-                                                    //                                                        viewModel.showEventView = true
-                                                    //                                                        viewModel.showNavigationBar = false
-                                                    //                                                    }
+                                                    tabBarVisibility = .invisible
                                                 }
                                             }
                                     }
@@ -159,21 +138,13 @@ struct ExplorePageView: View {
                                             .frame(height: 380)
                                             .onTapGesture {
                                                 withAnimation(.openCard) {
-                                                    //                                                    hostManager.selectedHost = host
                                                     viewModel.showEventView = true
                                                     viewModel.showNavigationBar = false
-                                                    
-                                                    //                                                    eventManager.selectedEvent = event
-                                                    //                                                    if let _ = eventManager.selectedEvent {
-                                                    //                                                        viewModel.showEventView = true
-                                                    //                                                        viewModel.showNavigationBar = false
-                                                    //                                                    }
+                                                    tabBarVisibility = .invisible
                                                 }
                                             }
                                     }
-                                    
                                 }
-                                
                             }, header: {
                                 viewModel.stickyHeader()
                                     .background(Color.mixerBackground)
@@ -188,7 +159,7 @@ struct ExplorePageView: View {
                 
                 
                 if viewModel.showEventView {
-                    EventView(parentViewModel: viewModel)
+                    EventView(parentViewModel: viewModel, tabBarVisibility: $tabBarVisibility)
                         .transition(.move(edge: .bottom).combined(with: .scale(scale: 1.3)))
                         .zIndex(2)
                 }
@@ -196,7 +167,7 @@ struct ExplorePageView: View {
             }
             .ignoresSafeArea()
             .sheet(isPresented: $viewModel.showHostView) {
-                HostOrganizationView()
+                HostOrganizationView(parentViewModel: viewModel)
             }
             .statusBar(hidden: viewModel.showEventView)
         
@@ -205,7 +176,7 @@ struct ExplorePageView: View {
 
 struct ExplorePageView_Previews: PreviewProvider {
     static var previews: some View {
-        ExplorePageView()
+        ExplorePageView(tabBarVisibility: .constant(.visible))
             .preferredColorScheme(.dark)
             .environmentObject(Model())
 

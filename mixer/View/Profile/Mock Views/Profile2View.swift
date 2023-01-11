@@ -15,7 +15,7 @@ struct UserProfilePrototypeView: View {
         case current = "Going to"
         case upcoming = "Events attended"
     }
-//    @StateObject var viewModel = ProfileViewModel()
+
     @State var shareUsername = false
     @State var profileContext: ProfilePrototypeContext = .current
     @State var showSettingsView = false

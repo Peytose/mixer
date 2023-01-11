@@ -61,6 +61,9 @@
 		A6430457294FC50C0058C0F0 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6430456294FC50C0058C0F0 /* AvatarView.swift */; };
 		A6430459294FC6D00058C0F0 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6430458294FC6D00058C0F0 /* NavigationBar.swift */; };
 		A643045B294FC72F0058C0F0 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A643045A294FC72F0058C0F0 /* Model.swift */; };
+		A68971CA296E7E1900289516 /* TabBar in Frameworks */ = {isa = PBXBuildFile; productRef = A68971C9296E7E1900289516 /* TabBar */; };
+		A68971CD296E7E5D00289516 /* CustomTabBarStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68971CC296E7E5D00289516 /* CustomTabBarStyle.swift */; };
+		A68971CF296E7E8D00289516 /* CustomTabItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68971CE296E7E8D00289516 /* CustomTabItemView.swift */; };
 		A6A731BD2966AC52008DAC17 /* MockEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A731BC2966AC52008DAC17 /* MockEvent.swift */; };
 		A6AB6C7C2960E20F007E9BF0 /* PinchZoomImageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AB6C7B2960E20F007E9BF0 /* PinchZoomImageModifier.swift */; };
 		A6AB6C7E2960EFE7007E9BF0 /* CustomPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AB6C7D2960EFE7007E9BF0 /* CustomPopUpView.swift */; };
@@ -140,6 +143,8 @@
 		A6430456294FC50C0058C0F0 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		A6430458294FC6D00058C0F0 /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		A643045A294FC72F0058C0F0 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		A68971CC296E7E5D00289516 /* CustomTabBarStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarStyle.swift; sourceTree = "<group>"; };
+		A68971CE296E7E8D00289516 /* CustomTabItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabItemView.swift; sourceTree = "<group>"; };
 		A6A731BC2966AC52008DAC17 /* MockEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEvent.swift; sourceTree = "<group>"; };
 		A6AB6C7B2960E20F007E9BF0 /* PinchZoomImageModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinchZoomImageModifier.swift; sourceTree = "<group>"; };
 		A6AB6C7D2960EFE7007E9BF0 /* CustomPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopUpView.swift; sourceTree = "<group>"; };
@@ -183,6 +188,7 @@
 				9C3BADFD291F5C70009C8043 /* Kingfisher in Frameworks */,
 				9C3BADEE291F59E7009C8043 /* FirebaseFunctions in Frameworks */,
 				9C3BADEA291F59E7009C8043 /* FirebaseFirestore in Frameworks */,
+				A68971CA296E7E1900289516 /* TabBar in Frameworks */,
 				9C3BADEC291F59E7009C8043 /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -403,7 +409,7 @@
 			isa = PBXGroup;
 			children = (
 				9C3BADBB291F54B4009C8043 /* ContentView.swift */,
-				9C93318229201C3F0079E039 /* MainTabView.swift */,
+				A68971CB296E7E2E00289516 /* Tab Bar */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -484,6 +490,16 @@
 				A6430450294FC3380058C0F0 /* HexagonBlobView.swift */,
 			);
 			path = Blobs;
+			sourceTree = "<group>";
+		};
+		A68971CB296E7E2E00289516 /* Tab Bar */ = {
+			isa = PBXGroup;
+			children = (
+				9C93318229201C3F0079E039 /* MainTabView.swift */,
+				A68971CC296E7E5D00289516 /* CustomTabBarStyle.swift */,
+				A68971CE296E7E8D00289516 /* CustomTabItemView.swift */,
+			);
+			path = "Tab Bar";
 			sourceTree = "<group>";
 		};
 		A6B9E65529518A24009C936E /* Items */ = {
@@ -626,6 +642,7 @@
 				9C93319A29242A9F0079E039 /* FirebaseDynamicLinks */,
 				9C9331B929272E0F0079E039 /* iPhoneNumberField */,
 				A6B9E6612953A47C009C936E /* CodeScanner */,
+				A68971C9296E7E1900289516 /* TabBar */,
 			);
 			productName = mixer;
 			productReference = 9C3BADB6291F54B4009C8043 /* mixer.app */;
@@ -660,6 +677,7 @@
 				9C3BADFB291F5C70009C8043 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				9C9331B829272E0F0079E039 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */,
 				A6B9E6602953A47C009C936E /* XCRemoteSwiftPackageReference "CodeScanner" */,
+				A68971C8296E7E1900289516 /* XCRemoteSwiftPackageReference "TabBar" */,
 			);
 			productRefGroup = 9C3BADB7291F54B4009C8043 /* Products */;
 			projectDirPath = "";
@@ -714,6 +732,7 @@
 				9C567A9E2934F83100EA5FCB /* PhotoPicker.swift in Sources */,
 				A6430451294FC3380058C0F0 /* HexagonBlobView.swift in Sources */,
 				A6430457294FC50C0058C0F0 /* AvatarView.swift in Sources */,
+				A68971CF296E7E8D00289516 /* CustomTabItemView.swift in Sources */,
 				9C93318929201C990079E039 /* ProfileView.swift in Sources */,
 				9C9331AB2925D2ED0079E039 /* Color+Ext.swift in Sources */,
 				9C93319D29255D8D0079E039 /* AlertItem.swift in Sources */,
@@ -752,6 +771,7 @@
 				9C3BADD7291F55D1009C8043 /* Constants.swift in Sources */,
 				A6B9E690295464A8009C936E /* EventFlyerUploadView.swift in Sources */,
 				A6B9E65B2951933D009C936E /* Profile2View.swift in Sources */,
+				A68971CD296E7E5D00289516 /* CustomTabBarStyle.swift in Sources */,
 				A6430459294FC6D00058C0F0 /* NavigationBar.swift in Sources */,
 				9C93319429203D8B0079E039 /* Notification.swift in Sources */,
 				9C93319F2925B0390079E039 /* AuthFlow.swift in Sources */,
@@ -995,6 +1015,14 @@
 				kind = branch;
 			};
 		};
+		A68971C8296E7E1900289516 /* XCRemoteSwiftPackageReference "TabBar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onl1ner/TabBar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		A6B9E6602953A47C009C936E /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/twostraws/CodeScanner";
@@ -1050,6 +1078,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9C9331B829272E0F0079E039 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */;
 			productName = iPhoneNumberField;
+		};
+		A68971C9296E7E1900289516 /* TabBar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A68971C8296E7E1900289516 /* XCRemoteSwiftPackageReference "TabBar" */;
+			productName = TabBar;
 		};
 		A6B9E6612953A47C009C936E /* CodeScanner */ = {
 			isa = XCSwiftPackageProductDependency;

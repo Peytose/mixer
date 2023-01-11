@@ -26,16 +26,6 @@ struct MapView: View {
             .padding(EdgeInsets(top: 60, leading: 0, bottom: 0, trailing: 6))
             
             BlurredStatusBar()
-            
-            UserQRCodeButton()
-                .frame(maxHeight: .infinity, alignment: .bottom)
-                .padding(.bottom, 20)
-                .onTapGesture {
-                    withAnimation() {
-                        viewModel.isShowingQRCodeView.toggle()
-                    }
-                }
-            
         }
         .overlay(alignment: .bottomTrailing, content: {
             LocationButton(.currentLocation) {
@@ -53,6 +43,21 @@ struct MapView: View {
         .overlay(alignment: .bottomTrailing, content: {
             AddEventButton()
                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 100, trailing: 20))
+                .onTapGesture {
+                    let impact = UIImpactFeedbackGenerator(style: .medium)
+                    impact.impactOccurred()
+                    
+                    viewModel.isShowingAddEventView.toggle()
+                }
+        })
+        .overlay(alignment: .bottom, content: {
+            UserQRCodeButton()
+                .onTapGesture {
+                    withAnimation() {
+                        viewModel.isShowingQRCodeView.toggle()
+                    }
+                }
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: 90, trailing: 20))
                 .onTapGesture {
                     let impact = UIImpactFeedbackGenerator(style: .medium)
                     impact.impactOccurred()
@@ -105,7 +110,6 @@ fileprivate struct EventUsersListButton: View {
 
 fileprivate struct UserQRCodeButton: View {
     var body: some View {
-        
         Rectangle()
             .fill(Color.mixerPurpleGradient)
             .cornerRadius(30)
