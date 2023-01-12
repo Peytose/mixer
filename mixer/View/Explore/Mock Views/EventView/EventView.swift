@@ -398,7 +398,6 @@ struct EventView: View {
                     tabBarVisibility = .visible
                 }
             }
-            
         } label: { XDismissButton() }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             .padding(20)

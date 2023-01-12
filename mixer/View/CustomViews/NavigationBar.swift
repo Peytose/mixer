@@ -36,7 +36,7 @@ struct NavigationBar: View {
                 
                 Spacer()
 
-                Image("mock-user")
+                Image("mock-user-1")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 40, height: 40)

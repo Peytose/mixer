@@ -30,7 +30,6 @@ struct MockEvent: Identifiable {
     var type: String
     var eventRowDate: String
 }
-
 var events = [
     MockEvent(hostName: "MIT Theta Chi", fullHostName: "MIT Theta Chi Fraternity", visibility: "Invite Only", title: "Neon Party", attendance: "156", date: "Friday, January 20", shortDate: "Friday, 10:00 PM", stickyMonth: "Jan", stickyDay: "24", duration: "10:00 PM - 1:00 AM", startTime: "10:00 PM", wetOrDry: "Wet", description: "Neon party at Theta Chi this friday night, need we say more?", theme: "Neon/Black light", attireDescription: "Normal party clothes (wear neon if possible)", flyer: "theta-chi-party-poster", school: "MIT", address: "528 Beacon St, Boston MA", type: "Frat Party", eventRowDate: "January 24"),
     MockEvent(hostName: "MIT Theta Chi", fullHostName: "MIT Theta Chi Fraternity", visibility: "Open", title: "Theta SpooChi", attendance: "455", date: "Friday, January 27", shortDate: "Friday, 10:00 PM", stickyMonth: "Jan", stickyDay: "27", duration: "10:00 PM - 1:00 AM", startTime: "10:00 PM", wetOrDry: "Wet", description: "Halloween Party. Come with a costume or no entry", theme: "Halloween", attireDescription: "Costumes only (No costume, no entry!)", flyer: "theta-chi-party-poster-2", school: "MIT", address: "528 Beacon St, Boston MA", type: "Frat Party", eventRowDate: "January 27"),

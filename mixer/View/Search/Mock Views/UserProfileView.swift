@@ -15,10 +15,6 @@ struct UserProfileView: View {
         case current = "Going to"
         case upcoming = "Events attended"
     }
-    
-//    @EnvironmentObject private var eventManager: EventManager
-//    @EnvironmentObject private var hostManager: HostManager
-//    @StateObject private var viewModel = ExplorePageViewModel()
     @Environment(\.presentationMode) var presentationMode
     @State var addFriend = false
     @State var shareUsername = false
@@ -48,18 +44,16 @@ struct UserProfileView: View {
             Color.mixerBackground
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
-                    //                        banner
-                    cover2
+                    banner
                     
                     VStack(alignment: .leading, spacing: 4) {
                         HStack(alignment: .center, spacing: 12) {
-                            Text("Peyton Lyons")
+                            Text(user.name)
                                 .font(.largeTitle).bold()
                                 .minimumScaleFactor(0.5)
                             
-                            Text("20")
+                            Text(user.age)
                                 .font(.title2.weight(.medium))
-                                .offset(x: 0)
                             
                             Spacer()
                             
@@ -79,7 +73,25 @@ struct UserProfileView: View {
                                         isFriends.toggle()
                                     }
                                 }
-                                .alert(isFriends ? "Started following MIT Theta Chi" : "Stopped following MIT Theta Chi", isPresented: $showAlert, actions: {})
+                        }
+                        .lineLimit(1)
+                        
+                        HStack {
+                            Text("\(Image(systemName: "graduationcap.fill")) \(user.school)")
+                                .font(.body)
+                                .fontWeight(.medium)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.5)
+                            
+                            Spacer()
+                            
+                            Link(destination: URL(string: "https://instagram.com/mitthetachi?igshid=Zjc2ZTc4Nzk=")!) {
+                                Image("Instagram-Icon")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(Color.white)
+                                    .frame(width: 20, height: 20)
+                            }
                             
                             ShareLink(item: link) {
                                 Image(systemName: "square.and.arrow.up")
@@ -87,15 +99,7 @@ struct UserProfileView: View {
                                     .fontWeight(.semibold)
                             }
                             .buttonStyle(.plain)
-                            
                         }
-                        .lineLimit(1)
-                        
-                        Text("\(Image(systemName: "graduationcap.fill")) Fordham University")
-                            .font(.body)
-                            .fontWeight(.medium)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.5)
                         
                         HStack {
                             HStack(spacing: -8) {
@@ -115,7 +119,7 @@ struct UserProfileView: View {
                                     .foregroundColor(.mixerSecondaryBackground)
                                     .frame(width: 28, height: 46)
                                     .overlay {
-                                        Image("mock-user")
+                                        Image("mock-user-1")
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .clipShape(Circle())
@@ -155,18 +159,19 @@ struct UserProfileView: View {
                         
                     }
                     .padding()
-                    
+                    .padding(.top, 40)
+
                     VStack(alignment: .leading, spacing: 20) {
                         Text("About")
                             .font(.title).bold()
-                            .padding(.trailing, 10)
-                        
+                            .padding(.top, -5)
+
                         VStack(alignment: .leading, spacing: 10) {
-                            DetailRow(image: "figure.2.arms.open", text: "Taken")
+                            DetailRow(image: "figure.2.arms.open", text: user.status)
                             
-                            DetailRow(image: "house.fill", text: "MIT Theta Chi")
+                            DetailRow(image: "house.fill", text: user.affiliation)
                             
-                            DetailRow(image: "briefcase.fill", text: "Computer Science")
+                            DetailRow(image: "briefcase.fill", text: user.major)
                             
                         }
                         .font(.headline.weight(.semibold))
@@ -186,7 +191,7 @@ struct UserProfileView: View {
                                     }
                                     .redacted(reason: isFriends ? [] : .placeholder)
                                     .overlay(!isFriends ?
-                                             Text("Only Jose's friends can see his activity")
+                                             Text("Only \(user.name)'s friends can see his activity")
                                         .font(.title).bold()
                                         .multilineTextAlignment(.center)
                                         .offset(y: 60)
@@ -204,7 +209,7 @@ struct UserProfileView: View {
                                     }
                                     .redacted(reason: isFriends ? [] : .placeholder)
                                     .overlay(!isFriends ?
-                                             Text("Only Jose's friends can see his activity")
+                                             Text("Only \(user.name)'s friends can see his activity")
                                         .font(.title).bold()
                                         .multilineTextAlignment(.center)
                                         .offset(y: 60)
@@ -270,12 +275,11 @@ struct UserProfileView_Previews: PreviewProvider {
 }
 
 extension UserProfileView {
-    var cover2: some View {
+    var banner: some View {
         GeometryReader { proxy in
             let scrollY = proxy.frame(in: .named("scroll")).minY
-            
             VStack {
-                StretchableHeader(imageName: "mock-user")
+                StretchableHeader(imageName: user.image)
                     .mask(Color.profileGradient) /// mask the blurred image using the gradient's alpha values
                     .matchedGeometryEffect(id: "profileBackground", in: namespace)
                     .offset(y: scrollY > 0 ? -scrollY : 0)
@@ -285,66 +289,7 @@ extension UserProfileView {
         }
         .padding(.bottom, 230)
     }
-    
-    var banner: some View {
         
-        GeometryReader { proxy in
-            let scrollY = proxy.frame(in: .named("scroll")).minY
-            
-            VStack {
-                Image("banner-image-1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .blur(radius: 3) /// blur the image
-                    .padding(-20) /// expand the blur a bit to cover the edges
-                    .clipped() /// prevent blur overflow
-                    .mask(gradient) /// mask the blurred image using the gradient's alpha values
-                    .matchedGeometryEffect(id: "profileBackground", in: namespace)
-                    .offset(y: scrollY > 0 ? -scrollY : 0)
-                    .scaleEffect(scrollY > 0 ? scrollY / 500 + 1 : 1)
-                    .blur(radius: scrollY > 0 ? scrollY / 20 : 0)
-                    .frame(height: 220)
-                    .frame(maxWidth: .infinity)
-                    .overlay {
-                        VStack(spacing: -10) {
-                            Image(user.image)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .clipShape(Circle())
-                                .frame(width: 110, height: 110)
-                                .shadow(radius: 5, x: 0, y: 10)
-                                .padding(.bottom, 20)
-                            
-                            VStack(spacing: 3) {
-                                HStack {
-                                    Text(user.name)
-                                        .font(.largeTitle.weight(.bold))
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.75)
-                                    
-                                    Text(user.age)
-                                        .foregroundColor(.secondary)
-                                        .font(.largeTitle.weight(.bold))
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.75)
-                                }
-                                
-                                ShareLink(item: URL(string: user.username)!) {
-                                    Text("@\(user.username)")
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(.blue)
-                                }
-                            }
-                            
-                        }
-                        .padding(.top, 75)
-                    }
-                
-            }
-        }
-        .padding(.bottom, 230)
-    }
-    
     var navigationBarButtons: some View {
         ZStack {
             Button(action: {

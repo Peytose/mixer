@@ -192,24 +192,6 @@ struct HostOrganizationView: View {
                                 .backgroundStyle(cornerRadius: 18, opacity: 0.4)
                         }
                         
-                        Button(action: {
-                            let latitude = 42.3507046
-                            let longitude = -71.0909822
-                            let url = URL(string: "maps://?saddr=&daddr=\(latitude),\(longitude)")
-                            if UIApplication.shared.canOpenURL(url!) {
-                                UIApplication.shared.open(url!, options: [:], completionHandler: nil)
-                            }
-                        }, label: {
-                            Image(systemName: "map.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .foregroundColor(Color.white)
-                                .frame(width: 20, height: 20)
-                                .padding(7)
-                                .background(.ultraThinMaterial)
-                                .backgroundStyle(cornerRadius: 18, opacity: 0.4)
-                        })
-                        
                         Link(destination: URL(string: "http://ox.mit.edu/main/")!) {
                             Image(systemName: "globe")
                                 .resizable()
@@ -272,7 +254,13 @@ struct HostOrganizationView: View {
                     Text("MIT Theta Chi")
                         .font(.largeTitle).bold()
                         .lineLimit(1)
-                        .minimumScaleFactor(0.5)
+                        .minimumScaleFactor(0.6)
+                    
+                    Image(systemName: "checkmark.seal.fill")
+                        .symbolRenderingMode(.palette)
+                        .foregroundStyle(.white, .blue)                        .foregroundColor(.blue)
+                        .padding(.leading, -5)
+
                     
                     Spacer()
                     
@@ -294,17 +282,38 @@ struct HostOrganizationView: View {
                         }
                         .alert(isFollowing ? "Started following MIT Theta Chi" : "Stopped following MIT Theta Chi", isPresented: $showAlert, actions: {})
                     
+                }
+                
+                HStack(spacing: 10) {
+                    Text("1845 Followers")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+
+                    Spacer()
+                    
+                    Link(destination: URL(string: "https://instagram.com/mitthetachi?igshid=Zjc2ZTc4Nzk=")!) {
+                        Image("Instagram-Icon")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(Color.white)
+                            .frame(width: 20, height: 20)
+                    }
+                    
+                    Link(destination: URL(string: "http://ox.mit.edu/main/")!) {
+                        Image(systemName: "globe")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(Color.white)
+                            .frame(width: 20, height: 20)
+                    }
+                    
                     ShareLink(item: link) {
                         Image(systemName: "square.and.arrow.up")
-                            .imageScale(.large)
+                            .imageScale(.medium)
                             .fontWeight(.semibold)
                     }
                     .buttonStyle(.plain)
                 }
-                
-                Text("1845 Followers")
-                    .font(.footnote)
-                    .foregroundColor(.secondary)
                 
                 HStack {
                     HStack(spacing: -8) {
@@ -324,7 +333,7 @@ struct HostOrganizationView: View {
                             .foregroundColor(.mixerSecondaryBackground)
                             .frame(width: 28, height: 46)
                             .overlay {
-                                Image("mock-user")
+                                Image("mock-user-1")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .clipShape(Circle())
@@ -343,11 +352,11 @@ struct HostOrganizationView: View {
                     VStack(alignment: .leading) {
                         HStack(spacing: 3) {
                             Text("Followed by")
-                                .font(.footnote)
+                                .font(.subheadline)
                                 .foregroundColor(.secondary)
                             
                             Text("peytonlyons2002, fishcoop")
-                                .font(.footnote)
+                                .font(.subheadline)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.white.opacity(0.8))
                         }
@@ -355,7 +364,7 @@ struct HostOrganizationView: View {
                         .minimumScaleFactor(0.8)
                         
                         Text("and 3 more")
-                            .font(.footnote)
+                            .font(.subheadline)
                             .foregroundColor(.secondary)
                     }
                     
@@ -366,7 +375,8 @@ struct HostOrganizationView: View {
             Text("About this host")
                 .font(.title).bold()
                 .padding(.bottom, -10)
-            
+                .padding(.top, -5)
+
             VStack {
                 Text("Established in 1902, Theta Chi Beta Chapter is the oldest active Theta Chi chapter in the country, and is one of the first fraternities founded at MIT. We have a storied history of developing leaders: our alumni go on to start companies, build self-driving cars, cure diseases, get involved in politics, serve in the military, and change the world. The brothers of Theta Chi are dedicated to helping each other achieve their goals and give back to the community.")
                     .font(.headline)
@@ -402,7 +412,7 @@ struct HostOrganizationView: View {
             }
         }
         .padding()
-        .padding(EdgeInsets(top: 60, leading: 0, bottom: 120, trailing: 0))
+        .padding(EdgeInsets(top: 40, leading: 0, bottom: 120, trailing: 0))
     }
     
     var closeButton: some View {
@@ -497,7 +507,7 @@ struct StretchableHeader: View {
                        height: geometry.height)
                 .offset(y: geometry.verticalOffset)
         }
-        .frame(height: 380)
+        .frame(height: 350)
     }
 }
 

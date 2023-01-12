@@ -43,7 +43,7 @@ struct SocialPageNavigationBar: View {
                     //                    .padding(.top, 20)
                     //                    .opacity(contentHasScrolled ? 0.7 : 1)
                     NavigationLink(destination: UserProfilePrototypeView()) {
-                        Image("mock-user")
+                        Image("mock-user-1")
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .clipShape(Circle())

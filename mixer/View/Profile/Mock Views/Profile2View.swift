@@ -52,6 +52,15 @@ struct UserProfilePrototypeView: View {
                             
                             Spacer()
                             
+                            Link(destination: URL(string: "https://instagram.com/mitthetachi?igshid=Zjc2ZTc4Nzk=")!) {
+                                Image("Instagram-Icon")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(Color.white)
+                                    .frame(width: 24, height: 24)
+                            }
+                            .offset(y: 2)
+                            
                             ShareLink(item: link) {
                                 Image(systemName: "square.and.arrow.up")
                                     .imageScale(.large)
@@ -86,7 +95,7 @@ struct UserProfilePrototypeView: View {
                                     .foregroundColor(.mixerSecondaryBackground)
                                     .frame(width: 28, height: 46)
                                     .overlay {
-                                        Image("mock-user")
+                                        Image("mock-user-1")
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .clipShape(Circle())
@@ -126,11 +135,12 @@ struct UserProfilePrototypeView: View {
                         
                     }
                     .padding()
-                    
+                    .padding(.top, 40)
+
                     VStack(alignment: .leading, spacing: 20) {
                         Text("About")
                             .font(.title).bold()
-                            .padding(.trailing, 10)
+                            .padding(.top, -5)
                         
                         VStack(alignment: .leading, spacing: 10) {
                             DetailRow(image: "figure.2.arms.open", text: "Taken")
@@ -300,7 +310,7 @@ extension UserProfilePrototypeView {
             let scrollY = proxy.frame(in: .named("scroll")).minY
             
             VStack {
-                StretchableHeader(imageName: "mock-user")
+                StretchableHeader(imageName: "mock-user-1")
                     .mask(Color.profileGradient) /// mask the blurred image using the gradient's alpha values
                     .matchedGeometryEffect(id: "profileBackground", in: namespace)
                     .offset(y: scrollY > 0 ? -scrollY : 0)
