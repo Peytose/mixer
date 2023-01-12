@@ -52,7 +52,7 @@ struct EventView: View {
                 closeButton
             }
             .sheet(isPresented: $showHost) {
-                HostOrganizationView(parentViewModel: ExplorePageViewModel())
+                HostOrganizationView(parentViewModel: ExplorePageViewModel(), tabBarVisibility: .constant(.visible))
         }
         }
     }

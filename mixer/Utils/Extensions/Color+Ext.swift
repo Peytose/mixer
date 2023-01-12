@@ -61,7 +61,7 @@ extension Color {
     //MARK: - Chosen Gradients
     static let mixerPurpleGradient = LinearGradient(gradient: Gradient(colors: [Color.gradientPurple1, Color.gradientPurple2]), startPoint: .top, endPoint: .bottom)
 //    static let mixerPurpleGradient2 = LinearGradient(gradient: Gradient(colors: [Color.mixerIndigo, Color.mixerPurple]), startPoint: .top, endPoint: .bottom)
-    static let profileGradient = LinearGradient(gradient: Gradient(stops: [.init(color: Color.black, location: 0), .init(color: .clear, location: 1)]), startPoint:.top, endPoint: .bottom)
+    static let profileGradient = LinearGradient(gradient: Gradient(stops: [.init(color: Color.mixerBackground, location: 0), .init(color: .clear, location: 1)]), startPoint:.top, endPoint: .bottom)
     
     static let gradientPurple1 = Color(red: 112/255, green: 63/255, blue: 213/255)
     static let gradientPurple2 = Color(red: 76/255, green: 20/255, blue: 178/255)

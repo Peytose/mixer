@@ -40,7 +40,7 @@ struct ExplorePageView: View {
                     
                     Rectangle()
                         .fill(.clear)
-                        .frame(height: 40)
+                        .frame(height: 30)
                         .frame(maxWidth: .infinity)
                         .overlay(alignment: .top) {
                             HStack {
@@ -77,6 +77,7 @@ struct ExplorePageView: View {
                             }
                             .padding(.horizontal)
                         }
+                        .padding(.top, -10)
                     
                     VStack(spacing: -50) {
                         //MARK: Featured Hosts
@@ -85,7 +86,7 @@ struct ExplorePageView: View {
                                 .font(.largeTitle.weight(.bold))
                                 .background(
                                     Image("Blob 1")
-                                        .offset(x: 330, y: 230)
+                                        .offset(x: 330, y: 240)
                                         .scaleEffect(0.9)
                                         .blur(radius: 10)
                                         .accessibility(hidden: true)
@@ -114,7 +115,11 @@ struct ExplorePageView: View {
                                             )
                                             .padding(20)
                                             .onTapGesture {
-                                                viewModel.showHostView.toggle()
+                                                withAnimation(.openCard) {
+                                                    viewModel.showHostView = true
+                                                    viewModel.showNavigationBar = false
+                                                    tabBarVisibility = .invisible
+                                                }
                                             }
                                     }
                                 }
@@ -174,13 +179,17 @@ struct ExplorePageView: View {
                         .zIndex(2)
                 }
                 
+                if viewModel.showHostView {
+                    HostOrganizationView(parentViewModel: viewModel, tabBarVisibility: $tabBarVisibility)
+                        .transition(.move(edge: .bottom).combined(with: .scale(scale: 1.3)))
+                        .zIndex(2)
+                }
+                
+               
+                
             }
             .ignoresSafeArea()
-            .sheet(isPresented: $viewModel.showHostView) {
-                HostOrganizationView(parentViewModel: viewModel)
-            }
-            .statusBar(hidden: viewModel.showEventView)
-        
+            .statusBar(hidden: !viewModel.showNavigationBar)
     }
 }
 

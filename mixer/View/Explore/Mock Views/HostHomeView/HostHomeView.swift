@@ -15,6 +15,7 @@
 
 import SwiftUI
 import MapKit
+import TabBar
 
 struct HostOrganizationView: View {
     @StateObject var parentViewModel: ExplorePageViewModel
@@ -26,16 +27,20 @@ struct HostOrganizationView: View {
     @State var showMore = false
     @State var showAlert = false
     @State var isFollowing = false
-    
+    @Binding var tabBarVisibility: TabBarVisibility
+
     @Namespace var namespace
     
     let coordinates = CLLocationCoordinate2D(latitude: 42.3507046, longitude: -71.0909822)
     let link = URL(string: "https://mixer.llc")!
+    var eventList: [MockEvent] {
+        return events
+    }
     
     var body: some View {
         ZStack {
             ScrollView(showsIndicators: false) {
-                cover
+                cover2
                 
                 content
             }
@@ -244,8 +249,125 @@ struct HostOrganizationView: View {
         .frame(height: 500)
     }
     
+    var cover2: some View {
+        GeometryReader { proxy in
+            let scrollY = proxy.frame(in: .named("scroll")).minY
+            
+            VStack {
+                StretchableHeader(imageName: "profile-banner-2")
+                    .mask(Color.profileGradient) /// mask the blurred image using the gradient's alpha values
+                    .matchedGeometryEffect(id: "profileBackground", in: namespace)
+                    .offset(y: scrollY > 0 ? -scrollY : 0)
+                    .scaleEffect(scrollY > 0 ? scrollY / 500 + 1 : 1)
+                    .blur(radius: scrollY > 0 ? scrollY / 40 : 0)
+            }
+        }
+        .padding(.bottom, 230)
+    }
+    
     var content: some View {
         VStack(alignment: .leading, spacing: 25) {
+            VStack(alignment: .leading, spacing: 4) {
+                HStack(spacing: 12) {
+                    Text("MIT Theta Chi")
+                        .font(.largeTitle).bold()
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
+                    
+                    Spacer()
+                    
+                    Text(isFollowing ? "Following" : "Follow")
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                        .padding(EdgeInsets(top: 5, leading: 8, bottom: 5, trailing: 8))
+                        .background {
+                            Capsule()
+                                .stroke()
+                        }
+                        .onTapGesture {
+                            let impact = UIImpactFeedbackGenerator(style: .light)
+                            impact.impactOccurred()
+                            withAnimation(.spring()) {
+                                showAlert.toggle()
+                                isFollowing.toggle()
+                            }
+                        }
+                        .alert(isFollowing ? "Started following MIT Theta Chi" : "Stopped following MIT Theta Chi", isPresented: $showAlert, actions: {})
+                    
+                    Image(systemName: "square.and.arrow.up")
+                        .imageScale(.large)
+                        .fontWeight(.semibold)
+                }
+                
+                Text("1845 Followers")
+                    .font(.footnote)
+                    .foregroundColor(.secondary)
+                
+                HStack {
+                    HStack(spacing: -8) {
+                        Circle()
+                            .stroke()
+                            .foregroundColor(.mixerSecondaryBackground)
+                            .frame(width: 28, height: 46)
+                            .overlay {
+                                Image("profile-banner-1")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .clipShape(Circle())
+                            }
+                        
+                        Circle()
+                            .stroke()
+                            .foregroundColor(.mixerSecondaryBackground)
+                            .frame(width: 28, height: 46)
+                            .overlay {
+                                Image("mock-user")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .clipShape(Circle())
+                            }
+                        
+                        Circle()
+                            .fill(Color.mixerSecondaryBackground)
+                            .frame(width: 28, height: 46)
+                            .overlay {
+                                Text("+3")
+                                    .foregroundColor(.white)
+                                    .font(.footnote)
+                            }
+                        
+                        
+                        //                    Image("profile-banner-1")
+                        //                        .resizable()
+                        //                        .aspectRatio(contentMode: .fit)
+                        //                        .clipShape(Circle())
+                        //                        .frame(width: 40, height: 40)
+                    }
+                    
+                    
+                    VStack(alignment: .leading) {
+                        HStack(spacing: 3) {
+                            Text("Followed by")
+                                .font(.footnote)
+                                .foregroundColor(.secondary)
+                            
+                            Text("peytonlyons2002, fishcoop")
+                                .font(.footnote)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.white.opacity(0.8))
+                        }
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                        
+                        Text("and 3 more")
+                            .font(.footnote)
+                            .foregroundColor(.secondary)
+                    }
+                    
+                }
+                
+            }
+            
             Text("About this host")
                 .font(.title).bold()
                 .padding(.bottom, -10)
@@ -275,19 +397,29 @@ struct HostOrganizationView: View {
             MapSnapshotView(location: coordinates)
                 .cornerRadius(12)
             
-            Text("Past Events")
-                .font(.title).bold()
-                .padding(.bottom)
+            VStack(alignment: .leading) {
+                Text("Events hosted")
+                    .font(.title).bold()
+                    .padding(.bottom, 10)
+                
+                ForEach(Array(eventList.enumerated().prefix(9)), id: \.offset) { index, event in
+                    EventRow(flyer: event.flyer, title: event.title, date: event.eventRowDate, attendance: event.attendance)
+                }
+                
+            }
         }
         .padding()
-        .padding(EdgeInsets(top: 80, leading: 0, bottom: 180, trailing: 0))
+        .padding(EdgeInsets(top: 60, leading: 0, bottom: 120, trailing: 0))
     }
     
     var closeButton: some View {
         Button {
             withAnimation() {
-                dismiss()
+                parentViewModel.showHostView.toggle()
+                parentViewModel.showNavigationBar.toggle()
+                tabBarVisibility = .visible
             }
+            dismiss()
             
         } label: { XDismissButton() }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
@@ -300,11 +432,91 @@ struct HostOrganizationView: View {
         @Namespace static var namespace
         
         static var previews: some View {
-            HostOrganizationView(parentViewModel: ExplorePageViewModel())
-            //            HostOrganizationView()
+            HostOrganizationView(parentViewModel: ExplorePageViewModel(), tabBarVisibility: .constant(.visible))
                 .preferredColorScheme(.dark)
-            
-            //                .environmentObject(Model())
         }
+    }
+}
+
+struct EventRow: View {
+    var flyer: String
+    var title: String
+    var date: String
+    var attendance: String
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            
+            HStack(spacing: 15) {
+                Image(flyer)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 50, height: 50)
+                    .clipShape(RoundedRectangle(cornerRadius: 4))
+                
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text(title)
+                            .fontWeight(.semibold)
+                        
+                        Text(date)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white.opacity(0.8))
+                    }
+                    
+                    HStack {
+                        Image(systemName: "person.3.fill")
+                            .imageScale(.small)
+                            .symbolRenderingMode(.hierarchical)
+                        
+                        Text("\(attendance) Attended")
+                            .font(.callout)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
+                
+                Spacer()
+                                
+                Button(action: {
+                    
+                }, label: {
+                    Image(systemName: "ellipsis")
+                        .foregroundColor(.white.opacity(0.7))
+                })
+            }
+        }
+        .frame(height: 60)
+    }
+}
+
+struct StretchableHeader: View {
+    let imageName: String
+    
+    var body: some View {
+        GeometryReader { geometry in
+            Image(self.imageName)
+                .resizable()
+                .scaledToFill()
+                .frame(width: geometry.size.width,
+                       height: geometry.height)
+                .offset(y: geometry.verticalOffset)
+        }
+        .frame(height: 380)
+    }
+}
+
+extension GeometryProxy {
+    private var offset: CGFloat {
+        frame(in: .global).minY
+    }
+    var height: CGFloat {
+        size.height + (offset > 0 ? offset : 0)
+    }
+    
+    var verticalOffset: CGFloat {
+        offset > 0 ? -offset : 0
     }
 }
