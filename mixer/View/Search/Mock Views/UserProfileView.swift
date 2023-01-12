@@ -23,10 +23,14 @@ struct UserProfileView: View {
     @State var addFriend = false
     @State var shareUsername = false
     @State private var selection = "None"
-    var user: MockUser
+    @State var showAlert = false
+    @State var isFriends = false
+    @State var profileContext: ProfileContext = .current
 
     @Namespace var animation
     @Namespace var namespace
+    
+    let link = URL(string: "https://mixer.llc")!
 
     let gradient = LinearGradient(
         gradient: Gradient(stops: [
@@ -36,108 +40,214 @@ struct UserProfileView: View {
         startPoint: .top,
         endPoint: .bottom
     )
-    @State var profileContext: ProfileContext = .current
+    
+    var user: MockUser
     
     var body: some View {
         ZStack {
             Color.mixerBackground
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
-                    banner
+                    //                        banner
+                    cover2
+                    
+                    VStack(alignment: .leading, spacing: 4) {
+                        HStack(alignment: .center, spacing: 12) {
+                            Text("Peyton Lyons")
+                                .font(.largeTitle).bold()
+                                .minimumScaleFactor(0.5)
+                            
+                            Text("20")
+                                .font(.title2.weight(.medium))
+                                .offset(x: 0)
+                            
+                            Spacer()
+                            
+                            Text(isFriends ? "\(Image(systemName: "person.fill.checkmark")) Friends" : "Add Friend")
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
+                                .padding(EdgeInsets(top: 5, leading: 8, bottom: 5, trailing: 8))
+                                .background {
+                                    Capsule()
+                                        .stroke()
+                                }
+                                .onTapGesture {
+                                    let impact = UIImpactFeedbackGenerator(style: .light)
+                                    impact.impactOccurred()
+                                    withAnimation(.spring()) {
+                                        showAlert.toggle()
+                                        isFriends.toggle()
+                                    }
+                                }
+                                .alert(isFriends ? "Started following MIT Theta Chi" : "Stopped following MIT Theta Chi", isPresented: $showAlert, actions: {})
+                            
+                            ShareLink(item: link) {
+                                Image(systemName: "square.and.arrow.up")
+                                    .imageScale(.medium)
+                                    .fontWeight(.semibold)
+                            }
+                            .buttonStyle(.plain)
+                            
+                        }
+                        .lineLimit(1)
+                        
+                        Text("\(Image(systemName: "graduationcap.fill")) Fordham University")
+                            .font(.body)
+                            .fontWeight(.medium)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.5)
+                        
+                        HStack {
+                            HStack(spacing: -8) {
+                                Circle()
+                                    .stroke()
+                                    .foregroundColor(.mixerSecondaryBackground)
+                                    .frame(width: 28, height: 46)
+                                    .overlay {
+                                        Image("profile-banner-1")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .clipShape(Circle())
+                                    }
+                                
+                                Circle()
+                                    .stroke()
+                                    .foregroundColor(.mixerSecondaryBackground)
+                                    .frame(width: 28, height: 46)
+                                    .overlay {
+                                        Image("mock-user")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .clipShape(Circle())
+                                    }
+                                
+                                Circle()
+                                    .fill(Color.mixerSecondaryBackground)
+                                    .frame(width: 28, height: 46)
+                                    .overlay {
+                                        Text("+3")
+                                            .foregroundColor(.white)
+                                            .font(.footnote)
+                                    }
+                            }
+                            
+                            
+                            VStack(alignment: .leading) {
+                                HStack(spacing: 3) {
+                                    Text("Friends with")
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                    
+                                    Text("josemartinez, fishcoop")
+                                        .font(.subheadline)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.white.opacity(0.8))
+                                }
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.8)
+                                
+                                Text("and 3 more")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                            }
+                            
+                        }
+                        
+                    }
+                    .padding()
                     
                     VStack(alignment: .leading, spacing: 20) {
                         Text("About")
                             .font(.title).bold()
                             .padding(.trailing, 10)
                         
-                        VStack(alignment: .leading, spacing: 8) {
-                            HStack {
-                                PaddedImage(image: "figure.2.arms.open")
-                                
-                                Text(user.status)
-                            }
+                        VStack(alignment: .leading, spacing: 10) {
+                            DetailRow(image: "figure.2.arms.open", text: "Taken")
                             
-                            HStack {
-                                PaddedImage(image: "graduationcap.fill")
-                                
-                                Text(user.school)
-                            }
+                            DetailRow(image: "house.fill", text: "MIT Theta Chi")
                             
-                            HStack {
-                                PaddedImage(image: "house.fill")
-                                
-                                Text(user.affiliation)
-                            }
-                            
-                            HStack {
-                                PaddedImage(image: "briefcase.fill")
-                                
-                                Text(user.major)
-                            }
+                            DetailRow(image: "briefcase.fill", text: "Computer Science")
                             
                         }
-                        .font(.headline)
+                        .font(.headline.weight(.semibold))
+                        .padding(.bottom, -80)
                         
-//                        LazyVStack(pinnedViews: [.sectionHeaders]) {
-//                            Section(content: {
-//                                if profileContext == .current {
-//                                    ForEach((1...1).reversed(), id: \.self) { event in
-//                                        EventCard(namespace: namespace)
-//                                            .frame(height: 200)
-//                                            .padding(.horizontal, -10)
-//                                            .offset(y: 100)
-//                                    }
-//                                } else {
-//                                    ForEach((1...3).reversed(), id: \.self) { event in
-//                                        EventCard(namespace: namespace)
-//                                            .frame(height: 200)
-//                                            .padding(.horizontal, -10)
-//                                            .offset(y: 100)
-//                                    }
-//                                }
-//                            }, header: {
-//                                    HStack {
-//                                        ForEach(ProfileContext.allCases, id: \.self) { [self] context in
-//                                            VStack(spacing: 8) {
-//
-//                                                Text(context.rawValue)
-//                                                    .fontWeight(.semibold)
-//                                                    .foregroundColor(profileContext == context ? .white : .gray)
-//
-//                                                ZStack{
-//                                                    if profileContext == context {
-//                                                        RoundedRectangle(cornerRadius: 4, style: .continuous)
-//                                                            .fill(Color.mixerIndigo)
-//                                                            .matchedGeometryEffect(id: "TAB", in: animation)
-//                                                    }
-//                                                    else {
-//                                                        RoundedRectangle(cornerRadius: 4, style: .continuous)
-//                                                            .fill(.clear)
-//                                                    }
-//                                                }
-//                                                .frame(height: 4)
-//                                            }
-//                                            .contentShape(Rectangle())
-//                                            .onTapGesture {
-//                                                withAnimation(.easeInOut) {
-//                                                    self.profileContext = context
-//                                                }
-//                                            }
-//                                        }
-//                                    }
-//                                    .padding(.bottom, 0)
-//                                .background(Color.mixerBackground)
-//                                .offset(y: 70)
-//                            })
-//                        }
-//                        .offset(y: -50)
-
-                        
+                        LazyVStack(pinnedViews: [.sectionHeaders]) {
+                            Section(content: {
+                                if profileContext == .current {
+                                    ForEach(Array(events.enumerated().prefix(2)), id: \.offset) { index, event in
+                                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 300), spacing: 20)]) {
+                                            EventCard(event: event, namespace: namespace)
+                                                .frame(height: 380)
+                                                .padding(.horizontal, -15)
+                                                .offset(y: 100)
+                                        }
+                                        .redacted(reason: isFriends ? [] : .placeholder)
+                                    }
+                                    .redacted(reason: isFriends ? [] : .placeholder)
+                                    .overlay(!isFriends ?
+                                             Text("Only Jose's friends can see his activity")
+                                        .font(.title).bold()
+                                        .multilineTextAlignment(.center)
+                                        .offset(y: 60)
+                                             : nil, alignment: .center)
+                                    
+                                    
+                                } else {
+                                    ForEach(Array(events.enumerated()), id: \.offset) { index, event in
+                                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 300), spacing: 20)]) {
+                                            EventCard(event: event, namespace: namespace)
+                                                .frame(height: 380)
+                                                .padding(.horizontal, -15)
+                                                .offset(y: 100)
+                                        }
+                                    }
+                                    .redacted(reason: isFriends ? [] : .placeholder)
+                                    .overlay(!isFriends ?
+                                             Text("Only Jose's friends can see his activity")
+                                        .font(.title).bold()
+                                        .multilineTextAlignment(.center)
+                                        .offset(y: 60)
+                                             : nil, alignment: .center)
+                                }
+                            }, header: {
+                                HStack {
+                                    ForEach(ProfileContext.allCases, id: \.self) { [self] context in
+                                        VStack(spacing: 8) {
+                                            Text(context.rawValue)
+                                                .fontWeight(.semibold)
+                                                .foregroundColor(profileContext == context ? .white : .gray)
+                                            
+                                            ZStack{
+                                                if profileContext == context {
+                                                    RoundedRectangle(cornerRadius: 4, style: .continuous)
+                                                        .fill(Color.mixerIndigo)
+                                                        .matchedGeometryEffect(id: "TAB", in: animation)
+                                                }
+                                                else {
+                                                    RoundedRectangle(cornerRadius: 4, style: .continuous)
+                                                        .fill(.clear)
+                                                }
+                                            }
+                                            .frame(height: 4)
+                                        }
+                                        .contentShape(Rectangle())
+                                        .onTapGesture {
+                                            withAnimation(.easeInOut) {
+                                                self.profileContext = context
+                                            }
+                                        }
+                                    }
+                                }
+                                .background(Color.mixerBackground)
+                                .offset(y: 80)
+                            })
+                        }
                     }
                     .padding(.horizontal)
                 }
                 .frame(maxHeight: .infinity, alignment: .top)
-                .padding(.bottom, 150)
+                .padding(.bottom, 200)
             }
             .overlay {
                 navigationBarButtons
@@ -160,6 +270,22 @@ struct UserProfileView_Previews: PreviewProvider {
 }
 
 extension UserProfileView {
+    var cover2: some View {
+        GeometryReader { proxy in
+            let scrollY = proxy.frame(in: .named("scroll")).minY
+            
+            VStack {
+                StretchableHeader(imageName: "mock-user")
+                    .mask(Color.profileGradient) /// mask the blurred image using the gradient's alpha values
+                    .matchedGeometryEffect(id: "profileBackground", in: namespace)
+                    .offset(y: scrollY > 0 ? -scrollY : 0)
+                    .scaleEffect(scrollY > 0 ? scrollY / 500 + 1 : 1)
+                    .blur(radius: scrollY > 0 ? scrollY / 40 : 0)
+            }
+        }
+        .padding(.bottom, 230)
+    }
+    
     var banner: some View {
         
         GeometryReader { proxy in
@@ -221,22 +347,6 @@ extension UserProfileView {
     
     var navigationBarButtons: some View {
         ZStack {
-            Button(action: {
-                let impact = UIImpactFeedbackGenerator(style: .light)
-                impact.impactOccurred()
-                withAnimation(.spring()) {
-                    addFriend.toggle()
-                }
-            }, label: {
-                Image(systemName: addFriend ? "person.crop.circle.badge.checkmark" : "person.crop.circle.badge.plus")
-                    .symbolRenderingMode(addFriend ? .multicolor : .none)
-                    .foregroundColor(Color.mainFont)
-                    .font(.system(size: 28))
-                    .shadow(radius: 10)
-            })
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-            .padding(30)
-            
             Button(action: {
                 presentationMode.wrappedValue.dismiss()
             }, label: {

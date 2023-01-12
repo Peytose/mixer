@@ -294,9 +294,12 @@ struct HostOrganizationView: View {
                         }
                         .alert(isFollowing ? "Started following MIT Theta Chi" : "Stopped following MIT Theta Chi", isPresented: $showAlert, actions: {})
                     
-                    Image(systemName: "square.and.arrow.up")
-                        .imageScale(.large)
-                        .fontWeight(.semibold)
+                    ShareLink(item: link) {
+                        Image(systemName: "square.and.arrow.up")
+                            .imageScale(.large)
+                            .fontWeight(.semibold)
+                    }
+                    .buttonStyle(.plain)
                 }
                 
                 Text("1845 Followers")
@@ -335,15 +338,7 @@ struct HostOrganizationView: View {
                                     .foregroundColor(.white)
                                     .font(.footnote)
                             }
-                        
-                        
-                        //                    Image("profile-banner-1")
-                        //                        .resizable()
-                        //                        .aspectRatio(contentMode: .fit)
-                        //                        .clipShape(Circle())
-                        //                        .frame(width: 40, height: 40)
                     }
-                    
                     
                     VStack(alignment: .leading) {
                         HStack(spacing: 3) {
@@ -388,7 +383,6 @@ struct HostOrganizationView: View {
                             showMore.toggle()
                         }
                     }
-                
             }
             
             Text("Located at")
@@ -405,7 +399,6 @@ struct HostOrganizationView: View {
                 ForEach(Array(eventList.enumerated().prefix(9)), id: \.offset) { index, event in
                     EventRow(flyer: event.flyer, title: event.title, date: event.eventRowDate, attendance: event.attendance)
                 }
-                
             }
         }
         .padding()

@@ -30,12 +30,15 @@ struct EventCard: View {
                                 Text(event.stickyDay)
                                     .font(.title.weight(.bold))
                             }
-
-//                            VStack(spacing: 2) {
-//                                Text(event.wetOrDry)
-//                                    .font(.title3.weight(.bold))
-//                                    .minimumScaleFactor(0.9)
-//                            }
+                            ShareLink(item: link) {
+                                VStack(spacing: 6) {
+                                    Image(systemName: "square.and.arrow.up")
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 18, height: 18)
+                                }
+                            }
+                            .buttonStyle(.plain)
                         }
                         .padding(.top, 10)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -91,7 +94,7 @@ struct EventCard: View {
                 VStack(alignment: .leading, spacing: 10) {
                     HStack(spacing: 20) {
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("\(event.wetOrDry) \(event.type)")
+                            Text(event.type)
                                 .font(.title2.weight(.semibold))
                                 .minimumScaleFactor(0.75)
 
@@ -107,6 +110,18 @@ struct EventCard: View {
                         Spacer()
                         
                         VStack(spacing: 6) {
+                            Image(systemName: "drop.fill")
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 18, height: 18)
+                            
+                            Text("\(event.wetOrDry) Event")
+                                        .font(.footnote)
+                                        .foregroundColor(.secondary)
+                                        .offset(y: 1)
+                        }
+
+                        VStack(spacing: 6) {
                             Image(systemName: "person.3.fill")
                                 .resizable()
                                 .scaledToFill()
@@ -118,21 +133,7 @@ struct EventCard: View {
                                 .foregroundColor(.secondary)
                                 .offset(y: 1)
                         }
-                        
-                        ShareLink(item: link) {
-                            VStack(spacing: 6) {
-                                Image(systemName: "square.and.arrow.up")
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 18, height: 18)
-                                
-                                Text("Share Event")
-                                    .font(.footnote)
-                                    .foregroundColor(.secondary)
-                                    .offset(y: 1)
-                            }
-                        }
-                        .buttonStyle(.plain)
+
                     }
                     
                     Text(event.description)

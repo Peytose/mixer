@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct SearchPageView: View {
+    @EnvironmentObject var model: Model
+
     @State var text = ""
     @State var selectedUser = users[0]
     @Namespace var namespace
-    @EnvironmentObject var model: Model
 //    @EnvironmentObject private var hostManager: HostManager
     
     var body: some View {

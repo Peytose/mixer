@@ -176,13 +176,13 @@ struct ExplorePageView: View {
                 if viewModel.showEventView {
                     EventView(parentViewModel: viewModel, tabBarVisibility: $tabBarVisibility, event: eventManager.selectedEvent!)
                         .transition(.move(edge: .bottom).combined(with: .scale(scale: 1.3)))
-                        .zIndex(2)
+                        .zIndex(3)
                 }
                 
                 if viewModel.showHostView {
                     HostOrganizationView(parentViewModel: viewModel, tabBarVisibility: $tabBarVisibility)
                         .transition(.move(edge: .bottom).combined(with: .scale(scale: 1.3)))
-                        .zIndex(2)
+                        .zIndex(3)
                 }
                 
                
