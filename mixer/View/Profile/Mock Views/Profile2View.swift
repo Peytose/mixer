@@ -197,11 +197,12 @@ struct UserProfilePrototypeView: View {
                                 .offset(y: 80)
                             })
                         }
+                        .padding(.bottom, 40)
                     }
                     .padding(.horizontal)
                 }
                 .frame(maxHeight: .infinity, alignment: .top)
-                .padding(.bottom, 200)
+                .padding(.bottom, 160)
             }
         }
         .ignoresSafeArea()
@@ -319,7 +320,7 @@ extension UserProfilePrototypeView {
                         .font(.system(size: 28))
                         .shadow(radius: 10)
                 })
-                .padding(EdgeInsets(top: 40, leading: 0, bottom: 0, trailing: 30))
+                .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 20))
             }
         }
         .padding(.bottom, 230)

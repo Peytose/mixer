@@ -118,7 +118,6 @@ struct ExplorePageView: View {
                                                 withAnimation(.openCard) {
                                                     viewModel.showHostView = true
                                                     viewModel.showNavigationBar = false
-                                                    tabBarVisibility = .invisible
                                                 }
                                             }
                                     }

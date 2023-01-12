@@ -19,64 +19,6 @@ struct ProfileSettingsView: View {
                     .edgesIgnoringSafeArea(.all)
                 
                 List {
-                    Section { }
-                    
-                    ZStack {
-                        
-                        VStack(spacing: 4) {
-                            ProfileImageView()
-                                .onTapGesture {
-                                    viewModel.showNavigationBar = false
-                                    viewModel.isShowingPhotoPicker = true
-                                    viewModel.isShowingUpdateButton = true
-                                }
-                                .background(
-                                    HexagonBlobView()
-                                        .offset(x: -50, y: -100)
-                                )
-                                .background(
-                                    BlobView()
-                                        .offset(x: 230, y: -20)
-                                        .scaleEffect(0.5)
-                                )
-                            Text("\(viewModel.firstName) \(viewModel.lastName)")
-                                .font(.system(size: 27, weight: .semibold, design: .default))
-                            HStack {
-                                Image(systemName: "house.fill")
-                                    .imageScale(.medium)
-                                
-                                Text("ΘX")
-                                    .foregroundColor(.secondary)
-                                    .font(.title2.weight(.semibold))
-                                    .lineLimit(2)
-                                    .minimumScaleFactor(0.75)
-                                    .padding(.trailing, 10)
-                                
-                                Image(systemName: "graduationcap.fill")
-                                    .imageScale(.medium)
-                                
-                                Text("MIT")
-                                    .foregroundColor(.secondary)
-                                    .font(.title2.weight(.semibold))
-                                    .lineLimit(2)
-                                    .minimumScaleFactor(0.75)
-                            }
-                            Spacer()
-                        }
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 220)
-                        .padding(.vertical, 10)
-                    }
-                    .listRowBackground(
-                        ZStack {
-                            Rectangle()
-                                .fill(.black.opacity(0.05))
-                                .background(.ultraThinMaterial.opacity(0.9))
-                                .backgroundBlur(radius: 10)
-                                .backgroundColor(opacity: 0.5)
-                        }
-                    )
-
                     Section(header: Text("Personal Information").fontWeight(.semibold)) {
                         HStack {
                             Text("Email")
@@ -104,38 +46,15 @@ struct ProfileSettingsView: View {
                 .background(
                     Image("Blob 1")
                         .offset(x: 250, y: -180)
+                        .blur(radius: 30)
+                        .opacity(0.5)
                 )
                 .scrollContentBackground(.hidden)
                 .listStyle(.insetGrouped)
                 .padding(.bottom, 50)
-
-                
-    //            if viewModel.isShowingUpdateButton {
-    //                VStack {
-    //                    Spacer()
-    //
-    //                    Button {
-    //                        viewModel.updateProfile()
-    //                        viewModel.isShowingUpdateButton = false
-    //                    } label: {
-    //                        OnboardButton(text: "Update")
-    //                    }
-    //                    .padding(.bottom, 50)
-    //                }
-    //            }
-                
-    //            if viewModel.isLoading { LoadingView() }
             }
             .navigationTitle("Settings")
-    //        .task {
-    //            viewModel.getProfile()
-    //        }
-    //        .overlay(
-    //            NavigationBar(title: "Profile", onSocialPage: false, contentHasScrolled: $viewModel.contentHasScrolled, showNavigationBar: $viewModel.showNavigationBar)
-    //        )
-    //        .sheet(isPresented: $viewModel.isShowingPhotoPicker) { PhotoPicker(image: $viewModel.avatar) }
-    //        .alert(item: $viewModel.alertItem, content: { $0.alert })
-        .scrollIndicators(.hidden)
+            .scrollIndicators(.hidden)
         }
     }
 }
