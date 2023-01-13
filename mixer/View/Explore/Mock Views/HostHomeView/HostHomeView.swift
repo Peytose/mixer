@@ -111,9 +111,16 @@ struct HostOrganizationView: View {
                     
                 }
                 
+
                 HStack(spacing: 10) {
+                    Text("@mitthetachi")
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white.opacity(0.8))
+                    
                     Text("1845 Followers")
                         .font(.subheadline)
+                        .fontWeight(.semibold)
                         .foregroundColor(.secondary)
 
                     Spacer()
@@ -141,6 +148,12 @@ struct HostOrganizationView: View {
                     }
                     .buttonStyle(.plain)
                 }
+                
+                Text("Your number one spot for college parties!")
+                    .font(.body)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.white.opacity(0.8))
+                    .padding(.top, 10)
                 
                 HStack {
                     HStack(spacing: -8) {
@@ -196,11 +209,10 @@ struct HostOrganizationView: View {
                     }
                 }
             }
-            
             Text("About this host")
                 .font(.title).bold()
                 .padding(.bottom, -10)
-                .padding(.top, -5)
+                .padding(.top, -10)
 
             VStack {
                 Text("Established in 1902, Theta Chi Beta Chapter is the oldest active Theta Chi chapter in the country, and is one of the first fraternities founded at MIT. We have a storied history of developing leaders: our alumni go on to start companies, build self-driving cars, cure diseases, get involved in politics, serve in the military, and change the world. The brothers of Theta Chi are dedicated to helping each other achieve their goals and give back to the community.")

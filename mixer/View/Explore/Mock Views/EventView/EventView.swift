@@ -36,24 +36,24 @@ struct EventView: View {
                 }
                 .coordinateSpace(name: "scroll")
                 .background(Color.mixerBackground)
-                .ignoresSafeArea()
                 
                 joinButton
                 
                 if showFullFlyer {
-                    FlyerPopUpView()
+                    popUp
                         .transition(.scale(scale: 0.01))
                         .zIndex(1)
                 }
             }
             .preferredColorScheme(.dark)
+            .ignoresSafeArea()
             .onAppear { fadeIn() }
             .overlay {
                 closeButton
             }
             .sheet(isPresented: $showHost) {
                 HostOrganizationView(parentViewModel: ExplorePageViewModel(), tabBarVisibility: .constant(.visible))
-        }
+            }
         }
     }
     
@@ -97,40 +97,16 @@ struct EventView: View {
                             
                             Spacer()
                             
-                            Text("\(event.visibility) Party".capitalized)
-                                .font(.title3).bold()
-                                .foregroundColor(.primary.opacity(0.7))
-                                .lineLimit(2)
-                                .minimumScaleFactor(0.75)
-                        }
-                        
-                        Text(event.title)
-                            .font(.title).bold()
-                            .foregroundColor(.primary)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.65)
-                        
-                        HStack {
-                            Image(systemName: "person.3.fill")
-                                .symbolRenderingMode(.hierarchical)
-                            
-                            Text("\(event.attendance) going")
-                                .font(.body.weight(.semibold))
-                            
-                            Spacer()
-                            
-                            
-                            
                             ShareLink(item: link, message: Text("Join this party!")) {
                                 Image(systemName: "square.and.arrow.up")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .foregroundColor(Color.white)
-                                    .frame(width: 20, height: 20)
-                                    .padding(7)
+                                    .frame(width: 19, height: 19)
+                                    .offset(y: -1)
+                                    .padding(5)
                                     .background(.ultraThinMaterial)
                                     .backgroundStyle(cornerRadius: 18, opacity: 0.4)
-                                
                             }
                             
                             Button {
@@ -142,8 +118,8 @@ struct EventView: View {
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .foregroundColor(Color.white)
-                                    .frame(width: 19, height: 19)
-                                    .padding(7)
+                                    .frame(width: 18, height: 18)
+                                    .padding(5)
                                     .background(.ultraThinMaterial)
                                     .backgroundStyle(cornerRadius: 18, opacity: 0.4)
                             }
@@ -152,7 +128,72 @@ struct EventView: View {
                                 }
                             }
                         }
-                        .foregroundColor(.primary.opacity(0.7))
+                        .padding(.vertical, -6)
+                        
+                        Text(event.title)
+                            .font(.title).bold()
+                            .foregroundColor(.primary)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.65)
+                        
+                        HStack {
+                            Text("\(event.visibility)".capitalized)
+                                .font(.title3).bold()
+                                .foregroundColor(.primary.opacity(0.7))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.75)
+                            
+                            Spacer()
+                        }
+                        
+                        HStack(spacing: 5) {
+                            Image(systemName: "person.3.fill")
+                                .symbolRenderingMode(.hierarchical)
+                            
+                            Text("\(event.attendance) going")
+                                .font(.body.weight(.semibold))
+                            
+                            Spacer()
+                            
+                            HStack(spacing: -8) {
+                                Circle()
+                                    .stroke()
+                                    .foregroundColor(.mixerSecondaryBackground)
+                                    .frame(width: 28, height: 46)
+                                    .overlay {
+                                        Image("profile-banner-1")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .clipShape(Circle())
+                                    }
+                                
+                                Circle()
+                                    .stroke()
+                                    .foregroundColor(.mixerSecondaryBackground)
+                                    .frame(width: 28, height: 46)
+                                    .overlay {
+                                        Image("mock-user-1")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .clipShape(Circle())
+                                    }
+                                
+                                Circle()
+                                    .fill(Color.mixerSecondaryBackground)
+                                    .frame(width: 28, height: 46)
+                                    .overlay {
+                                        Text("+3")
+                                            .foregroundColor(.white)
+                                            .font(.footnote)
+                                    }
+                                
+                                Text("going")
+                                    .font(.body.weight(.semibold))
+                                    .foregroundColor(.primary.opacity(0.7))
+                                    .padding(.leading, 13)
+                            }
+                        }
+                        .padding(.vertical, -10)
                         
                         Divider()
                             .foregroundColor(.secondary)
@@ -187,7 +228,7 @@ struct EventView: View {
                         }
                         .font(.headline)
                     }
-                        .padding(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 15))
+                        .padding(EdgeInsets(top: 15, leading: 14, bottom: 14, trailing: 14))
                         .background(
                             Rectangle()
                                 .fill(.ultraThinMaterial)
@@ -199,7 +240,6 @@ struct EventView: View {
                         .offset(y: 100)
                         .background(
                             ZStack {
-                                
                                 Image(event.flyer)
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
@@ -240,6 +280,13 @@ struct EventView: View {
                                             showFullFlyer.toggle()
                                         }
                                 }
+                                    .onTapGesture(count: 2) {
+                                        let impact = UIImpactFeedbackGenerator(style: .heavy)
+                                        impact.impactOccurred()
+                                        withAnimation() {
+                                            showFullFlyer.toggle()
+                                        }
+                                    }
                                     .zIndex(2)
                             }
                         )
@@ -432,6 +479,25 @@ struct EventView: View {
         return users
     }
     
+    var popUp: some View {
+        GeometryReader { proxy in
+            ZStack {
+                Rectangle()
+                    .fill(Color.clear)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                    .backgroundBlur(radius: 10, opaque: true)
+                    .ignoresSafeArea()
+                
+                Image(event.flyer)
+                    .resizable()
+                    .frame(width: 370, height: 435)
+                    .frame(width: proxy.size.width, height: proxy.size.height)
+                    .aspectRatio(contentMode: .fit)
+                    .modifier(ImageModifier(contentSize: CGSize(width: proxy.size.width, height: proxy.size.height)))
+            }
+        }
+    }
+    
     struct EventView_Previews: PreviewProvider {
         @Namespace static var namespace
         static var previews: some View {
@@ -456,24 +522,5 @@ struct EventView: View {
         }
     }
     
-    private struct FlyerPopUpView: View {
-        var body: some View {
-            GeometryReader { proxy in
-                ZStack {
-                    Rectangle()
-                        .fill(Color.clear)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                        .backgroundBlur(radius: 10, opaque: true)
-                        .ignoresSafeArea()
-                    
-                    Image("theta-chi-party-poster")
-                        .resizable()
-                        .frame(width: 370, height: 435)
-                        .frame(width: proxy.size.width, height: proxy.size.height)
-                        .aspectRatio(contentMode: .fit)
-                        .modifier(ImageModifier(contentSize: CGSize(width: proxy.size.width, height: proxy.size.height)))
-                }
-            }
-        }
-    }
+
 }

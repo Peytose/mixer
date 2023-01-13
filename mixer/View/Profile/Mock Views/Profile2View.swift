@@ -12,7 +12,7 @@ import SwiftUI
 struct UserProfilePrototypeView: View {
     
     enum ProfilePrototypeContext: String, CaseIterable {
-        case current = "Going to"
+        case current = "Attending"
         case upcoming = "Events attended"
     }
     
@@ -76,69 +76,19 @@ struct UserProfilePrototypeView: View {
                             .lineLimit(1)
                             .minimumScaleFactor(0.5)
                         
-                        HStack {
-                            HStack(spacing: -8) {
-                                Circle()
-                                    .stroke()
-                                    .foregroundColor(.mixerSecondaryBackground)
-                                    .frame(width: 28, height: 46)
-                                    .overlay {
-                                        Image("profile-banner-1")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .clipShape(Circle())
-                                    }
-                                
-                                Circle()
-                                    .stroke()
-                                    .foregroundColor(.mixerSecondaryBackground)
-                                    .frame(width: 28, height: 46)
-                                    .overlay {
-                                        Image("mock-user-1")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .clipShape(Circle())
-                                    }
-                                
-                                Circle()
-                                    .fill(Color.mixerSecondaryBackground)
-                                    .frame(width: 28, height: 46)
-                                    .overlay {
-                                        Text("+3")
-                                            .foregroundColor(.white)
-                                            .font(.footnote)
-                                    }
-                            }
-                            
-                            
-                            VStack(alignment: .leading) {
-                                HStack(spacing: 3) {
-                                    Text("Friends with")
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
-                                    
-                                    Text("josemartinez, fishcoop")
-                                        .font(.subheadline)
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(.white.opacity(0.8))
-                                }
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.8)
-                                
-                                Text("and 3 more")
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                            }
-                            
-                        }
-                        
+                        Text("Just know if I'm there, it's good")
+                            .font(.body)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white.opacity(0.8))
+                            .padding(.top, 15)
+
                     }
                     .padding()
 
                     VStack(alignment: .leading, spacing: 20) {
                         Text("About")
                             .font(.title).bold()
-                            .padding(.top, -5)
+                            .padding(.top, -10)
                         
                         VStack(alignment: .leading, spacing: 10) {
                             DetailRow(image: "figure.2.arms.open", text: "Taken")
@@ -161,6 +111,22 @@ struct UserProfilePrototypeView: View {
         }
         .ignoresSafeArea()
         .preferredColorScheme(.dark)
+        .statusBarHidden(true)
+        .overlay(alignment: .topTrailing) {
+            Button(action: {
+                let impact = UIImpactFeedbackGenerator(style: .light)
+                impact.impactOccurred()
+                withAnimation(.spring()) {
+                    showSettingsView.toggle()
+                }
+            }, label: {
+                Image(systemName: "gearshape.fill")
+                    .foregroundColor(Color.mainFont)
+                    .font(.system(size: 28))
+                    .shadow(radius: 10)
+            })
+            .padding(EdgeInsets(top: -20, leading: 0, bottom: 0, trailing: 20))
+        }
         .sheet(isPresented: $showSettingsView, content: {
             ProfileSettingsView()
                 .preferredColorScheme(.dark)
@@ -186,21 +152,6 @@ extension UserProfilePrototypeView {
                     .offset(y: scrollY > 0 ? -scrollY : 0)
                     .scaleEffect(scrollY > 0 ? scrollY / 500 + 1 : 1)
                     .blur(radius: scrollY > 0 ? scrollY / 40 : 0)
-            }
-            .overlay(alignment: .topTrailing) {
-                Button(action: {
-                    let impact = UIImpactFeedbackGenerator(style: .light)
-                    impact.impactOccurred()
-                    withAnimation(.spring()) {
-                        showSettingsView.toggle()
-                    }
-                }, label: {
-                    Image(systemName: "gearshape.fill")
-                        .foregroundColor(Color.mainFont)
-                        .font(.system(size: 28))
-                        .shadow(radius: 10)
-                })
-                .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 20))
             }
         }
         .padding(.bottom, 270)
