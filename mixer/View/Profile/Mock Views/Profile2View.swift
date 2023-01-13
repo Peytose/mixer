@@ -37,8 +37,7 @@ struct UserProfilePrototypeView: View {
             
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
-                    //                        banner
-                    cover2
+                    banner
                     
                     VStack(alignment: .leading, spacing: 4) {
                         HStack(alignment: .center, spacing: 12) {
@@ -135,7 +134,6 @@ struct UserProfilePrototypeView: View {
                         
                     }
                     .padding()
-                    .padding(.top, 40)
 
                     VStack(alignment: .leading, spacing: 20) {
                         Text("About")
@@ -153,61 +151,7 @@ struct UserProfilePrototypeView: View {
                         .font(.headline.weight(.semibold))
                         .padding(.bottom, -80)
                         
-                        LazyVStack(pinnedViews: [.sectionHeaders]) {
-                            Section(content: {
-                                if profileContext == .current {
-                                    ForEach(Array(events.enumerated().prefix(2)), id: \.offset) { index, event in
-                                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 300), spacing: 20)]) {
-                                            EventCard(event: event, namespace: namespace)
-                                                .frame(height: 380)
-                                                .padding(.horizontal, -15)
-                                                .offset(y: 100)
-                                        }
-                                    }
-                                } else {
-                                    ForEach(Array(events.enumerated()), id: \.offset) { index, event in
-                                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 300), spacing: 20)]) {
-                                            EventCard(event: event, namespace: namespace)
-                                                .frame(height: 380)
-                                                .padding(.horizontal, -15)
-                                                .offset(y: 100)
-                                        }
-                                    }
-                                }
-                            }, header: {
-                                HStack {
-                                    ForEach(ProfilePrototypeContext.allCases, id: \.self) { [self] context in
-                                        VStack(spacing: 8) {
-                                            Text(context.rawValue)
-                                                .fontWeight(.semibold)
-                                                .foregroundColor(profileContext == context ? .white : .gray)
-                                            
-                                            ZStack{
-                                                if profileContext == context {
-                                                    RoundedRectangle(cornerRadius: 4, style: .continuous)
-                                                        .fill(Color.mixerIndigo)
-                                                        .matchedGeometryEffect(id: "TAB", in: animation)
-                                                }
-                                                else {
-                                                    RoundedRectangle(cornerRadius: 4, style: .continuous)
-                                                        .fill(.clear)
-                                                }
-                                            }
-                                            .frame(height: 4)
-                                        }
-                                        .contentShape(Rectangle())
-                                        .onTapGesture {
-                                            withAnimation(.easeInOut) {
-                                                self.profileContext = context
-                                            }
-                                        }
-                                    }
-                                }
-                                .background(Color.mixerBackground)
-                                .offset(y: 80)
-                            })
-                        }
-                        .padding(.bottom, 40)
+                        eventSection
                     }
                     .padding(.horizontal)
                 }
@@ -235,80 +179,6 @@ extension UserProfilePrototypeView {
     var banner: some View {
         GeometryReader { proxy in
             let scrollY = proxy.frame(in: .named("scroll")).minY
-            
-            VStack {
-                Image("banner-image-1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .blur(radius: 3) /// blur the image
-                    .padding(-20) /// expand the blur a bit to cover the edges
-                    .clipped() /// prevent blur overflow
-                    .mask(Color.profileGradient) /// mask the blurred image using the gradient's alpha values
-                    .matchedGeometryEffect(id: "profileBackground", in: namespace)
-                    .offset(y: scrollY > 0 ? -scrollY : 0)
-                    .scaleEffect(scrollY > 0 ? scrollY / 500 + 1 : 1)
-                    .blur(radius: scrollY > 0 ? scrollY / 20 : 0)
-                    .frame(height: 220)
-                    .frame(maxWidth: .infinity)
-                    .overlay {
-                        VStack(spacing: -10) {
-//                            Image(uiImage: viewModel.avatar)
-                            Image("default-avatar")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .clipShape(Circle())
-                                .frame(width: 110, height: 110)
-                                .shadow(radius: 5, x: 0, y: 10)
-                                .padding(.bottom, 20)
-                            
-                            VStack(spacing: 3) {
-                                HStack {
-//                                    Text("\(viewModel.firstName) \(viewModel.lastName)")
-                                    Text("John Doe")
-                                        .font(.largeTitle.weight(.bold))
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.75)
-                                    
-                                    Text("21")
-                                        .foregroundColor(.secondary)
-                                        .font(.largeTitle.weight(.bold))
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.75)
-                                }
-                                
-                                ShareLink(item: URL(string: "https://mixer.llc")!) {
-                                    Text("@johndoe")
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(.blue)
-                                }
-                            }
-                        }
-                        .padding(.top, 75)
-                    }
-            }
-            .overlay(alignment: .topTrailing) {
-                Button(action: {
-                    let impact = UIImpactFeedbackGenerator(style: .light)
-                    impact.impactOccurred()
-                    withAnimation(.spring()) {
-                        showSettingsView.toggle()
-                    }
-                }, label: {
-                    Image(systemName: "gearshape.fill")
-                        .foregroundColor(Color.mainFont)
-                        .font(.system(size: 28))
-                        .shadow(radius: 10)
-                })
-                .padding(EdgeInsets(top: 60, leading: 0, bottom: 0, trailing: 30))
-            }
-        }
-        .padding(.bottom, 230)
-    }
-    
-    var cover2: some View {
-        GeometryReader { proxy in
-            let scrollY = proxy.frame(in: .named("scroll")).minY
-            
             VStack {
                 StretchableHeader(imageName: "mock-user-1")
                     .mask(Color.profileGradient) /// mask the blurred image using the gradient's alpha values
@@ -333,7 +203,65 @@ extension UserProfilePrototypeView {
                 .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 20))
             }
         }
-        .padding(.bottom, 230)
+        .padding(.bottom, 270)
+    }
+    
+    var eventSection: some View {
+        LazyVStack(pinnedViews: [.sectionHeaders]) {
+            Section(content: {
+                if profileContext == .current {
+                    ForEach(Array(events.enumerated().prefix(2)), id: \.offset) { index, event in
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 300), spacing: 20)]) {
+                            EventCard(event: event, namespace: namespace)
+                                .frame(height: 380)
+                                .padding(.horizontal, -15)
+                                .offset(y: 100)
+                        }
+                    }
+                } else {
+                    ForEach(Array(events.enumerated()), id: \.offset) { index, event in
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 300), spacing: 20)]) {
+                            EventCard(event: event, namespace: namespace)
+                                .frame(height: 380)
+                                .padding(.horizontal, -15)
+                                .offset(y: 100)
+                        }
+                    }
+                }
+            }, header: {
+                HStack {
+                    ForEach(ProfilePrototypeContext.allCases, id: \.self) { [self] context in
+                        VStack(spacing: 8) {
+                            Text(context.rawValue)
+                                .fontWeight(.semibold)
+                                .foregroundColor(profileContext == context ? .white : .gray)
+                            
+                            ZStack{
+                                if profileContext == context {
+                                    RoundedRectangle(cornerRadius: 4, style: .continuous)
+                                        .fill(Color.mixerIndigo)
+                                        .matchedGeometryEffect(id: "TAB", in: animation)
+                                }
+                                else {
+                                    RoundedRectangle(cornerRadius: 4, style: .continuous)
+                                        .fill(.clear)
+                                }
+                            }
+                            .frame(height: 4)
+                        }
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            withAnimation(.easeInOut) {
+                                self.profileContext = context
+                            }
+                        }
+                    }
+                }
+                .background(Color.mixerBackground)
+                .offset(y: 80)
+            })
+        }
+        .padding(.bottom, 40)
     }
 }
 

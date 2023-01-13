@@ -8,52 +8,37 @@
 import SwiftUI
 
 struct ProfileSettingsView: View {
-    @StateObject var viewModel = UserProfileViewModel()
-    
     var body: some View {
         NavigationView {
-            ZStack {
-                Rectangle()
-                    .fill(Color.mixerBackground)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .edgesIgnoringSafeArea(.all)
+            List {
+                PersonalInformationView()
                 
-                List {
-                    Section(header: Text("Personal Information").fontWeight(.semibold)) {
-                        HStack {
-                            Text("Email")
-                            Spacer()
-                            Text(viewModel.email)
-                                .foregroundColor(.secondary)
-                        }
-                        HStack {
-                            Text("Phone Number")
-                            Spacer()
-                            Text(viewModel.phone)
-                                .foregroundColor(.secondary)
-                        }
-                    }
-                    .listRowBackground(Color.mixerSecondaryBackground)
+                SupportView()
+                
+                LegalView()
+            }
+            .background {
+                ZStack {
+                    Rectangle()
+                        .fill(Color.mixerBackground)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .edgesIgnoringSafeArea(.all)
                     
-                    SupportView()
-                    LegalView()
+                    Image("Blob 1")
+                        .offset(x: 250, y: -180)
+                        .opacity(0.9)
                     
                     Rectangle()
                         .fill(Color.clear)
-                        .listRowBackground(Color.clear)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                        .backgroundBlur(radius: 12, opaque: true)
+                        .ignoresSafeArea()
                 }
-                .coordinateSpace(name: "scroll")
-                .background(
-                    Image("Blob 1")
-                        .offset(x: 250, y: -180)
-                        .blur(radius: 30)
-                        .opacity(0.5)
-                )
-                .scrollContentBackground(.hidden)
-                .listStyle(.insetGrouped)
-                .padding(.bottom, 50)
             }
+            .scrollContentBackground(.hidden)
+            .listStyle(.insetGrouped)
             .navigationTitle("Settings")
+            .navigationBarTitleDisplayMode(.automatic)
             .scrollIndicators(.hidden)
         }
     }
@@ -67,35 +52,27 @@ struct ProfileSettingsView_Previews: PreviewProvider {
     }
 }
 
+fileprivate struct PersonalInformationView: View {
+    @StateObject var viewModel = UserProfileViewModel()
 
-fileprivate struct ProfileImageView: View {
-//    var image: String
-    
     var body: some View {
-        ZStack {
-//            AvatarView(image: , size: 170)
-            Image("kingfisher-2.jpg")
-                .resizable()
-                .scaledToFit()
-                .clipShape(Circle())
-                .shadow(radius: 20)
-                .background(Circle().fill(.ultraThinMaterial))
-                .frame(width: 170, height: 170)
-            
-            Image(systemName: "square.and.pencil")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 20, height: 20)
-                .foregroundColor(.white)
-                .offset(y: 30)
+        Section(header: Text("Personal Information").fontWeight(.semibold)) {
+            HStack {
+                Text("Email")
+                Spacer()
+                Text(viewModel.email)
+                    .foregroundColor(.secondary)
+            }
+            HStack {
+                Text("Phone Number")
+                Spacer()
+                Text(viewModel.phone)
+                    .foregroundColor(.secondary)
+            }
         }
-        .accessibilityElement(children: .ignore)
-        .accessibilityAddTraits(.isButton)
-        .accessibilityLabel(Text("Profile photo"))
-        .accessibilityHint(Text("Opens the iPhone's photo picker"))
+        .listRowBackground(Color.mixerSecondaryBackground)
     }
 }
-
 
 fileprivate struct SupportView: View {
     var body: some View {

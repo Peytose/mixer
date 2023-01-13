@@ -38,199 +38,20 @@ struct HostOrganizationView: View {
     }
     
     var body: some View {
-        ZStack {
-            ScrollView(showsIndicators: false) {
-                cover2
-                
-                content
-            }
-            .coordinateSpace(name: "scroll")
-            .background(Color.mixerBackground)
-            .ignoresSafeArea()
+        ScrollView(showsIndicators: false) {
+            cover2
+            
+            content
         }
+        .background(Color.mixerBackground)
+        .coordinateSpace(name: "scroll")
         .preferredColorScheme(.dark)
-        .onAppear { fadeIn() }
+        .ignoresSafeArea()
         .overlay {
             closeButton
         }
     }
-    
-    func fadeIn() {
-        withAnimation(.easeOut.delay(0.3)) {
-            appear[0] = true
-        }
-        withAnimation(.easeOut.delay(0.4)) {
-            appear[1] = true
-        }
-        withAnimation(.easeOut.delay(0.5)) {
-            appear[2] = true
-        }
-    }
-    
-    func fadeOut() {
-        withAnimation(.easeIn(duration: 0.1)) {
-            appear[0] = false
-            appear[1] = false
-            appear[2] = false
-        }
-    }
-    
-    var cover: some View {
-        GeometryReader { proxy in
-            let scrollY = proxy.frame(in: .named("scroll")).minY
             
-            VStack {
-            }
-            .frame(maxWidth: .infinity)
-            .frame(height: scrollY > 0 ? 500 + scrollY : 500)  //MARK: Change Flyer Height
-            .background(
-                Image("theta-chi-crest")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 290, height: 290)
-                    .matchedGeometryEffect(id: "image 1", in: namespace)
-                    .offset(y: scrollY > 0 ? -scrollY : 0)
-            )
-            .background(
-                ZStack {
-                    Image("mit-banner")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .matchedGeometryEffect(id: "background 2", in: namespace)
-                        .offset(y: scrollY > 0 ? -scrollY : 0)
-                        .scaleEffect(scrollY > 0 ? scrollY / 500 + 1 : 1)
-                        .blur(radius: scrollY > 0 ? scrollY / 20 : 0)
-                        .opacity(0.9)
-                    
-                    Rectangle()
-                        .fill(Color.clear)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                        .backgroundBlur(radius: 10, opaque: true)
-                        .ignoresSafeArea()
-                }
-            )
-            .mask(
-                RoundedRectangle(cornerRadius: 20)
-            )
-            .overlay(
-                //                VStack {
-                VStack(alignment: .leading, spacing: 3) {
-                    HStack {
-                        Text("MIT Theta Chi")
-                            .font(.title).bold()
-                            .foregroundColor(.primary)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.5)
-                        
-                        Spacer()
-                        Text(isFollowing ? "Following" : "Follow")
-                            .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
-                            .background {
-                                Capsule()
-                                    .stroke()
-                            }
-                            .onTapGesture {
-                                let impact = UIImpactFeedbackGenerator(style: .light)
-                                impact.impactOccurred()
-                                withAnimation(.spring()) {
-                                    showAlert.toggle()
-                                    isFollowing.toggle()
-                                }
-                            }
-                            .alert(isFollowing ? "Added to Favorites" : "Removed from Favorites", isPresented: $showAlert, actions: {})
-                        
-                        Button {
-                            let impact = UIImpactFeedbackGenerator(style: .light)
-                            impact.impactOccurred()
-                            showingOptions.toggle()
-                        } label: {
-                            Image(systemName: "ellipsis")
-                                .foregroundColor(Color.white)
-                        }
-                        .confirmationDialog("Select an option", isPresented: $showingOptions, titleVisibility: .hidden) {
-                            Button("Report") {
-                            }
-                        }
-                    }
-                    
-                    HStack {
-                        Text("528 Beacon St, Boston MA")
-                            .font(.body.weight(.semibold))
-                            .foregroundColor(.white.opacity(0.7))
-                        
-                        Spacer()
-                        
-                        
-                    }
-                    
-                    Divider()
-                        .foregroundColor(.secondary)
-                        .padding(.vertical, 4)
-                    
-                    HStack {
-                        Image(systemName: "checkmark")
-                            .imageScale(.small)
-                            .foregroundColor(Color.white)
-                            .padding(5)
-                            .background(.ultraThinMaterial)
-                            .backgroundStyle(cornerRadius: 18, opacity: 0.4)
-                        
-                        Text("Verified Host")
-                            .font(.body.weight(.semibold))
-                            .foregroundColor(.white.opacity(0.7))
-                        
-                        Spacer()
-                        
-                        Link(destination: URL(string: "https://instagram.com/mitthetachi?igshid=Zjc2ZTc4Nzk=")!) {
-                            Image("Instagram-Icon")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .foregroundColor(Color.white)
-                                .frame(width: 22, height: 22)
-                                .padding(6)
-                                .background(.ultraThinMaterial)
-                                .backgroundStyle(cornerRadius: 18, opacity: 0.4)
-                        }
-                        
-                        Link(destination: URL(string: "http://ox.mit.edu/main/")!) {
-                            Image(systemName: "globe")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .foregroundColor(Color.white)
-                                .frame(width: 20, height: 20)
-                                .padding(7)
-                                .background(.ultraThinMaterial)
-                                .backgroundStyle(cornerRadius: 18, opacity: 0.4)
-                        }
-                        
-                        ShareLink(item: link) {
-                            Image(systemName: "square.and.arrow.up")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .foregroundColor(Color.white)
-                                .frame(width: 20, height: 20)
-                                .padding(7)
-                                .background(.ultraThinMaterial)
-                                .backgroundStyle(cornerRadius: 18, opacity: 0.4)
-                        }
-                    }
-                    .font(.headline)
-                }
-                    .padding(EdgeInsets(top: 12, leading: 15, bottom: 12, trailing: 15))
-                    .background(
-                        Rectangle()
-                            .fill(.ultraThinMaterial)
-                            .backgroundStyle(cornerRadius: 30)
-                    )
-                    .frame(maxHeight: .infinity, alignment: .bottom)
-                    .padding(20)
-                    .offset(y: 100)
-            )
-            .offset(y: scrollY > 0 ? -scrollY * 1.8 : 0)
-        }
-        .frame(height: 500)
-    }
-    
     var cover2: some View {
         GeometryReader { proxy in
             let scrollY = proxy.frame(in: .named("scroll")).minY
@@ -244,13 +65,13 @@ struct HostOrganizationView: View {
                     .blur(radius: scrollY > 0 ? scrollY / 40 : 0)
             }
         }
-        .padding(.bottom, 230)
+        .padding(.bottom, 270)
     }
     
     var content: some View {
         VStack(alignment: .leading, spacing: 25) {
             VStack(alignment: .leading, spacing: 4) {
-                HStack(spacing: 12) {
+                HStack(spacing: 7) {
                     Text("MIT Theta Chi")
                         .font(.largeTitle).bold()
                         .lineLimit(1)
@@ -258,10 +79,17 @@ struct HostOrganizationView: View {
                     
                     Image(systemName: "checkmark.seal.fill")
                         .symbolRenderingMode(.palette)
-                        .foregroundStyle(.white, .blue)                        .foregroundColor(.blue)
-                        .padding(.leading, -5)
+                        .foregroundStyle(.white, .blue)
+                        .onTapGesture {
+                            let impact = UIImpactFeedbackGenerator(style: .light)
+                            impact.impactOccurred()
+                            withAnimation(.spring()) {
+                                showAlert.toggle()
+                            }                        }
+                        .alert("Verified Host", isPresented: $showAlert, actions: {}) {
+                                Text("Verified badges are awarded to hosts that have provided proof of identity and have demonstrated that they have the necessary experience and qualifications to host a safe event")
+                        }
 
-                    
                     Spacer()
                     
                     Text(isFollowing ? "Following" : "Follow")
@@ -276,11 +104,10 @@ struct HostOrganizationView: View {
                             let impact = UIImpactFeedbackGenerator(style: .light)
                             impact.impactOccurred()
                             withAnimation(.spring()) {
-                                showAlert.toggle()
                                 isFollowing.toggle()
                             }
                         }
-                        .alert(isFollowing ? "Started following MIT Theta Chi" : "Stopped following MIT Theta Chi", isPresented: $showAlert, actions: {})
+
                     
                 }
                 
@@ -367,9 +194,7 @@ struct HostOrganizationView: View {
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                     }
-                    
                 }
-                
             }
             
             Text("About this host")
@@ -412,7 +237,7 @@ struct HostOrganizationView: View {
             }
         }
         .padding()
-        .padding(EdgeInsets(top: 40, leading: 0, bottom: 120, trailing: 0))
+        .padding(.bottom, 120)
     }
     
     var closeButton: some View {
@@ -431,95 +256,31 @@ struct HostOrganizationView: View {
             .ignoresSafeArea()
     }
     
-    struct EventView_Previews: PreviewProvider {
-        @Namespace static var namespace
-        
-        static var previews: some View {
-            HostOrganizationView(parentViewModel: ExplorePageViewModel(), tabBarVisibility: .constant(.visible))
-                .preferredColorScheme(.dark)
+    func fadeIn() {
+        withAnimation(.easeOut.delay(0.3)) {
+            appear[0] = true
+        }
+        withAnimation(.easeOut.delay(0.4)) {
+            appear[1] = true
+        }
+        withAnimation(.easeOut.delay(0.5)) {
+            appear[2] = true
+        }
+    }
+    
+    func fadeOut() {
+        withAnimation(.easeIn(duration: 0.1)) {
+            appear[0] = false
+            appear[1] = false
+            appear[2] = false
         }
     }
 }
 
-struct EventRow: View {
-    var flyer: String
-    var title: String
-    var date: String
-    var attendance: String
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            
-            HStack(spacing: 15) {
-                Image(flyer)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 50, height: 50)
-                    .clipShape(RoundedRectangle(cornerRadius: 4))
-                
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text(title)
-                            .fontWeight(.semibold)
-                        
-                        Text(date)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.white.opacity(0.8))
-                    }
-                    
-                    HStack {
-                        Image(systemName: "person.3.fill")
-                            .imageScale(.small)
-                            .symbolRenderingMode(.hierarchical)
-                        
-                        Text("\(attendance) Attended")
-                            .font(.callout)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.secondary)
-                    }
-                }
-                .lineLimit(1)
-                .minimumScaleFactor(0.75)
-                
-                Spacer()
-                                
-                Button(action: {
-                    
-                }, label: {
-                    Image(systemName: "ellipsis")
-                        .foregroundColor(.white.opacity(0.7))
-                })
-            }
-        }
-        .frame(height: 60)
-    }
-}
-
-struct StretchableHeader: View {
-    let imageName: String
-    
-    var body: some View {
-        GeometryReader { geometry in
-            Image(self.imageName)
-                .resizable()
-                .scaledToFill()
-                .frame(width: geometry.size.width,
-                       height: geometry.height)
-                .offset(y: geometry.verticalOffset)
-        }
-        .frame(height: 350)
-    }
-}
-
-extension GeometryProxy {
-    private var offset: CGFloat {
-        frame(in: .global).minY
-    }
-    var height: CGFloat {
-        size.height + (offset > 0 ? offset : 0)
-    }
-    
-    var verticalOffset: CGFloat {
-        offset > 0 ? -offset : 0
+struct EventView_Previews: PreviewProvider {
+    @Namespace static var namespace
+    static var previews: some View {
+        HostOrganizationView(parentViewModel: ExplorePageViewModel(), tabBarVisibility: .constant(.visible))
+            .preferredColorScheme(.dark)
     }
 }
