@@ -51,7 +51,7 @@ struct UserProfilePrototypeView: View {
                             
                             Spacer()
                             
-                            Link(destination: URL(string: "https://instagram.com/mitthetachi?igshid=Zjc2ZTc4Nzk=")!) {
+                            Link(destination: URL(string: "https://instagram.com/peytonalyons?igshid=Zjc2ZTc4Nzk=")!) {
                                 Image("Instagram-Icon")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)

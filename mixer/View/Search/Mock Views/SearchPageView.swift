@@ -33,6 +33,7 @@ struct SearchPageView: View {
                 
                 content
                     .padding(.top, 10)
+                    .padding(.bottom, 20)
             }
             .navigationTitle("Search Mixer")
             .navigationBarTitleDisplayMode(.large)
@@ -79,7 +80,10 @@ extension SearchPageView {
                                         Text(user.school)
                                             .font(.system(size: 18, weight: .semibold, design: .default))
                                             .foregroundColor(.secondary)
+                                            .lineLimit(1)
+                                            .minimumScaleFactor(0.7)
                                     }
+                                    
                                     
                                     Text("@\(user.username)")
                                     .font(.system(size: 16, weight: .semibold, design: .default))

@@ -75,6 +75,7 @@ struct UserProfileView: View {
                                 }
                         }
                         .lineLimit(1)
+                        .padding(.bottom, 5)
                         
                         HStack {
                             Text("\(Image(systemName: "graduationcap.fill")) \(user.school)")
@@ -85,7 +86,7 @@ struct UserProfileView: View {
                             
                             Spacer()
                             
-                            Link(destination: URL(string: "https://instagram.com/mitthetachi?igshid=Zjc2ZTc4Nzk=")!) {
+                            Link(destination: URL(string: user.instagram)!) {
                                 Image("Instagram-Icon")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
