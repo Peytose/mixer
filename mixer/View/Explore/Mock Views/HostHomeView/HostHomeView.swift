@@ -33,22 +33,28 @@ struct HostOrganizationView: View {
     
     let coordinates = CLLocationCoordinate2D(latitude: 42.3507046, longitude: -71.0909822)
     let link = URL(string: "https://mixer.llc")!
+    
     var eventList: [MockEvent] {
         return events
     }
+    var results: [MockUser] {
+        return users
+    }
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            cover2
-            
-            content
+        NavigationView {
+            ScrollView(showsIndicators: false) {
+                cover2
+                
+                content
+            }
+            .background(Color.mixerBackground)
+            .coordinateSpace(name: "scroll")
+            .preferredColorScheme(.dark)
+            .ignoresSafeArea()
+            .overlay {
+                closeButton
         }
-        .background(Color.mixerBackground)
-        .coordinateSpace(name: "scroll")
-        .preferredColorScheme(.dark)
-        .ignoresSafeArea()
-        .overlay {
-            closeButton
         }
     }
             
@@ -69,7 +75,7 @@ struct HostOrganizationView: View {
     }
     
     var content: some View {
-        VStack(alignment: .leading, spacing: 25) {
+        VStack(alignment: .leading, spacing: 20) {
             VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: 7) {
                     Text("MIT Theta Chi")
@@ -112,7 +118,7 @@ struct HostOrganizationView: View {
                 }
                 
 
-                HStack(spacing: 10) {
+                HStack(alignment: .center, spacing: 10) {
                     Text("@mitthetachi")
                         .font(.subheadline)
                         .fontWeight(.semibold)
@@ -130,7 +136,7 @@ struct HostOrganizationView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .foregroundColor(Color.white)
-                            .frame(width: 20, height: 20)
+                            .frame(width: 22, height: 22)
                     }
                     
                     Link(destination: URL(string: "http://ox.mit.edu/main/")!) {
@@ -138,13 +144,15 @@ struct HostOrganizationView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .foregroundColor(Color.white)
-                            .frame(width: 20, height: 20)
+                            .frame(width: 22, height: 22)
                     }
                     
                     ShareLink(item: link) {
                         Image(systemName: "square.and.arrow.up")
-                            .imageScale(.medium)
-                            .fontWeight(.semibold)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .fontWeight(.medium)
+                            .frame(width: 22, height: 22)
                     }
                     .buttonStyle(.plain)
                 }
@@ -211,20 +219,19 @@ struct HostOrganizationView: View {
             }
             Text("About this host")
                 .font(.title).bold()
-                .padding(.bottom, -10)
+                .padding(.bottom, -14)
                 .padding(.top, -10)
 
             VStack {
                 Text("Established in 1902, Theta Chi Beta Chapter is the oldest active Theta Chi chapter in the country, and is one of the first fraternities founded at MIT. We have a storied history of developing leaders: our alumni go on to start companies, build self-driving cars, cure diseases, get involved in politics, serve in the military, and change the world. The brothers of Theta Chi are dedicated to helping each other achieve their goals and give back to the community.")
-                    .font(.headline)
+                    .font(.body)
                     .foregroundColor(.secondary)
                     .lineLimit(showMore ? nil : 4)
                 
                 Text("Read more")
-                    .fontWeight(.bold)
+                    .fontWeight(.semibold)
                     .foregroundColor(.blue)
                     .frame(maxWidth: .infinity,maxHeight: .infinity, alignment: .leading)
-                
                     .onTapGesture {
                         withAnimation(.spring()) {
                             showMore.toggle()
@@ -245,6 +252,37 @@ struct HostOrganizationView: View {
                 
                 ForEach(Array(eventList.enumerated().prefix(9)), id: \.offset) { index, event in
                     EventRow(flyer: event.flyer, title: event.title, date: event.eventRowDate, attendance: event.attendance)
+                }
+            }
+            
+            Text("Members of MIT Theta Chi")
+                .font(.title).bold()
+                .padding(.bottom, 10)
+
+            ForEach(Array(results.enumerated().prefix(9)), id: \.offset) { index, user in
+                if index != 0 { Divider() }
+                NavigationLink(destination: UserProfileView(user: user)) {
+                    HStack(spacing: 15) {
+                        Image(user.image)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .clipShape(Circle())
+                            .frame(width: 40, height: 40)
+                        
+                        VStack(alignment: .leading) {
+                            HStack {
+                                Text(user.name)
+                                    .font(.system(size: 18, weight: .semibold, design: .default))
+                                    .lineLimit(1)
+                                
+                                    .foregroundColor(.white)
+                                Text(user.school)
+                                    .font(.system(size: 18, weight: .semibold, design: .default))
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                    .padding(.vertical, -16)
                 }
             }
         }

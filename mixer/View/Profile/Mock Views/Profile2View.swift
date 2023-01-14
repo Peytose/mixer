@@ -62,8 +62,10 @@ struct UserProfilePrototypeView: View {
                             
                             ShareLink(item: link) {
                                 Image(systemName: "square.and.arrow.up")
-                                    .imageScale(.large)
-                                    .fontWeight(.semibold)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .fontWeight(.medium)
+                                    .frame(width: 24, height: 24)
                             }
                             .buttonStyle(.plain)
                             
@@ -80,12 +82,12 @@ struct UserProfilePrototypeView: View {
                             .font(.body)
                             .fontWeight(.semibold)
                             .foregroundColor(.white.opacity(0.8))
-                            .padding(.top, 15)
+                            .padding(.top, 15 )
 
                     }
                     .padding()
 
-                    VStack(alignment: .leading, spacing: 20) {
+                    VStack(alignment: .leading, spacing: 15) {
                         Text("About")
                             .font(.title).bold()
                             .padding(.top, -10)

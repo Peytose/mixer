@@ -16,7 +16,7 @@ struct DetailRow: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 21, height: 21)
-                .padding(8)
+                .padding(7)
                 .background(.ultraThinMaterial)
                 .backgroundStyle(cornerRadius: 10, opacity: 0.5)
             

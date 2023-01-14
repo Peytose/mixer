@@ -12,7 +12,7 @@ import SwiftUI
 struct UserProfileView: View {
     
     enum ProfileContext: String, CaseIterable {
-        case current = "Going to"
+        case current = "Attending"
         case upcoming = "Events attended"
     }
     @Environment(\.presentationMode) var presentationMode
@@ -57,6 +57,37 @@ struct UserProfileView: View {
                             
                             Spacer()
                             
+                            Link(destination: URL(string: user.instagram)!) {
+                                Image("Instagram-Icon")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(Color.white)
+                                    .frame(width: 24, height: 24)
+                            }
+                            .offset(y: 2)
+                            
+                            ShareLink(item: link) {
+                                Image(systemName: "square.and.arrow.up")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .fontWeight(.medium)
+                                    .frame(width: 24, height: 24)
+                            }
+                            .buttonStyle(.plain)
+                            
+                        }
+                        .lineLimit(1)
+                        .padding(.bottom, 5)
+                        
+                        HStack(spacing: 10) {
+                            Text("\(Image(systemName: "graduationcap.fill")) \(user.school)")
+                                .font(.body)
+                                .fontWeight(.medium)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.5)
+                            
+                            Spacer()
+                            
                             Text(isFriends ? "\(Image(systemName: "person.fill.checkmark")) Friends" : "Add Friend")
                                 .font(.subheadline)
                                 .fontWeight(.semibold)
@@ -73,33 +104,6 @@ struct UserProfileView: View {
                                         isFriends.toggle()
                                     }
                                 }
-                        }
-                        .lineLimit(1)
-                        .padding(.bottom, 5)
-                        
-                        HStack {
-                            Text("\(Image(systemName: "graduationcap.fill")) \(user.school)")
-                                .font(.body)
-                                .fontWeight(.medium)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.5)
-                            
-                            Spacer()
-                            
-                            Link(destination: URL(string: user.instagram)!) {
-                                Image("Instagram-Icon")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(Color.white)
-                                    .frame(width: 20, height: 20)
-                            }
-                            
-                            ShareLink(item: link) {
-                                Image(systemName: "square.and.arrow.up")
-                                    .imageScale(.medium)
-                                    .fontWeight(.semibold)
-                            }
-                            .buttonStyle(.plain)
                         }
                         
                         HStack {
@@ -162,10 +166,10 @@ struct UserProfileView: View {
                     .padding()
                     .padding(.top, 40)
 
-                    VStack(alignment: .leading, spacing: 20) {
+                    VStack(alignment: .leading, spacing: 15) {
                         Text("About")
                             .font(.title).bold()
-                            .padding(.top, -5)
+                            .padding(.top, -10)
 
                         VStack(alignment: .leading, spacing: 10) {
                             DetailRow(image: "figure.2.arms.open", text: user.status)

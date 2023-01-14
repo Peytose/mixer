@@ -136,16 +136,6 @@ struct EventView: View {
                             .lineLimit(2)
                             .minimumScaleFactor(0.65)
                         
-                        HStack {
-                            Text("\(event.visibility)".capitalized)
-                                .font(.title3).bold()
-                                .foregroundColor(.primary.opacity(0.7))
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.75)
-                            
-                            Spacer()
-                        }
-                        
                         HStack(spacing: 5) {
                             Image(systemName: "person.3.fill")
                                 .symbolRenderingMode(.hierarchical)
@@ -300,14 +290,24 @@ struct EventView: View {
     }
     
     var content: some View {
-        VStack(alignment: .leading, spacing: 25) {
+        VStack(alignment: .leading, spacing: 20) {
             Text("About this event")
                 .font(.title).bold()
-                .padding(.bottom, -10)
+                .padding(.bottom, -14 )
 
             Text(event.description)
-                .font(.headline)
+                .font(.body)
                 .foregroundColor(.secondary)
+            
+            if event.hasNote {
+                Text("Notes for guests")
+                    .font(.title).bold()
+                    .padding(.bottom, -15)
+
+                Text(event.note)
+                    .font(.body)
+                    .foregroundColor(.secondary)
+            }
             
             Text("Event Details")
                 .font(.title).bold()
@@ -398,8 +398,8 @@ struct EventView: View {
             
             Text("Friends Attending")
                 .font(.title).bold()
-                .padding(.bottom)
-            
+                .padding(.bottom, 10)
+
             ForEach(Array(results.enumerated().prefix(9)), id: \.offset) { index, user in
                 if index != 0 { Divider() }
                 NavigationLink(destination: UserProfileView(user: user)) {
@@ -472,7 +472,7 @@ struct EventView: View {
             }
         })
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-        .padding(.bottom, 8)
+        .padding(.bottom, 20)
     }
     
     var results: [MockUser] {
@@ -513,11 +513,12 @@ struct EventView: View {
                 Image(systemName: image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 22, height: 22)
-                    .padding(10)
+                    .frame(width: 21, height: 21)
+                    .padding(8)
                     .background(.ultraThinMaterial)
                     .backgroundStyle(cornerRadius: 10, opacity: 0.6)
                     .cornerRadius(10)
+
             }
         }
     }

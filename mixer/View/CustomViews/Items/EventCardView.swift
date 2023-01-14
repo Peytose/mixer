@@ -98,11 +98,17 @@ struct EventCard: View {
                                 .font(.title2.weight(.semibold))
                                 .minimumScaleFactor(0.75)
 
-                            Text("By \(event.hostName)")
-                                .font(.footnote)
-                                .foregroundColor(.secondary)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.3)
+                            HStack {
+                                Text("By \(event.hostName)")
+                                    .font(.subheadline.weight(.semibold))
+                                    .foregroundColor(.secondary)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.3)
+                                
+                                Image(systemName: "checkmark.seal.fill")
+                                    .symbolRenderingMode(.palette)
+                                    .foregroundStyle(.white, .blue)
+                            }
                             
                         }
                         .padding(.trailing, -10)
@@ -115,10 +121,10 @@ struct EventCard: View {
                                 .scaledToFill()
                                 .frame(width: 18, height: 18)
                             
-                            Text("\(event.wetOrDry) Event")
+                            Text("\(event.wetOrDry) Chi")
                                         .font(.footnote)
                                         .foregroundColor(.secondary)
-                                        .offset(y: 1)
+                                        .offset(y: 2)
                         }
 
                         VStack(spacing: 6) {
@@ -131,7 +137,7 @@ struct EventCard: View {
                             Text("\(event.attendance) Going")
                                 .font(.footnote)
                                 .foregroundColor(.secondary)
-                                .offset(y: 1)
+                                .offset(y: 2)
                         }
 
                     }
