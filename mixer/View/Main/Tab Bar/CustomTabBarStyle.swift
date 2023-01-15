@@ -21,10 +21,6 @@ struct CustomTabBarStyle: TabBarStyle {
                     .mask(gradient)
                     .frame(height: height)
                     .allowsHitTesting(false)
-//                Image("Background 1")
-//                    .resizable()
-//                    .aspectRatio(contentMode: .fill)
-//                    .frame(height: 80)
             })
     }
     

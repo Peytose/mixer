@@ -429,7 +429,7 @@ struct EventView: View {
             
         }
         .padding()
-        .padding(EdgeInsets(top: 80, leading: 0, bottom: 130, trailing: 0))
+        .padding(EdgeInsets(top: 80, leading: 0, bottom: 120, trailing: 0))
     }
     
     var closeButton: some View {
@@ -472,7 +472,7 @@ struct EventView: View {
             }
         })
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-        .padding(.bottom, 20)
+        .padding(.bottom, 30)
     }
     
     var results: [MockUser] {

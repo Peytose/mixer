@@ -47,7 +47,6 @@ struct ExplorePageView: View {
                                 Circle()
                                     .fill(.clear)
                                     .frame(width: 40, height: 40)
-                                
                                 Spacer()
                                 
                                 Button(action: {}) {
@@ -87,7 +86,7 @@ struct ExplorePageView: View {
                                 .background(
                                     Image("Blob 1")
                                         .offset(x: 330, y: 240)
-                                        .scaleEffect(0.9)
+                                        .scaleEffect(0.85)
                                         .blur(radius: 10)
                                         .accessibility(hidden: true)
                                 )
