@@ -32,8 +32,7 @@ struct CustomStackView<Title: View,Content: View>: View {
                 .frame(height: 38)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.leading)
-                .background(.red)
-                .zIndex(1)
+                .background(Color.mixerBackground,in: CustomCorner(corners: bottomOffset < 38 ? .allCorners : [.topLeft,.topRight], radius: 12))
             
             VStack{
                 
@@ -42,7 +41,7 @@ struct CustomStackView<Title: View,Content: View>: View {
                 contentView
                     .padding()
             }
-            .background(.red)
+            .background(Color.mixerBackground,in: CustomCorner(corners: [.bottomLeft,.bottomRight], radius: 12))
             // Moving Content Upward....
             .offset(y: topOffset >= 120 ? 0 : -(-topOffset + 120))
             .zIndex(0)
@@ -109,5 +108,20 @@ struct CornerModifier: ViewModifier {
             content
                 .cornerRadius(12)
         }
+    }
+}
+
+import SwiftUI
+
+struct CustomCorner: Shape {
+    
+    var corners: UIRectCorner
+    var radius: CGFloat
+    
+    func path(in rect: CGRect) -> Path {
+        
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        
+        return Path(path.cgPath)
     }
 }

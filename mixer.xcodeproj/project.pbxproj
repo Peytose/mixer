@@ -64,6 +64,8 @@
 		A682CC562970915B008EA546 /* DetailRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A682CC552970915B008EA546 /* DetailRowView.swift */; };
 		A682CC582970F4A4008EA546 /* StretchableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A682CC572970F4A4008EA546 /* StretchableHeaderView.swift */; };
 		A682CC5A2970F60C008EA546 /* EventRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A682CC592970F60C008EA546 /* EventRowView.swift */; };
+		A682CC5C29752463008EA546 /* FollowerGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A682CC5B29752463008EA546 /* FollowerGraphView.swift */; };
+		A682CC5E297524CC008EA546 /* SiteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A682CC5D297524CC008EA546 /* SiteView.swift */; };
 		A68971CA296E7E1900289516 /* TabBar in Frameworks */ = {isa = PBXBuildFile; productRef = A68971C9296E7E1900289516 /* TabBar */; };
 		A68971CD296E7E5D00289516 /* CustomTabBarStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68971CC296E7E5D00289516 /* CustomTabBarStyle.swift */; };
 		A68971CF296E7E8D00289516 /* CustomTabItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68971CE296E7E8D00289516 /* CustomTabItemView.swift */; };
@@ -151,6 +153,8 @@
 		A682CC552970915B008EA546 /* DetailRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRowView.swift; sourceTree = "<group>"; };
 		A682CC572970F4A4008EA546 /* StretchableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchableHeaderView.swift; sourceTree = "<group>"; };
 		A682CC592970F60C008EA546 /* EventRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRowView.swift; sourceTree = "<group>"; };
+		A682CC5B29752463008EA546 /* FollowerGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerGraphView.swift; sourceTree = "<group>"; };
+		A682CC5D297524CC008EA546 /* SiteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteView.swift; sourceTree = "<group>"; };
 		A68971CC296E7E5D00289516 /* CustomTabBarStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarStyle.swift; sourceTree = "<group>"; };
 		A68971CE296E7E8D00289516 /* CustomTabItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabItemView.swift; sourceTree = "<group>"; };
 		A6A731BC2966AC52008DAC17 /* MockEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEvent.swift; sourceTree = "<group>"; };
@@ -520,6 +524,7 @@
 				A6B9E6772953B8A3009C936E /* MapSnapshotView.swift */,
 				A6B9E6852953E792009C936E /* FeaturedHostCard.swift */,
 				A682CC572970F4A4008EA546 /* StretchableHeaderView.swift */,
+				A682CC5B29752463008EA546 /* FollowerGraphView.swift */,
 			);
 			path = Items;
 			sourceTree = "<group>";
@@ -574,6 +579,7 @@
 			children = (
 				A6B9E64F29518627009C936E /* MockUser.swift */,
 				A6A731BC2966AC52008DAC17 /* MockEvent.swift */,
+				A682CC5D297524CC008EA546 /* SiteView.swift */,
 			);
 			path = "Mock Models";
 			sourceTree = "<group>";
@@ -778,6 +784,7 @@
 				9C567A96292FF77300EA5FCB /* GetBirthday.swift in Sources */,
 				A6B9E6842953E68B009C936E /* ExplorePageViewModel.swift in Sources */,
 				A6A731BF29737F88008DAC17 /* HostDashboardView.swift in Sources */,
+				A682CC5E297524CC008EA546 /* SiteView.swift in Sources */,
 				9C3BADBA291F54B4009C8043 /* mixerApp.swift in Sources */,
 				9C9331B42926D4CB0079E039 /* ContinueSignUpButton.swift in Sources */,
 				A6430455294FC4470058C0F0 /* UserProfileViewModel.swift in Sources */,
@@ -795,6 +802,7 @@
 				A6430459294FC6D00058C0F0 /* NavigationBar.swift in Sources */,
 				9C93319429203D8B0079E039 /* Notification.swift in Sources */,
 				9C93319F2925B0390079E039 /* AuthFlow.swift in Sources */,
+				A682CC5C29752463008EA546 /* FollowerGraphView.swift in Sources */,
 				A6B9E68C29544F21009C936E /* NextButton.swift in Sources */,
 				A6430448294FBEC80058C0F0 /* CreateEventViewModel.swift in Sources */,
 			);
