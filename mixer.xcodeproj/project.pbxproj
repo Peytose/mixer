@@ -69,6 +69,7 @@
 		A68971CF296E7E8D00289516 /* CustomTabItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68971CE296E7E8D00289516 /* CustomTabItemView.swift */; };
 		A6A731BD2966AC52008DAC17 /* MockEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A731BC2966AC52008DAC17 /* MockEvent.swift */; };
 		A6A731BF29737F88008DAC17 /* HostDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A731BE29737F88008DAC17 /* HostDashboardView.swift */; };
+		A6A731C12974FA3A008DAC17 /* CustomStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A731C02974FA3A008DAC17 /* CustomStackView.swift */; };
 		A6AB6C7C2960E20F007E9BF0 /* PinchZoomImageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AB6C7B2960E20F007E9BF0 /* PinchZoomImageModifier.swift */; };
 		A6AB6C7E2960EFE7007E9BF0 /* CustomPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AB6C7D2960EFE7007E9BF0 /* CustomPopUpView.swift */; };
 		A6B9E64E295185F9009C936E /* SearchPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B9E64D295185F9009C936E /* SearchPageView.swift */; };
@@ -154,6 +155,7 @@
 		A68971CE296E7E8D00289516 /* CustomTabItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabItemView.swift; sourceTree = "<group>"; };
 		A6A731BC2966AC52008DAC17 /* MockEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEvent.swift; sourceTree = "<group>"; };
 		A6A731BE29737F88008DAC17 /* HostDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostDashboardView.swift; sourceTree = "<group>"; };
+		A6A731C02974FA3A008DAC17 /* CustomStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStackView.swift; sourceTree = "<group>"; };
 		A6AB6C7B2960E20F007E9BF0 /* PinchZoomImageModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinchZoomImageModifier.swift; sourceTree = "<group>"; };
 		A6AB6C7D2960EFE7007E9BF0 /* CustomPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopUpView.swift; sourceTree = "<group>"; };
 		A6B9E64D295185F9009C936E /* SearchPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPageView.swift; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 				9C567A9D2934F83100EA5FCB /* PhotoPicker.swift */,
 				A6430449294FBFB00058C0F0 /* DesignCodeExtensions.swift */,
 				A6B9E65829518AB2009C936E /* CustomStickyHeader.swift */,
+				A6A731C02974FA3A008DAC17 /* CustomStackView.swift */,
 				A6B9E6792953B95E009C936E /* Animation+Ext.swift */,
 				A6B9E6872953E9CB009C936E /* OffsetModifier.swift */,
 				A6AB6C7B2960E20F007E9BF0 /* PinchZoomImageModifier.swift */,
@@ -786,6 +789,7 @@
 				9C3BADD7291F55D1009C8043 /* Constants.swift in Sources */,
 				A6B9E690295464A8009C936E /* EventFlyerUploadView.swift in Sources */,
 				A682CC582970F4A4008EA546 /* StretchableHeaderView.swift in Sources */,
+				A6A731C12974FA3A008DAC17 /* CustomStackView.swift in Sources */,
 				A6B9E65B2951933D009C936E /* Profile2View.swift in Sources */,
 				A68971CD296E7E5D00289516 /* CustomTabBarStyle.swift in Sources */,
 				A6430459294FC6D00058C0F0 /* NavigationBar.swift in Sources */,
