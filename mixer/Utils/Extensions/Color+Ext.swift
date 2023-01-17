@@ -78,6 +78,11 @@ extension Color {
     //MARK: Font Colors
     static let mainFont = Color(red: 221/255, green: 222/255, blue: 224/255) //MARK: A replacement for white font meant to be easier to read
     
+    //MARK: Other Colors
+    static let harvardCrimson = Color(red: 165/255, green: 28/255, blue: 48/255)
+    static let girlPink = Color(red: 212/255, green: 97/255, blue: 133/255)
+
+    
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int: UInt64 = 0

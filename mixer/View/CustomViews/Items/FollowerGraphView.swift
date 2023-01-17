@@ -19,25 +19,31 @@ struct FollowerGraphView: View {
     @State var plotWidth: CGFloat = 0
     
     @State var isLineGraph: Bool = true
+    
+    var title: String
+    var showSegmentedControl = false
+    var showlinebartoggle = false
 
     var body: some View {
             VStack {
                 // MARK: New Chart API
-                VStack(alignment: .leading, spacing: 12){
+                VStack(alignment: .leading, spacing: 12) {
                     HStack {
-                        Text("Followers")
+                        Text(title)
                             .fontWeight(.semibold)
                         
-                        Picker("", selection: $currentTab) {
-                            Text("7 Days")
-                                .tag("7 Days")
-                            Text("Week")
-                                .tag("Week")
-                            Text("Month")
-                                .tag("Month")
+                        if showSegmentedControl {
+                            Picker("", selection: $currentTab) {
+                                Text("7 Days")
+                                    .tag("7 Days")
+                                Text("Week")
+                                    .tag("Week")
+                                Text("Month")
+                                    .tag("Month")
+                            }
+                            .pickerStyle(.segmented)
+                            .padding(.leading,80)
                         }
-                        .pickerStyle(.segmented)
-                        .padding(.leading,80)
                     }
                     
                     let totalValue = sampleAnalytics.reduce(0.0) { partialResult, item in
@@ -55,11 +61,12 @@ struct FollowerGraphView: View {
                         .fill(Color.mixerBackground.shadow(.drop(radius: 2)))
                 }
                 
-//                Toggle("Line Graph", isOn: $isLineGraph)
-//                    .padding(.top)
+                if showlinebartoggle {
+                    Toggle("Line Graph", isOn: $isLineGraph)
+                        .padding(.top)
+                }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-            .padding()
             // MARK: Simply Updating Values For Segmented Tabs
             .onChange(of: currentTab) { newValue in
                 sampleAnalytics = sample_analytics
@@ -198,7 +205,7 @@ struct FollowerGraphView: View {
 
 struct FollowerGraphView_Previews: PreviewProvider {
     static var previews: some View {
-        FollowerGraphView()
+        FollowerGraphView(title: "Followers")
     }
 }
 
