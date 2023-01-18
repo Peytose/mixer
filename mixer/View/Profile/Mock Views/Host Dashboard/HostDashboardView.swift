@@ -44,9 +44,11 @@ struct HostDashboardView: View {
                         }
                     
                     CustomStackView {
-                        Text("graph")
+                        Text("Followers")
                     } contentView: {
-                        FollowerGraphView(title: "Followers")
+                        FollowerGraphView(title: "", itemTitle: "Followers")
+                            .padding(.top, -50)
+                            .padding(-10)
                     }
 
                     

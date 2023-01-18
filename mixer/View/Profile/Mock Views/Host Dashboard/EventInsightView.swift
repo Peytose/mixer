@@ -21,8 +21,14 @@ struct EventInsightView: View {
     
     var body: some View {
         NavigationView {
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack(spacing: 20) {
+                    Text("After Action Report")
+                        .font(.title.bold())
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading, 4)
+                    
                     HStack(spacing: 30) {
                         VStack {
                             Text("$0")
@@ -44,7 +50,7 @@ struct EventInsightView: View {
                     }
                     .padding(.top)
                     
-                    FollowerGraphView(title: "Followers", showSegmentedControl: true, showlinebartoggle: true)
+                    FollowerGraphView(title: "Guests", itemTitle: "Guests", showSegmentedControl: true, showlinebartoggle: true)
                     
                     distributionCharts
                     
@@ -106,39 +112,36 @@ struct EventInsightView: View {
                 }
                 .padding(.horizontal)
             }
-            .background(Color.black)
+            .background(Color.mixerBackground)
             .preferredColorScheme(.dark)
-            .navigationBarTitle("Neon Party AAR")
+            .navigationBarTitle("Neon Party")
         }
     }
     
     var distributionCharts: some View {
         VStack(spacing: 20) {
             CustomStackView {
-                Text("School Distribution")
-                    .font(.title3.weight(.semibold))
+                Text("Universities")
+                    .font(.title2.weight(.semibold))
             } contentView: {
-                PieChartView(values: [200, 100, 50], names: ["BU", "Harvard", "Other"], formatter: {value in String(format: "%.f", value)},
-                             colors: [Color.red, Color.harvardCrimson, Color.orange])
-                .frame(height: 410)
+                PieChartView(values: [128, 95, 49, 31, 19, 67], names: ["BU", "NEU", "Wellesely", "MIT", "Harvard", "Other"], formatter: {value in String(format: "%.f", value)}, colors: [Color.green, Color.red, Color.blue, Color.red.opacity(0.7), Color.harvardCrimson, Color.gray], title: "Total Guests", showChartRowText: true, chartRowText: "from")
+                    .frame(height: 580)
             }
             
             CustomStackView {
                 Text("Gender Distribution")
-                    .font(.title3.weight(.semibold))
+                    .font(.title2.weight(.semibold))
             } contentView: {
-                PieChartView(values: [222, 113, 15], names: ["Female", "Male", "Other"], formatter: {value in String(format: "%.f", value)},
-                             colors: [Color.girlPink, Color.blue, Color.gray])
-                .frame(height: 410)
+                PieChartView(values: [242, 128, 19], names: ["Female", "Male", "Other"], formatter: { value in String(format: "%.f", value)}, colors: [Color.girlPink, Color.blue, Color.gray], title: "Total Guests", showChartRowText: true, chartRowText: "were")
+                    .frame(height: 420)
             }
             
             CustomStackView {
-                Text("Single vs Taken Distribution")
-                    .font(.title3.weight(.semibold))
+                Text("Single vs Taken")
+                    .font(.title2.weight(.semibold))
             } contentView: {
-                PieChartView(values: [298, 22, 30], names: ["Single", "Taken", "Complicated"], formatter: {value in String(format: "%.f", value)},
-                             colors: [Color.green, Color.red, Color.yellow])
-                .frame(height: 410)
+                PieChartView(values: [318, 28, 45], names: ["Single", "Taken", "Complicated"], formatter: {value in String(format: "%.f", value)}, colors: [Color.green, Color.red, Color.yellow], title: "Total Guests", showChartRowText: true, chartRowText: "were")
+                    .frame(height: 420)
             }
         }
     }

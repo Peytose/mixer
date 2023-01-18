@@ -11,16 +11,17 @@ import Charts
 struct FollowerGraphView: View {
     // Environment Scheme
     // MARK: State Chart Data For Animation Changes
-    @State var sampleAnalytics: [SiteView] = sample_analytics
+    @State var sampleAnalytics: [GraphMetric] = followers
     // MARK: View Properties
     @State var currentTab: String = "7 Days"
     // MARK: Gesture Properties
-    @State var currentActiveItem: SiteView?
+    @State var currentActiveItem: GraphMetric?
     @State var plotWidth: CGFloat = 0
     
     @State var isLineGraph: Bool = true
     
     var title: String
+    var itemTitle: String
     var showSegmentedControl = false
     var showlinebartoggle = false
 
@@ -47,7 +48,7 @@ struct FollowerGraphView: View {
                     }
                     
                     let totalValue = sampleAnalytics.reduce(0.0) { partialResult, item in
-                        item.views + partialResult
+                        item.number + partialResult
                     }
                     
                     Text(totalValue.stringFormat)
@@ -58,7 +59,7 @@ struct FollowerGraphView: View {
                 .padding()
                 .background {
                     RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .fill(Color.mixerBackground.shadow(.drop(radius: 2)))
+                        .fill(Color.mixerSecondaryBackground.shadow(.drop(radius: 2)))
                 }
                 
                 if showlinebartoggle {
@@ -69,10 +70,10 @@ struct FollowerGraphView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             // MARK: Simply Updating Values For Segmented Tabs
             .onChange(of: currentTab) { newValue in
-                sampleAnalytics = sample_analytics
+                sampleAnalytics = followers
                 if newValue != "7 Days"{
                     for (index,_) in sampleAnalytics.enumerated(){
-                        sampleAnalytics[index].views = .random(in: 1500...10000)
+                        sampleAnalytics[index].number = .random(in: 1500...10000)
                     }
                 }
                 
@@ -86,8 +87,8 @@ struct FollowerGraphView: View {
     @ViewBuilder
     func AnimatedChart()->some View {
         let max = sampleAnalytics.max { item1, item2 in
-            return item2.views > item1.views
-        }?.views ?? 0
+            return item2.number > item1.number
+        }?.number ?? 0
         
         Chart {
             ForEach(sampleAnalytics){item in
@@ -96,7 +97,7 @@ struct FollowerGraphView: View {
                 if isLineGraph {
                     LineMark(
                         x: .value("Hour", item.hour,unit: .hour),
-                        y: .value("Views", item.animate ? item.views : 0)
+                        y: .value("Views", item.animate ? item.number : 0)
                     )
                     // Applying Gradient Style
                     // From SwiftUI 4.0 We can Directly Create Gradient From Color
@@ -105,7 +106,7 @@ struct FollowerGraphView: View {
                 }else {
                     BarMark(
                         x: .value("Hour", item.hour,unit: .hour),
-                        y: .value("Views", item.animate ? item.views : 0)
+                        y: .value("Views", item.animate ? item.number : 0)
                     )
                     // Applying Gradient Style
                     // From SwiftUI 4.0 We can Directly Create Gradient From Color
@@ -115,7 +116,7 @@ struct FollowerGraphView: View {
                 if isLineGraph {
                     AreaMark(
                         x: .value("Hour", item.hour,unit: .hour),
-                        y: .value("Views", item.animate ? item.views : 0)
+                        y: .value("Views", item.animate ? item.number : 0)
                     )
                     // Applying Gradient Style
                     // From SwiftUI 4.0 We can Directly Create Gradient From Color
@@ -132,11 +133,11 @@ struct FollowerGraphView: View {
                         .offset(x: (plotWidth / CGFloat(sampleAnalytics.count)) / 2)
                         .annotation(position: .top){
                             VStack(alignment: .leading, spacing: 6){
-                                Text("Views")
+                                Text(itemTitle)
                                     .font(.caption)
                                     .foregroundColor(.gray)
                                 
-                                Text(currentActiveItem.views.stringFormat)
+                                Text(currentActiveItem.number.stringFormat)
                                     .font(.title3.bold())
                             }
                             .padding(.horizontal,10)
@@ -150,7 +151,7 @@ struct FollowerGraphView: View {
             }
         }
         // MARK: Customizing Y-Axis Length
-        .chartYScale(domain: 0...(max + 500))
+        .chartYScale(domain: 0...(max + 100))
         // MARK: Gesture To Highlight Current Bar
         .chartOverlay(content: { proxy in
             GeometryReader{innerProxy in
@@ -205,7 +206,7 @@ struct FollowerGraphView: View {
 
 struct FollowerGraphView_Previews: PreviewProvider {
     static var previews: some View {
-        FollowerGraphView(title: "Followers")
+        FollowerGraphView(sampleAnalytics: followers, title: "Followers", itemTitle: "Followers")
     }
 }
 
