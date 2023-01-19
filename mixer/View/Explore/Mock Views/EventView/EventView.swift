@@ -203,7 +203,7 @@ struct EventView: View {
                             
                             Spacer()
                             
-                            VStack(alignment: .center) {
+                            VStack(alignment: .center, spacing: 4) {
                                 Image(systemName: "drop.fill")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)

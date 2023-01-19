@@ -8,9 +8,13 @@
 import SwiftUI
 
 struct GuestListView: View {
+    @StateObject private var guestManager = GuestManager()
+
     @State private var searchText = ""
+    @State var showUserInfoModal = false
+    @State var showAlert = false
     @StateObject var mockUserDictionary = MockUserDictionary()
-    
+
     var body: some View {
         NavigationView {
             VStack {
@@ -36,6 +40,13 @@ struct GuestListView: View {
             }
         }
         .preferredColorScheme(.dark)
+        .sheet(isPresented: $showUserInfoModal) {
+            GuestListUserView(user: guestManager.selectedGuest!)
+                .presentationDetents([.medium])
+        }
+        .alert("Checked In", isPresented: $showAlert, actions: {}) {
+            Text("Guest has been checked in")
+        }
     }
     var content: some View {
         ForEach(mockUserDictionary.sectionDictionary.keys.sorted(), id:\.self) { key in
@@ -87,14 +98,27 @@ struct GuestListView: View {
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.7)
                         }
-                        .padding(.vertical, -2)
+                        .padding(.vertical, -4)
                         .listRowBackground(Color.mixerSecondaryBackground.opacity(0.7))
                         .swipeActions {
                             Button(role: .destructive) {
-                                print("Deleting conversation")
                             } label: {
                                 Label("Delete", systemImage: "trash.fill")
                             }
+                            
+                            Button() {
+                                showAlert.toggle()
+                            } label: {
+                                VStack {
+                                    Label("Delete", systemImage: "list.clipboard")
+                                    Text("Add to guest list")
+                                }
+                            }
+                            .tint(.green)
+                        }
+                        .onTapGesture {
+                            showUserInfoModal.toggle()
+                            guestManager.selectedGuest = guest
                         }
                     }
                 }

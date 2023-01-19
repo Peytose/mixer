@@ -21,6 +21,11 @@ final class EventManager: ObservableObject {
     var selectedEvent: MockEvent?
 }
 
+final class GuestManager: ObservableObject {
+    @Published var guests: [MockUser] = []
+    var selectedGuest: MockUser?
+}
+
 final class ExplorePageViewModel: ObservableObject {
     @Published var showSearchView = false
     @Published var showEventView = false
