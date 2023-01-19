@@ -80,7 +80,7 @@ extension Color {
     
     //MARK: Other Colors
     static let harvardCrimson = Color(red: 165/255, green: 28/255, blue: 48/255)
-    static let girlPink = Color(red: 212/255, green: 97/255, blue: 133/255)
+    static let girlPink = Color(red: 255/255, green: 105/255, blue: 180/255)
 
     
     init(hex: String) {

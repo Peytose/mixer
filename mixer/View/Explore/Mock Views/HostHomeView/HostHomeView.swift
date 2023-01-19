@@ -251,7 +251,7 @@ struct HostOrganizationView: View {
                     .padding(.bottom, 10)
                 
                 ForEach(Array(eventList.enumerated().prefix(9)), id: \.offset) { index, event in
-                    EventRow(flyer: event.flyer, title: event.title, date: event.eventRowDate, attendance: event.attendance)
+                    EventRow(flyer: event.flyer, title: event.title, date: event.date, attendance: event.attendance)
                 }
             }
             

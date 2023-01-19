@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ProfileSettingsView: View {
-    @State var showDashboard = true
     var body: some View {
         NavigationView {
             List {
@@ -41,9 +40,7 @@ struct ProfileSettingsView: View {
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.automatic)
             .scrollIndicators(.hidden)
-        }
-        .fullScreenCover(isPresented: $showDashboard) {
-            HostDashboardView()
+            .preferredColorScheme(.dark)
         }
     }
 }

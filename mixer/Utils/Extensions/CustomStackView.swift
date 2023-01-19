@@ -31,7 +31,7 @@ struct CustomStackView<Title: View,Content: View>: View {
                 // Max Height...
                 .frame(height: 38)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading)
+                .padding(.horizontal)
                 .background(Color.mixerBackground,in: CustomCorner(corners: bottomOffset < 38 ? .allCorners : [.topLeft,.topRight], radius: 12))
             
             VStack{

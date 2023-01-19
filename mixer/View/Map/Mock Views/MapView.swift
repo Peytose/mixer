@@ -11,8 +11,10 @@ import MapKit
 import CoreLocationUI
 
 struct MapView: View {
-    @StateObject private var viewModel = LocationMapViewModel()
     @Namespace var namespace
+    @StateObject private var viewModel = LocationMapViewModel()
+    
+    @State var showGuestListView = false
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -20,7 +22,7 @@ struct MapView: View {
                 .ignoresSafeArea()
             
             VStack(spacing: 10) {
-                EventUsersListButton()
+                EventUsersListButton(action: $showGuestListView)
             }
             .frame(maxWidth:.infinity, maxHeight: .infinity, alignment: .topTrailing)
             .padding(EdgeInsets(top: 60, leading: 0, bottom: 0, trailing: 6))
@@ -65,8 +67,10 @@ struct MapView: View {
                     viewModel.isShowingAddEventView.toggle()
                 }
         })
-        
-        //        .sheet(isPresented: $viewModel.isShowingQRCodeView, content: { QRCodeView(viewModel: QRCodeViewModel(user: UserProfile(record: viewModel.existingProfileRecord!), hostManager: hostManager, eventManager: eventManager, isHost: viewModel.isHost)) })
+        .sheet(isPresented: $showGuestListView, content: {
+            GuestListView()
+        })
+
         //        .sheet(isPresented: $viewModel.isShowingHostView, content: { HostOrganizationView(viewModel: HostOrganizationViewModel(host: hostManager.selectedHost!, namespace: namespace)) })
                 .fullScreenCover(isPresented: $viewModel.isShowingAddEventView, content: { CreateEventView() })
         //        .sheet(isPresented: $viewModel.isShowingEventUsersListView, content: { EventListHostView(viewModel: EventListHostViewModel(host: viewModel.hostOrganization!)) })
@@ -96,6 +100,7 @@ fileprivate struct AddEventButton: View {
 
 
 fileprivate struct EventUsersListButton: View {
+    @Binding var action: Bool
     var body: some View {
         Image(systemName: "list.clipboard")
             .font(.title2.weight(.medium))
@@ -104,6 +109,12 @@ fileprivate struct EventUsersListButton: View {
             .background(Color.mixerSecondaryBackground)
             .clipShape(Circle())
             .shadow(radius: 5, y: 8)
+            .onTapGesture {
+                let impact = UIImpactFeedbackGenerator(style: .light)
+                impact.impactOccurred()
+                
+                action.toggle()
+            }
     }
 }
 

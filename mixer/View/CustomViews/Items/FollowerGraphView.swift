@@ -11,7 +11,7 @@ import Charts
 struct FollowerGraphView: View {
     // Environment Scheme
     // MARK: State Chart Data For Animation Changes
-    @State var sampleAnalytics: [GraphMetric] = followers
+    @State var sampleAnalytics: [GraphMetric] 
     // MARK: View Properties
     @State var currentTab: String = "7 Days"
     // MARK: Gesture Properties
@@ -31,7 +31,7 @@ struct FollowerGraphView: View {
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
                         Text(title)
-                            .fontWeight(.semibold)
+                            .font(.title2.weight(.semibold))
                         
                         if showSegmentedControl {
                             Picker("", selection: $currentTab) {
@@ -59,7 +59,7 @@ struct FollowerGraphView: View {
                 .padding()
                 .background {
                     RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .fill(Color.mixerSecondaryBackground.shadow(.drop(radius: 2)))
+                        .fill(Color.clear.opacity(0.5).shadow(.drop(radius: 2)))
                 }
                 
                 if showlinebartoggle {

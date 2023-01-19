@@ -105,18 +105,20 @@ struct EventCard: View {
                 
                 VStack(alignment: .leading, spacing: 10) {
                     HStack(spacing: 20) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(event.type)
-                                .font(.title2.weight(.semibold))
-                                .minimumScaleFactor(0.75)
-                            
+                        VStack(alignment: .leading) {
                             Text(event.shortDate)
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
+                                .font(.title3.bold())
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.7)
+                            
+                            Text("\(event.type)")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                                .offset(y: 2)
+                                .padding(0)
                         }
-                        
+                        .padding(.trailing, -20)
+
                         Spacer()
                         
                         VStack(spacing: 6) {
@@ -126,11 +128,11 @@ struct EventCard: View {
                                 .frame(width: 18, height: 18)
                             
                             Text("\(event.wetOrDry) Event")
-                                        .font(.footnote)
-                                        .foregroundColor(.secondary)
-                                        .offset(y: 2)
+                                .font(.footnote)
+                                .foregroundColor(.secondary)
+                                .offset(y: 2)
                         }
-
+                        
                         VStack(spacing: 6) {
                             Image(systemName: "person.3.fill")
                                 .resizable()

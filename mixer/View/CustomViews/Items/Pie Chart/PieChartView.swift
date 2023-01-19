@@ -36,7 +36,7 @@ import SwiftUI
         return tempSlices
     }
     
-     init(values:[Double], names: [String], formatter: @escaping (Double) -> String, colors: [Color] = [Color.blue, Color.green, Color.orange, Color.red, Color.purple, Color.gray], backgroundColor: Color = Color(red: 21 / 255, green: 24 / 255, blue: 30 / 255, opacity: 1.0), widthFraction: CGFloat = 0.75, innerRadiusFraction: CGFloat = 0.60, title: String = "Total", showChartRowText: Bool = false, chartRowText: String = "") {
+     init(values: [Double], names: [String], formatter: @escaping (Double) -> String, colors: [Color] = [Color.blue, Color.green, Color.orange, Color.red, Color.purple, Color.gray], backgroundColor: Color = Color(red: 21 / 255, green: 24 / 255, blue: 30 / 255, opacity: 1.0), widthFraction: CGFloat = 0.75, innerRadiusFraction: CGFloat = 0.60, title: String = "Total", showChartRowText: Bool = false, chartRowText: String = "") {
         self.values = values
         self.names = names
         self.formatter = formatter

@@ -87,7 +87,6 @@ struct ExplorePageView: View {
                                     Image("Blob 1")
                                         .offset(x: 330, y: 240)
                                         .scaleEffect(0.85)
-                                        .blur(radius: 10)
                                         .accessibility(hidden: true)
                                 )
                                 .padding(.leading, 20)

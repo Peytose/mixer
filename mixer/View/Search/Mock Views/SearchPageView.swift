@@ -8,19 +8,21 @@
 import SwiftUI
 
 struct SearchPageView: View {
-    @EnvironmentObject var model: Model
-
     @State var text = ""
     @State var selectedUser = users[0]
-    @Namespace var namespace
-//    @EnvironmentObject private var hostManager: HostManager
     
     var body: some View {
-        ScrollView {
-            ZStack {
-                Color.mixerBackground
-                    .ignoresSafeArea()
-                
+        ZStack {
+            
+            VStack {
+                List {
+                    content
+                }
+                .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+            }
+            .background(Color.mixerBackground)
+            .overlay {
                 Image("Blob 1")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -28,84 +30,79 @@ struct SearchPageView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                     .opacity(0.8)
                     .offset(x: -40, y: -355)
-                    .ignoresSafeArea()
-                    .zIndex(0)
-                
-                content
-                    .padding(.top, 10)
-                    .padding(.bottom, 20)
             }
-            .navigationTitle("Search Mixer")
-            .navigationBarTitleDisplayMode(.large)
-            .searchable(text: $text, prompt: "Search Users") {
-                ForEach(suggestions) { suggestion in
-                    Text(suggestion.text)
-                        .searchCompletion(suggestion.text)
-                }
-            }
-            .preferredColorScheme(.dark)
         }
-        .background(Color.mixerBackground)
+        .navigationTitle("Search Mixer")
+        .navigationBarTitleDisplayMode(.large)
+        .searchable(text: $text, prompt: "Search Users") {
+            ForEach(suggestions) { suggestion in
+                Text(suggestion.text)
+                    .searchCompletion(suggestion.text)
+            }
+        }
+        .preferredColorScheme(.dark)
         .accentColor(.white)
-        
     }
 }
 
 struct SearchPageView_Previews: PreviewProvider {
     static var previews: some View {
         SearchPageView()
-            .environmentObject(Model())
-//            .environmentObject(HostManager())
     }
 }
 
 extension SearchPageView {
     var content: some View {
-        VStack(alignment: .leading, spacing: 18) {
-            
-                    ForEach(Array(results.enumerated()), id: \.offset) { index, user in
-                        if index != 0 { Divider() }
-                        NavigationLink(destination: UserProfileView(user: user)) {
-                            HStack(spacing: 22) {
-                                Image(user.image)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .clipShape(Circle())
-                                    .frame(width: 45, height: 45)
-                                
-                                VStack(alignment: .leading) {
-                                    HStack {
-                                        Text(user.name)
-                                            .font(.system(size: 18, weight: .semibold, design: .default))
-                                        Text(user.school)
-                                            .font(.system(size: 18, weight: .semibold, design: .default))
-                                            .foregroundColor(.secondary)
-                                            .lineLimit(1)
-                                            .minimumScaleFactor(0.7)
-                                    }
-                                    
-                                    
-                                    Text("@\(user.username)")
-                                    .font(.system(size: 16, weight: .semibold, design: .default))
-                                    .foregroundColor(.secondary.opacity(0.7))
-                                }
-                                
-                                Spacer()
-                            }
-                            .padding(.vertical, -8)
+        ForEach(Array(results.enumerated()), id: \.offset) { index, user in
+            NavigationLink(destination: UserProfileView(user: user)) {
+                HStack(spacing: 15) {
+                    Image(user.image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 45, height: 45)
+                        .clipShape(Circle())
+                    
+                    VStack(alignment: .leading) {
+                        HStack(spacing: 2) {
+                            Text(user.name)
+                                .font(.callout.weight(.semibold))
+                                .foregroundColor(.white)
+                            
+                            Spacer()
+                            
+                            Image(systemName: "graduationcap.fill")
+                                .imageScale(.small)
+                                .foregroundColor(.secondary)
+                            
+                            Text("\(user.school)")
+                                .font(.subheadline.weight(.medium))
+                                .foregroundColor(.secondary)
+                        }
+                        
+                        HStack {
+                            Text("@\(user.username)")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary.opacity(0.7))
+                            
+                            Spacer()
+                            
+                            Text("Friend")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
                         }
                     }
-                    if results.isEmpty {
-                        Text("No results found")
-                    }
-            
-                Rectangle()
-                    .fill(.clear)
-                    .frame(height: 50)
-                    .frame(maxWidth: .infinity)
-
+                }
+                .padding(.vertical, -4)
+            }
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color.mixerBackground)
+            .swipeActions {
+                Button("Add Friend") {
+                    print("\(user.name) added as a friend")
+                }
+                .tint(Color.mixerPurple)
+            }
         }
-        .padding(.leading)
     }
     
 //    var results: [Host] {
@@ -146,7 +143,6 @@ struct Suggestion2: Identifiable {
 
 var suggestionsData2 = [
     Suggestion2(text: ""),
-
 ]
 
 

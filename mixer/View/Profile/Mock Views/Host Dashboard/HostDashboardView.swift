@@ -9,49 +9,24 @@ import SwiftUI
 
 struct HostDashboardView: View {
     @Namespace var namespace
-    
     @State var showEventInsightView = false
-    
-    var columns = Array(repeating: GridItem(.flexible(), spacing: 20), count: 2)
+    @StateObject private var eventManager = EventManager()
 
+    var columns = Array(repeating: GridItem(.flexible(), spacing: 20), count: 2)
+    var eventList: [MockEvent] {
+        return events
+    }
+    
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack(alignment: .center) {
-                    HStack(spacing: 30) {
-                        VStack {
-                            Text("$0")
-                                .font(.largeTitle.weight(.medium))
-                            
-                            Text("Total Revenue")
-                                .font(.headline)
-                                .foregroundColor(.secondary)
-                        }
-                        
-                        VStack {
-                            Text("589")
-                                .font(.largeTitle.weight(.medium))
-                            
-                            Text("Followers")
-                                .font(.headline)
-                                .foregroundColor(.secondary)
-                        }
-                    }
+            ScrollView(showsIndicators: false) {
+                VStack {
+                    quickStatsSection
+                    
+                    FollowerGraphView(sampleAnalytics: followers, title: "Followers", itemTitle: "Followers")
                     
                     recentEventsSection
-                        .onTapGesture {
-                            showEventInsightView.toggle()
-                        }
-                    
-                    CustomStackView {
-                        Text("Followers")
-                    } contentView: {
-                        FollowerGraphView(title: "", itemTitle: "Followers")
-                            .padding(.top, -50)
-                            .padding(-10)
-                    }
 
-                    
                     CustomStackView {
                         Label {
                             Text("Dog")
@@ -108,18 +83,19 @@ struct HostDashboardView: View {
                         }
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 5)
             }
-            .background(Color.black)
+            .background(Color.mixerBackground)
             .preferredColorScheme(.dark)
             .navigationBarTitle("MIT Theta Chi")
             .fullScreenCover(isPresented: $showEventInsightView) {
-                EventInsightView()
+                EventInsightView(event: eventManager.selectedEvent!)
                     .overlay(alignment: .topTrailing) {
                         XDismissButton()
                             .onTapGesture {
                                 showEventInsightView.toggle()
                             }
+                            .padding(.trailing)
                     }
             }
         }
@@ -129,42 +105,48 @@ struct HostDashboardView: View {
             Text("Recent Events")
                 .font(.title3.weight(.semibold))
         } contentView: {
-            VStack(alignment: .trailing) {
-
-                Spacer()
-                
-                VStack(alignment: .leading, spacing: 0) {
-                        Text("Neon Party")
-                            .font(.title).bold()
-                            .foregroundColor(.white)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.5)
+            ScrollView {
+                ForEach(Array(eventList.enumerated().prefix(7)), id: \.offset) { index, event in
+                        EventRow(flyer: event.flyer, title: event.title, date: event.date, attendance: event.attendance)
+                        .onTapGesture {
+                            showEventInsightView.toggle()
+                            eventManager.selectedEvent = event
+                        }
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 15)
-                .padding(.bottom, 5)
-                .padding(.top, 8)
-                .background(
-                    Rectangle()
-                        .fill(.ultraThinMaterial.opacity(0.98))
-                        .background(Color.mixerBackground.opacity(0.1))
-                        .frame(maxHeight: .infinity, alignment: .bottom)
-                        .padding(-1)
-                        .blur(radius: 9)
-                        .padding(.horizontal, -20)
-                        .padding(.bottom, -10)
-                        .padding(.top, 3)
-                )
             }
-            .background(
-                Image("theta-chi-party-poster")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            )
-            .mask(
-                RoundedRectangle(cornerRadius: 20)
-            )
-            .frame(height: 250)
+            .frame(height: 200)
+            .padding(.top, -10)
+        }
+    }
+    
+    var quickStatsSection: some View {
+        HStack(spacing: 30) {
+            VStack {
+                Text("$0")
+                    .font(.largeTitle.weight(.medium))
+                
+                Text("Total Revenue")
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+            }
+            
+            VStack {
+                Text("589")
+                    .font(.largeTitle.weight(.medium))
+                
+                Text("Followers")
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+            }
+            
+            VStack {
+                Text("32")
+                    .font(.largeTitle.weight(.medium))
+                
+                Text("Members")
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+            }
         }
     }
 }

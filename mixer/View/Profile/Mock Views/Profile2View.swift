@@ -23,14 +23,15 @@ struct UserProfilePrototypeView: View {
     @State var shareUsername = false
     @State var profileContext: ProfilePrototypeContext = .current
     @State var showSettingsView = false
+    @State var showDashboardView = false
     @State var showAlert = false
     @State var isFriends = false
-
+    
     @Namespace var animation
     @Namespace var namespace
     
     let link = URL(string: "https://mixer.llc")!
-
+    
     var body: some View {
         ZStack {
             Color.mixerBackground
@@ -83,10 +84,10 @@ struct UserProfilePrototypeView: View {
                             .fontWeight(.semibold)
                             .foregroundColor(.white.opacity(0.8))
                             .padding(.top, 15 )
-
+                        
                     }
                     .padding()
-
+                    
                     VStack(alignment: .leading, spacing: 15) {
                         Text("About")
                             .font(.title).bold()
@@ -115,23 +116,48 @@ struct UserProfilePrototypeView: View {
         .preferredColorScheme(.dark)
         .statusBarHidden(true)
         .overlay(alignment: .topTrailing) {
-            Button(action: {
-                let impact = UIImpactFeedbackGenerator(style: .light)
-                impact.impactOccurred()
-                withAnimation(.spring()) {
-                    showSettingsView.toggle()
-                }
-            }, label: {
-                Image(systemName: "gearshape.fill")
-                    .foregroundColor(Color.mainFont)
-                    .font(.system(size: 28))
-                    .shadow(radius: 10)
-            })
+            HStack {
+                Button(action: {
+                    let impact = UIImpactFeedbackGenerator(style: .light)
+                    impact.impactOccurred()
+                    withAnimation(.spring()) {
+                        showDashboardView.toggle()
+                    }
+                }, label: {
+                    Image(systemName: "house.fill")
+                        .foregroundColor(Color.mainFont)
+                        .font(.system(size: 28))
+                        .shadow(radius: 10)
+                })
+                
+                Button(action: {
+                    let impact = UIImpactFeedbackGenerator(style: .light)
+                    impact.impactOccurred()
+                    withAnimation(.spring()) {
+                        showSettingsView.toggle()
+                    }
+                }, label: {
+                    Image(systemName: "gearshape.fill")
+                        .foregroundColor(Color.mainFont)
+                        .font(.system(size: 28))
+                        .shadow(radius: 10)
+                })
+            }
             .padding(EdgeInsets(top: -20, leading: 0, bottom: 0, trailing: 20))
+            
         }
         .sheet(isPresented: $showSettingsView, content: {
             ProfileSettingsView()
-                .preferredColorScheme(.dark)
+        })
+        .fullScreenCover(isPresented: $showDashboardView, content: {
+            HostDashboardView()
+                .overlay(alignment: .topTrailing) {
+                    XDismissButton()
+                        .onTapGesture {
+                            showDashboardView.toggle()
+                        }
+                        .padding(.trailing)
+                }
         })
     }
 }

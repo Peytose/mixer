@@ -16,18 +16,23 @@ import SwiftUI
 import SwiftUI
 
 struct EventInsightView: View {
+    
     @Namespace var namespace
+    @State private var pieCharts = 0
+    @State var selectedChart: PieCharts = .universities
+    
+    var event: MockEvent
     var columns = Array(repeating: GridItem(.flexible(), spacing: 20), count: 2)
     
     var body: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
-                VStack(spacing: 20) {
+                VStack {
                     Text("After Action Report")
                         .font(.title.bold())
                         .foregroundColor(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.leading, 4)
+                        .padding(.leading, 2)
                     
                     HStack(spacing: 30) {
                         VStack {
@@ -40,23 +45,41 @@ struct EventInsightView: View {
                         }
                         
                         VStack {
-                            Text("389")
+                            Text(event.attendance)
                                 .font(.largeTitle.weight(.medium))
                             
                             Text("Guests")
                                 .font(.headline)
                                 .foregroundColor(.secondary)
                         }
+                        
+                        VStack {
+                            Text("0")
+                                .font(.largeTitle.weight(.medium))
+                            
+                            Text("Reports")
+                                .font(.headline)
+                                .foregroundColor(.secondary)
+                        }
                     }
-                    .padding(.top)
+                    .padding(.top, 1)
                     
-                    FollowerGraphView(title: "Guests", itemTitle: "Guests", showSegmentedControl: true, showlinebartoggle: true)
-                    
-                    distributionCharts
+                    FollowerGraphView(sampleAnalytics: guests, title: "Guests", itemTitle: "Guests", showlinebartoggle: true)
                     
                     CustomStackView {
+                        Picker("Pie Chart", selection: $selectedChart.animation() ) {
+                            ForEach(PieCharts.allCases, id: \.self) {
+                                Text($0.rawValue)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                    } contentView: {
+                        PieChart(selectedChart: selectedChart, event: event)
+                    }
+
+                    CustomStackView {
                         Label {
-                            Text("Dog")
+                            Text("Rings")
                         } icon: {
                             Image(systemName: "person")
                         }
@@ -75,18 +98,16 @@ struct EventInsightView: View {
                                         Spacer(minLength: 0)
                                     }
                                     
-                                    // Ring...
-                                    
                                     ZStack {
                                         
                                         Circle()
                                             .trim(from: 0, to: 1)
-                                            .stroke(Color.blue.opacity(0.05), lineWidth: 10)
+                                            .stroke(Color("graphLavendar").opacity(0.05), lineWidth: 10)
                                             .frame(width: (UIScreen.main.bounds.width - 150) / 2, height: (UIScreen.main.bounds.width - 150) / 2)
                                         
                                         Circle()
                                             .trim(from: 0, to: 7/15)
-                                            .stroke(Color.blue, style: StrokeStyle(lineWidth: 10, lineCap: .round))
+                                            .stroke(Color("graphLavendar"), style: StrokeStyle(lineWidth: 10, lineCap: .round))
                                             .frame(width: (UIScreen.main.bounds.width - 150) / 2, height: (UIScreen.main.bounds.width - 150) / 2)
                                         
                                         Text("45 %")
@@ -114,41 +135,40 @@ struct EventInsightView: View {
             }
             .background(Color.mixerBackground)
             .preferredColorScheme(.dark)
-            .navigationBarTitle("Neon Party")
-        }
-    }
-    
-    var distributionCharts: some View {
-        VStack(spacing: 20) {
-            CustomStackView {
-                Text("Universities")
-                    .font(.title2.weight(.semibold))
-            } contentView: {
-                PieChartView(values: [128, 95, 49, 31, 19, 67], names: ["BU", "NEU", "Wellesely", "MIT", "Harvard", "Other"], formatter: {value in String(format: "%.f", value)}, colors: [Color.green, Color.red, Color.blue, Color.red.opacity(0.7), Color.harvardCrimson, Color.gray], title: "Total Guests", showChartRowText: true, chartRowText: "from")
-                    .frame(height: 580)
-            }
-            
-            CustomStackView {
-                Text("Gender Distribution")
-                    .font(.title2.weight(.semibold))
-            } contentView: {
-                PieChartView(values: [242, 128, 19], names: ["Female", "Male", "Other"], formatter: { value in String(format: "%.f", value)}, colors: [Color.girlPink, Color.blue, Color.gray], title: "Total Guests", showChartRowText: true, chartRowText: "were")
-                    .frame(height: 420)
-            }
-            
-            CustomStackView {
-                Text("Single vs Taken")
-                    .font(.title2.weight(.semibold))
-            } contentView: {
-                PieChartView(values: [318, 28, 45], names: ["Single", "Taken", "Complicated"], formatter: {value in String(format: "%.f", value)}, colors: [Color.green, Color.red, Color.yellow], title: "Total Guests", showChartRowText: true, chartRowText: "were")
-                    .frame(height: 420)
-            }
+            .navigationBarTitle(event.title)
         }
     }
 }
 
 struct EventInsightView_Previews: PreviewProvider {
     static var previews: some View {
-        EventInsightView()
+        EventInsightView(event: events[0])
+    }
+}
+
+enum PieCharts: String, CaseIterable {
+    case universities = "Universities"
+    case gender = "Gender"
+    case relationship = "Relationship"
+}
+
+struct PieChart: View {
+    var selectedChart: PieCharts
+    var event: MockEvent
+
+    var body: some View {
+        switch selectedChart {
+        case .universities:
+            PieChartView(values: event.schoolValues, names: event.schoolNames, formatter: {value in String(format: "%.f", value)}, title: "Total", showChartRowText: true, chartRowText: "from")
+                .frame(height: 580)
+            
+        case .gender:
+            PieChartView(values: event.genderValues, names: ["Female", "Male", "Other"], formatter: { value in String(format: "%.f", value)}, colors: [Color.girlPink, Color.blue, Color.gray], title: "Total", showChartRowText: true, chartRowText: "were")
+                .frame(height: 420)
+            
+        case .relationship:
+            PieChartView(values: event.relationshipValues, names: ["Single", "Taken", "Complicated"], formatter: {value in String(format: "%.f", value)}, colors: [Color.green, Color.red, Color.yellow], title: "Total", showChartRowText: true, chartRowText: "were")
+                .frame(height: 420)
+        }
     }
 }

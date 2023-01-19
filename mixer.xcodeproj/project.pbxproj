@@ -50,6 +50,8 @@
 		9C9331B729272D7F0079E039 /* GetNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9331B629272D7F0079E039 /* GetNumber.swift */; };
 		9C9331BA29272E0F0079E039 /* iPhoneNumberField in Frameworks */ = {isa = PBXBuildFile; productRef = 9C9331B929272E0F0079E039 /* iPhoneNumberField */; };
 		9C9331BC292739700079E039 /* GetCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9331BB292739700079E039 /* GetCode.swift */; };
+		A613C3602978C61B00C4015C /* GuestListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A613C35F2978C61B00C4015C /* GuestListView.swift */; };
+		A613C362297922D800C4015C /* MockUserDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = A613C361297922D800C4015C /* MockUserDictionary.swift */; };
 		A6430446294FBDBF0058C0F0 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6430445294FBDBF0058C0F0 /* CreateEventView.swift */; };
 		A6430448294FBEC80058C0F0 /* CreateEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6430447294FBEC80058C0F0 /* CreateEventViewModel.swift */; };
 		A643044A294FBFB00058C0F0 /* DesignCodeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6430449294FBFB00058C0F0 /* DesignCodeExtensions.swift */; };
@@ -142,6 +144,8 @@
 		9C9331B32926D4CB0079E039 /* ContinueSignUpButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinueSignUpButton.swift; sourceTree = "<group>"; };
 		9C9331B629272D7F0079E039 /* GetNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNumber.swift; sourceTree = "<group>"; };
 		9C9331BB292739700079E039 /* GetCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCode.swift; sourceTree = "<group>"; };
+		A613C35F2978C61B00C4015C /* GuestListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestListView.swift; sourceTree = "<group>"; };
+		A613C361297922D800C4015C /* MockUserDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserDictionary.swift; sourceTree = "<group>"; };
 		A6430445294FBDBF0058C0F0 /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventView.swift; sourceTree = "<group>"; };
 		A6430447294FBEC80058C0F0 /* CreateEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewModel.swift; sourceTree = "<group>"; };
 		A6430449294FBFB00058C0F0 /* DesignCodeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignCodeExtensions.swift; sourceTree = "<group>"; };
@@ -493,6 +497,14 @@
 			path = Buttons;
 			sourceTree = "<group>";
 		};
+		A613C35E2978C5CA00C4015C /* Embedded Views */ = {
+			isa = PBXGroup;
+			children = (
+				A6A731C32975FFDF008DAC17 /* EventInsightView.swift */,
+			);
+			path = "Embedded Views";
+			sourceTree = "<group>";
+		};
 		A6430444294FBDA00058C0F0 /* Create Event View */ = {
 			isa = PBXGroup;
 			children = (
@@ -527,7 +539,7 @@
 			isa = PBXGroup;
 			children = (
 				A6A731BE29737F88008DAC17 /* HostDashboardView.swift */,
-				A6A731C32975FFDF008DAC17 /* EventInsightView.swift */,
+				A613C35E2978C5CA00C4015C /* Embedded Views */,
 			);
 			path = "Host Dashboard";
 			sourceTree = "<group>";
@@ -559,6 +571,7 @@
 			children = (
 				A6B9E6682953A889009C936E /* MapClusterView.swift */,
 				A6430444294FBDA00058C0F0 /* Create Event View */,
+				A613C35F2978C61B00C4015C /* GuestListView.swift */,
 			);
 			path = "Embedded Views";
 			sourceTree = "<group>";
@@ -605,6 +618,7 @@
 				A6B9E64F29518627009C936E /* MockUser.swift */,
 				A6A731BC2966AC52008DAC17 /* MockEvent.swift */,
 				A682CC5D297524CC008EA546 /* GraphModels.swift */,
+				A613C361297922D800C4015C /* MockUserDictionary.swift */,
 			);
 			path = "Mock Models";
 			sourceTree = "<group>";
@@ -772,7 +786,9 @@
 				9C93318B29201CA00079E039 /* MapView.swift in Sources */,
 				A6B9E652295189D2009C936E /* UserProfileView.swift in Sources */,
 				A6AB6C7C2960E20F007E9BF0 /* PinchZoomImageModifier.swift in Sources */,
+				A613C362297922D800C4015C /* MockUserDictionary.swift in Sources */,
 				9C93318D29201D010079E039 /* MockData.swift in Sources */,
+				A613C3602978C61B00C4015C /* GuestListView.swift in Sources */,
 				A6B9E6882953E9CB009C936E /* OffsetModifier.swift in Sources */,
 				A6B9E64E295185F9009C936E /* SearchPageView.swift in Sources */,
 				A6A731BD2966AC52008DAC17 /* MockEvent.swift in Sources */,
