@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import MapItemPicker
 
 struct CreateEventView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = CreateEventViewModel()
+    @State var showAddressPicker = false
     
     var body: some View {
         NavigationView {
@@ -17,24 +19,24 @@ struct CreateEventView: View {
                 Color.mixerBackground
                     .ignoresSafeArea()
                 
-                    List {
-                        mainDetailsSection
-                        
-                        dateSection
-                        
-                        addressSection
-                        
-                            Section(header: Text("Map Preview")) {
-                                MapSnapshotView(location: viewModel.coordinates, span: 0.001, delay: 0)
-                                    .cornerRadius(12)
-                                    .padding(.bottom, 60)
-                            }
-                            .listRowBackground(Color.clear)
+                List {
+                    mainDetailsSection
+                    
+                    dateSection
+                    
+                    addressSection
+                    
+                    Section(header: Text("Map Preview")) {
+                        MapSnapshotView(location: viewModel.coordinates, span: 0.001, delay: 0)
+                            .cornerRadius(12)
+                            .padding(.bottom, 60)
                     }
-                    .tint(.mixerIndigo)
-                    .preferredColorScheme(.dark)
-                    .scrollContentBackground(.hidden)
-                    .scrollIndicators(.hidden)
+                    .listRowBackground(Color.clear)
+                }
+                .tint(.mixerIndigo)
+                .preferredColorScheme(.dark)
+                .scrollContentBackground(.hidden)
+                .scrollIndicators(.hidden)
             }
             .overlay(alignment: .bottom, content: {
                 NavigationLink(destination: EventVisibilityView()) {
@@ -50,6 +52,11 @@ struct CreateEventView: View {
                     .foregroundColor(.blue)
                 })
             }
+            .mapItemPicker(isPresented: $showAddressPicker) { item in
+                if let name = item?.name {
+                    print("Selected \(name)")
+                }
+            }
         }
     }
     
@@ -63,7 +70,7 @@ struct CreateEventView: View {
                 .foregroundColor(Color.mainFont)
                 .font(.body.weight(.semibold))
                 .lineLimit(4)
-
+            
             TextField("Event/Theme Description*", text: $viewModel.description, axis: .vertical)
                 .foregroundColor(Color.mainFont)
                 .font(.body.weight(.semibold))
@@ -98,15 +105,18 @@ struct CreateEventView: View {
             .padding(.vertical, 8)
             
             if viewModel.selectedAddress == .yes {
-                TextField("Address", text: $viewModel.address)
-                    .foregroundColor(Color.mainFont)
+                Text("Tap to change")
                     .font(.body.weight(.semibold))
-                
+                    .foregroundColor(Color.secondary)
+                    .onTapGesture {
+                        showAddressPicker.toggle()
+
+                    }
             } else {
                 Text("Theta Chi House - 528 Beacon St")
                     .font(.body.weight(.semibold))
             }
-
+            
         }
         .listRowBackground(Color.mixerSecondaryBackground)
     }

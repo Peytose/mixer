@@ -18,7 +18,6 @@ struct HostSettingsView: View {
             .scrollContentBackground(.hidden)
             .background(Color.mixerBackground)
             .navigationTitle("Host Settings")
-            .navigationBarTitleDisplayMode(.automatic)
             .scrollIndicators(.hidden)
             .preferredColorScheme(.dark)
         }
@@ -27,7 +26,7 @@ struct HostSettingsView: View {
     var section: some View {
         Section {
             NavigationLink {
-                
+                HostProfileSettingsView()
             } label: {
                 HStack(alignment: .top, spacing: 15) {
                     Image("profile-banner-2")
@@ -137,6 +136,5 @@ struct HostSettingsView: View {
 struct HostSettingsView_Previews: PreviewProvider {
     static var previews: some View {
         HostSettingsView()
-            .preferredColorScheme(.dark)
     }
 }

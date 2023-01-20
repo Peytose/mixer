@@ -106,6 +106,13 @@
 		A6B9E690295464A8009C936E /* EventFlyerUploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B9E68F295464A8009C936E /* EventFlyerUploadView.swift */; };
 		A6BAEF612955064200410DED /* ReviewCreatedEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6BAEF602955064200410DED /* ReviewCreatedEventView.swift */; };
 		A6BAEF63295D40D700410DED /* SocialPageNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6BAEF62295D40D700410DED /* SocialPageNavigationBar.swift */; };
+		A6CD2C7E297B073500AA0B98 /* HostProfileSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CD2C7D297B073500AA0B98 /* HostProfileSettingsView.swift */; };
+		A6CD2C82297B105400AA0B98 /* HostSettingsChangeNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CD2C81297B105400AA0B98 /* HostSettingsChangeNameView.swift */; };
+		A6CD2C84297B201C00AA0B98 /* PlaceHolderColorModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CD2C83297B201C00AA0B98 /* PlaceHolderColorModifier.swift */; };
+		A6CD2C86297B39DF00AA0B98 /* HostSettingsChangeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CD2C85297B39DF00AA0B98 /* HostSettingsChangeEmailView.swift */; };
+		A6CD2C8A297B3EB600AA0B98 /* HostSettingsChangeSocialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CD2C89297B3EB600AA0B98 /* HostSettingsChangeSocialsView.swift */; };
+		A6CD2C8C297B46E100AA0B98 /* HostSettingsChangeAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CD2C8B297B46E100AA0B98 /* HostSettingsChangeAddressView.swift */; };
+		A6CD2C8F297B482A00AA0B98 /* MapItemPicker in Frameworks */ = {isa = PBXBuildFile; productRef = A6CD2C8E297B482A00AA0B98 /* MapItemPicker */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -200,6 +207,12 @@
 		A6B9E68F295464A8009C936E /* EventFlyerUploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventFlyerUploadView.swift; sourceTree = "<group>"; };
 		A6BAEF602955064200410DED /* ReviewCreatedEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCreatedEventView.swift; sourceTree = "<group>"; };
 		A6BAEF62295D40D700410DED /* SocialPageNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialPageNavigationBar.swift; sourceTree = "<group>"; };
+		A6CD2C7D297B073500AA0B98 /* HostProfileSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostProfileSettingsView.swift; sourceTree = "<group>"; };
+		A6CD2C81297B105400AA0B98 /* HostSettingsChangeNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostSettingsChangeNameView.swift; sourceTree = "<group>"; };
+		A6CD2C83297B201C00AA0B98 /* PlaceHolderColorModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceHolderColorModifier.swift; sourceTree = "<group>"; };
+		A6CD2C85297B39DF00AA0B98 /* HostSettingsChangeEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostSettingsChangeEmailView.swift; sourceTree = "<group>"; };
+		A6CD2C89297B3EB600AA0B98 /* HostSettingsChangeSocialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostSettingsChangeSocialsView.swift; sourceTree = "<group>"; };
+		A6CD2C8B297B46E100AA0B98 /* HostSettingsChangeAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostSettingsChangeAddressView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,6 +228,7 @@
 				9C93319B29242A9F0079E039 /* FirebaseDynamicLinks in Frameworks */,
 				9C3BADFD291F5C70009C8043 /* Kingfisher in Frameworks */,
 				9C3BADEE291F59E7009C8043 /* FirebaseFunctions in Frameworks */,
+				A6CD2C8F297B482A00AA0B98 /* MapItemPicker in Frameworks */,
 				9C3BADEA291F59E7009C8043 /* FirebaseFirestore in Frameworks */,
 				A68971CA296E7E1900289516 /* TabBar in Frameworks */,
 				9C3BADEC291F59E7009C8043 /* FirebaseFirestoreSwift in Frameworks */,
@@ -332,6 +346,7 @@
 				A6B9E6872953E9CB009C936E /* OffsetModifier.swift */,
 				A6AB6C7B2960E20F007E9BF0 /* PinchZoomImageModifier.swift */,
 				A6AB6C7D2960EFE7007E9BF0 /* CustomPopUpView.swift */,
+				A6CD2C83297B201C00AA0B98 /* PlaceHolderColorModifier.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -553,6 +568,7 @@
 			isa = PBXGroup;
 			children = (
 				A673527E297A683E00AAD32E /* HostSettingsView.swift */,
+				A6CD2C7F297B102100AA0B98 /* Host Profile Settings */,
 			);
 			path = "Host Settings";
 			sourceTree = "<group>";
@@ -697,6 +713,26 @@
 			path = "Mock View Model";
 			sourceTree = "<group>";
 		};
+		A6CD2C7F297B102100AA0B98 /* Host Profile Settings */ = {
+			isa = PBXGroup;
+			children = (
+				A6CD2C7D297B073500AA0B98 /* HostProfileSettingsView.swift */,
+				A6CD2C80297B103000AA0B98 /* Embedded Views */,
+			);
+			path = "Host Profile Settings";
+			sourceTree = "<group>";
+		};
+		A6CD2C80297B103000AA0B98 /* Embedded Views */ = {
+			isa = PBXGroup;
+			children = (
+				A6CD2C81297B105400AA0B98 /* HostSettingsChangeNameView.swift */,
+				A6CD2C85297B39DF00AA0B98 /* HostSettingsChangeEmailView.swift */,
+				A6CD2C89297B3EB600AA0B98 /* HostSettingsChangeSocialsView.swift */,
+				A6CD2C8B297B46E100AA0B98 /* HostSettingsChangeAddressView.swift */,
+			);
+			path = "Embedded Views";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -725,6 +761,7 @@
 				9C9331B929272E0F0079E039 /* iPhoneNumberField */,
 				A6B9E6612953A47C009C936E /* CodeScanner */,
 				A68971C9296E7E1900289516 /* TabBar */,
+				A6CD2C8E297B482A00AA0B98 /* MapItemPicker */,
 			);
 			productName = mixer;
 			productReference = 9C3BADB6291F54B4009C8043 /* mixer.app */;
@@ -760,6 +797,7 @@
 				9C9331B829272E0F0079E039 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */,
 				A6B9E6602953A47C009C936E /* XCRemoteSwiftPackageReference "CodeScanner" */,
 				A68971C8296E7E1900289516 /* XCRemoteSwiftPackageReference "TabBar" */,
+				A6CD2C8D297B482A00AA0B98 /* XCRemoteSwiftPackageReference "swiftui-map-item-picker" */,
 			);
 			productRefGroup = 9C3BADB7291F54B4009C8043 /* Products */;
 			projectDirPath = "";
@@ -833,6 +871,7 @@
 				A6B9E65029518627009C936E /* MockUser.swift in Sources */,
 				A643045B294FC72F0058C0F0 /* Model.swift in Sources */,
 				9C9331B729272D7F0079E039 /* GetNumber.swift in Sources */,
+				A6CD2C7E297B073500AA0B98 /* HostProfileSettingsView.swift in Sources */,
 				9C9331A72925BC2F0079E039 /* GetName.swift in Sources */,
 				A6430453294FC3A00058C0F0 /* PreferenceKey.swift in Sources */,
 				9C9331B22926D3560079E039 /* GetEmail.swift in Sources */,
@@ -856,21 +895,26 @@
 				A6430455294FC4470058C0F0 /* UserProfileViewModel.swift in Sources */,
 				A6B9E65D29539729009C936E /* MapViewModel.swift in Sources */,
 				A643044A294FBFB00058C0F0 /* DesignCodeExtensions.swift in Sources */,
+				A6CD2C86297B39DF00AA0B98 /* HostSettingsChangeEmailView.swift in Sources */,
 				9C93319229203D370079E039 /* NotificationsViewModel.swift in Sources */,
 				A673527A2979B8FD00AAD32E /* GuestListUserView.swift in Sources */,
 				A6B9E6782953B8A3009C936E /* MapSnapshotView.swift in Sources */,
 				A6B9E65929518AB2009C936E /* CustomStickyHeader.swift in Sources */,
 				9C3BADD7291F55D1009C8043 /* Constants.swift in Sources */,
 				A6B9E690295464A8009C936E /* EventFlyerUploadView.swift in Sources */,
+				A6CD2C8A297B3EB600AA0B98 /* HostSettingsChangeSocialsView.swift in Sources */,
 				A682CC582970F4A4008EA546 /* StretchableHeaderView.swift in Sources */,
 				A6A731C929772D62008DAC17 /* PieSliceView.swift in Sources */,
+				A6CD2C82297B105400AA0B98 /* HostSettingsChangeNameView.swift in Sources */,
 				A6A731C12974FA3A008DAC17 /* CustomStackView.swift in Sources */,
 				A6B9E65B2951933D009C936E /* Profile2View.swift in Sources */,
 				A68971CD296E7E5D00289516 /* CustomTabBarStyle.swift in Sources */,
 				A6430459294FC6D00058C0F0 /* NavigationBar.swift in Sources */,
+				A6CD2C84297B201C00AA0B98 /* PlaceHolderColorModifier.swift in Sources */,
 				9C93319429203D8B0079E039 /* Notification.swift in Sources */,
 				9C93319F2925B0390079E039 /* AuthFlow.swift in Sources */,
 				A682CC5C29752463008EA546 /* FollowerGraphView.swift in Sources */,
+				A6CD2C8C297B46E100AA0B98 /* HostSettingsChangeAddressView.swift in Sources */,
 				A6B9E68C29544F21009C936E /* NextButton.swift in Sources */,
 				A6430448294FBEC80058C0F0 /* CreateEventViewModel.swift in Sources */,
 			);
@@ -1127,6 +1171,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		A6CD2C8D297B482A00AA0B98 /* XCRemoteSwiftPackageReference "swiftui-map-item-picker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-map-item-picker";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1184,6 +1236,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A6B9E6602953A47C009C936E /* XCRemoteSwiftPackageReference "CodeScanner" */;
 			productName = CodeScanner;
+		};
+		A6CD2C8E297B482A00AA0B98 /* MapItemPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A6CD2C8D297B482A00AA0B98 /* XCRemoteSwiftPackageReference "swiftui-map-item-picker" */;
+			productName = MapItemPicker;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -12,6 +12,7 @@ struct HostDashboardView: View {
     @StateObject private var eventManager = EventManager()
     @State var showEventInsightView = false
     @State var showHostHomePageView = false
+    @State var showSettingsView = false
     @StateObject private var viewModel = ExplorePageViewModel()
     @Binding var tabBarVisibility: TabBarVisibility
 
@@ -110,7 +111,7 @@ struct HostDashboardView: View {
                             let impact = UIImpactFeedbackGenerator(style: .light)
                             impact.impactOccurred()
                             withAnimation(.spring()) {
-                                showHostHomePageView.toggle()
+                                showSettingsView.toggle()
                             }
                         }, label: {
                             Image(systemName: "gearshape.fill")
@@ -133,6 +134,9 @@ struct HostDashboardView: View {
             }
             .fullScreenCover(isPresented: $showHostHomePageView) {
                 HostOrganizationView(parentViewModel: viewModel, tabBarVisibility: $tabBarVisibility)
+            }
+            .sheet(isPresented: $showSettingsView) {
+                HostSettingsView()
             }
         }
     }
