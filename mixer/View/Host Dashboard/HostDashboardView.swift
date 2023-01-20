@@ -6,11 +6,14 @@
 //
 
 import SwiftUI
+import TabBar
 
 struct HostDashboardView: View {
-    @Namespace var namespace
-    @State var showEventInsightView = false
     @StateObject private var eventManager = EventManager()
+    @State var showEventInsightView = false
+    @State var showHostHomePageView = false
+    @StateObject private var viewModel = ExplorePageViewModel()
+    @Binding var tabBarVisibility: TabBarVisibility
 
     var columns = Array(repeating: GridItem(.flexible(), spacing: 20), count: 2)
     var eventList: [MockEvent] {
@@ -78,7 +81,6 @@ struct HostDashboardView: View {
                             .padding()
                             .background(Color.mixerSecondaryBackground.opacity(0.5))
                             .cornerRadius(15)
-//                            .shadow(color: Color.white.opacity(0.1), radius: 4, x: 0, y: 0)
                         }
                         }
                     }
@@ -88,6 +90,37 @@ struct HostDashboardView: View {
             .background(Color.mixerBackground)
             .preferredColorScheme(.dark)
             .navigationBarTitle("MIT Theta Chi")
+            .toolbar {
+                ToolbarItem() {
+                    HStack(spacing: 0) {
+                        Button(action: {
+                            let impact = UIImpactFeedbackGenerator(style: .light)
+                            impact.impactOccurred()
+                            withAnimation(.spring()) {
+                                showHostHomePageView.toggle()
+                            }
+                        }, label: {
+                            Image(systemName: "person.crop.circle")
+                                .foregroundColor(Color.mainFont)
+                                .font(.system(size: 24))
+                                .shadow(radius: 10)
+                        })
+                        
+                        Button(action: {
+                            let impact = UIImpactFeedbackGenerator(style: .light)
+                            impact.impactOccurred()
+                            withAnimation(.spring()) {
+                                showHostHomePageView.toggle()
+                            }
+                        }, label: {
+                            Image(systemName: "gearshape.fill")
+                                .foregroundColor(Color.mainFont)
+                                .font(.system(size: 24))
+                                .shadow(radius: 10)
+                        })
+                    }
+                }
+            }
             .fullScreenCover(isPresented: $showEventInsightView) {
                 EventInsightView(event: eventManager.selectedEvent!)
                     .overlay(alignment: .topTrailing) {
@@ -97,6 +130,9 @@ struct HostDashboardView: View {
                             }
                             .padding(.trailing)
                     }
+            }
+            .fullScreenCover(isPresented: $showHostHomePageView) {
+                HostOrganizationView(parentViewModel: viewModel, tabBarVisibility: $tabBarVisibility)
             }
         }
     }
@@ -153,7 +189,7 @@ struct HostDashboardView: View {
 
 struct HostDashboardView_Previews: PreviewProvider {
     static var previews: some View {
-        HostDashboardView()
+        HostDashboardView(tabBarVisibility: .constant(.visible))
     }
 }
 

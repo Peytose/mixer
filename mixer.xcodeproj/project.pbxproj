@@ -64,6 +64,7 @@
 		A6430459294FC6D00058C0F0 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6430458294FC6D00058C0F0 /* NavigationBar.swift */; };
 		A643045B294FC72F0058C0F0 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A643045A294FC72F0058C0F0 /* Model.swift */; };
 		A673527A2979B8FD00AAD32E /* GuestListUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67352792979B8FD00AAD32E /* GuestListUserView.swift */; };
+		A673527F297A683E00AAD32E /* HostSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A673527E297A683E00AAD32E /* HostSettingsView.swift */; };
 		A682CC562970915B008EA546 /* DetailRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A682CC552970915B008EA546 /* DetailRowView.swift */; };
 		A682CC582970F4A4008EA546 /* StretchableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A682CC572970F4A4008EA546 /* StretchableHeaderView.swift */; };
 		A682CC5A2970F60C008EA546 /* EventRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A682CC592970F60C008EA546 /* EventRowView.swift */; };
@@ -159,6 +160,7 @@
 		A6430458294FC6D00058C0F0 /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		A643045A294FC72F0058C0F0 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		A67352792979B8FD00AAD32E /* GuestListUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestListUserView.swift; sourceTree = "<group>"; };
+		A673527E297A683E00AAD32E /* HostSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostSettingsView.swift; sourceTree = "<group>"; };
 		A682CC552970915B008EA546 /* DetailRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRowView.swift; sourceTree = "<group>"; };
 		A682CC572970F4A4008EA546 /* StretchableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchableHeaderView.swift; sourceTree = "<group>"; };
 		A682CC592970F60C008EA546 /* EventRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRowView.swift; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 		9C3BADC7291F54FC009C8043 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A673527D297A280B00AAD32E /* Host Dashboard */,
 				9C3BADCC291F552F009C8043 /* CustomViews */,
 				9C3BADD0291F558A009C8043 /* Search */,
 				9C3BADCF291F5572009C8043 /* Explore */,
@@ -503,6 +506,7 @@
 			isa = PBXGroup;
 			children = (
 				A6A731C32975FFDF008DAC17 /* EventInsightView.swift */,
+				A6735280297A6EE900AAD32E /* Host Settings */,
 			);
 			path = "Embedded Views";
 			sourceTree = "<group>";
@@ -536,6 +540,23 @@
 			path = "Guest List";
 			sourceTree = "<group>";
 		};
+		A673527D297A280B00AAD32E /* Host Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				A6A731BE29737F88008DAC17 /* HostDashboardView.swift */,
+				A613C35E2978C5CA00C4015C /* Embedded Views */,
+			);
+			path = "Host Dashboard";
+			sourceTree = "<group>";
+		};
+		A6735280297A6EE900AAD32E /* Host Settings */ = {
+			isa = PBXGroup;
+			children = (
+				A673527E297A683E00AAD32E /* HostSettingsView.swift */,
+			);
+			path = "Host Settings";
+			sourceTree = "<group>";
+		};
 		A68971CB296E7E2E00289516 /* Tab Bar */ = {
 			isa = PBXGroup;
 			children = (
@@ -544,15 +565,6 @@
 				A68971CE296E7E8D00289516 /* CustomTabItemView.swift */,
 			);
 			path = "Tab Bar";
-			sourceTree = "<group>";
-		};
-		A6A731C22975FF26008DAC17 /* Host Dashboard */ = {
-			isa = PBXGroup;
-			children = (
-				A6A731BE29737F88008DAC17 /* HostDashboardView.swift */,
-				A613C35E2978C5CA00C4015C /* Embedded Views */,
-			);
-			path = "Host Dashboard";
 			sourceTree = "<group>";
 		};
 		A6A731C729772CFA008DAC17 /* Pie Chart */ = {
@@ -609,7 +621,6 @@
 			children = (
 				A6B9E65A2951933D009C936E /* Profile2View.swift */,
 				A643044B294FC2960058C0F0 /* ProfileSettingsView.swift */,
-				A6A731C22975FF26008DAC17 /* Host Dashboard */,
 			);
 			path = "Mock Views";
 			sourceTree = "<group>";
@@ -804,6 +815,7 @@
 				A6B9E64E295185F9009C936E /* SearchPageView.swift in Sources */,
 				A6A731BD2966AC52008DAC17 /* MockEvent.swift in Sources */,
 				9C567A9E2934F83100EA5FCB /* PhotoPicker.swift in Sources */,
+				A673527F297A683E00AAD32E /* HostSettingsView.swift in Sources */,
 				A6430451294FC3380058C0F0 /* HexagonBlobView.swift in Sources */,
 				A6430457294FC50C0058C0F0 /* AvatarView.swift in Sources */,
 				A6A731CB29772DF2008DAC17 /* PieChartView.swift in Sources */,

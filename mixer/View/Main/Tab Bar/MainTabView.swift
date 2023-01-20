@@ -15,6 +15,8 @@ struct MainTabView: View {
         case second
         case third
         case fourth
+        case fifth
+
         
         var icon: String {
             switch self {
@@ -22,6 +24,8 @@ struct MainTabView: View {
                 case .second: return "map"
                 case .third: return "magnifyingglass"
                 case .fourth: return "person"
+                case .fifth: return "house"
+
             }
         }
         
@@ -31,6 +35,7 @@ struct MainTabView: View {
                 case .second: return "Map"
                 case .third: return "Search"
                 case .fourth: return "Profile"
+                case .fifth: return "Host"
             }
         }
     }
@@ -53,6 +58,9 @@ struct MainTabView: View {
             
             UserProfilePrototypeView()
                 .tabItem(for: Item.fourth)
+            
+            HostDashboardView(tabBarVisibility: $visibility)
+                .tabItem(for: Item.fifth)
         }
         .tabBar(style: CustomTabBarStyle(height: selection == .second ? 300 : 370))
         .tabItem(style: CustomTabItemStyle())

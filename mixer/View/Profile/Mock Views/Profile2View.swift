@@ -20,12 +20,10 @@ struct UserProfilePrototypeView: View {
         return events
     }
     
-    @State var shareUsername = false
     @State var profileContext: ProfilePrototypeContext = .current
+
+    @State var shareUsername = false
     @State var showSettingsView = false
-    @State var showDashboardView = false
-    @State var showAlert = false
-    @State var isFriends = false
     
     @Namespace var animation
     @Namespace var namespace
@@ -116,48 +114,23 @@ struct UserProfilePrototypeView: View {
         .preferredColorScheme(.dark)
         .statusBarHidden(true)
         .overlay(alignment: .topTrailing) {
-            HStack {
-                Button(action: {
-                    let impact = UIImpactFeedbackGenerator(style: .light)
-                    impact.impactOccurred()
-                    withAnimation(.spring()) {
-                        showDashboardView.toggle()
-                    }
-                }, label: {
-                    Image(systemName: "house.fill")
-                        .foregroundColor(Color.mainFont)
-                        .font(.system(size: 28))
-                        .shadow(radius: 10)
-                })
-                
-                Button(action: {
-                    let impact = UIImpactFeedbackGenerator(style: .light)
-                    impact.impactOccurred()
-                    withAnimation(.spring()) {
-                        showSettingsView.toggle()
-                    }
-                }, label: {
-                    Image(systemName: "gearshape.fill")
-                        .foregroundColor(Color.mainFont)
-                        .font(.system(size: 28))
-                        .shadow(radius: 10)
-                })
-            }
+            Button(action: {
+                let impact = UIImpactFeedbackGenerator(style: .light)
+                impact.impactOccurred()
+                withAnimation(.spring()) {
+                    showSettingsView.toggle()
+                }
+            }, label: {
+                Image(systemName: "gearshape.fill")
+                    .foregroundColor(Color.mainFont)
+                    .font(.system(size: 28))
+                    .shadow(radius: 10)
+            })
             .padding(EdgeInsets(top: -20, leading: 0, bottom: 0, trailing: 20))
             
         }
         .sheet(isPresented: $showSettingsView, content: {
             ProfileSettingsView()
-        })
-        .fullScreenCover(isPresented: $showDashboardView, content: {
-            HostDashboardView()
-                .overlay(alignment: .topTrailing) {
-                    XDismissButton()
-                        .onTapGesture {
-                            showDashboardView.toggle()
-                        }
-                        .padding(.trailing)
-                }
         })
     }
 }
