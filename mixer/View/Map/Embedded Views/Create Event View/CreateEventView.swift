@@ -20,6 +20,8 @@ struct CreateEventView: View {
                     .ignoresSafeArea()
                 
                 List {
+                    flyerSection
+                    
                     mainDetailsSection
                     
                     dateSection
@@ -57,7 +59,27 @@ struct CreateEventView: View {
                     print("Selected \(name)")
                 }
             }
+            .sheet(isPresented: $viewModel.isShowingPhotoPicker) { PhotoPicker(image: $viewModel.flyer) }
         }
+    }
+    
+    var flyerSection: some View {
+        VStack {
+            Image(uiImage: viewModel.flyer)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .cornerRadius(12)
+                .frame(width: 175, height: 190)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+        .padding()
+        .onTapGesture {
+            let impact = UIImpactFeedbackGenerator(style: .medium)
+            impact.impactOccurred()
+            
+            viewModel.isShowingPhotoPicker = true
+        }
+        .listRowBackground(Color.clear)
     }
     
     var mainDetailsSection: some View {

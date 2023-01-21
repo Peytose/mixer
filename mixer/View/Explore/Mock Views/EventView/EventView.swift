@@ -252,8 +252,8 @@ struct EventView: View {
                                     
                                 Image(event.flyer)
                                     .resizable()
-                                    .frame(width: proxy.size.width, height: proxy.size.height)
                                     .aspectRatio(contentMode: .fit)
+                                    .frame(width: proxy.size.width, height: proxy.size.height)
                                     .matchedGeometryEffect(id: "background 1", in: namespace)
                                     .offset(y: scrollY > 0 ? -scrollY : 0)
                                     .mask(

@@ -23,7 +23,7 @@ struct HostSettingsChangeAddressView: View {
         }
         .scrollContentBackground(.hidden)
         .background(Color.mixerBackground)
-        .navigationTitle("Change Name")
+        .navigationTitle("Change Address")
         .navigationBarTitleDisplayMode(.inline)
         .scrollIndicators(.hidden)
         .preferredColorScheme(.dark)
