@@ -13,6 +13,8 @@ struct MapSnapshotView: View {
     let location: CLLocationCoordinate2D
     var span: CLLocationDegrees = 0.01
     var delay: CGFloat = 0.3
+    var width: CGFloat = 350
+    var height: CGFloat = 220
     
     @State private var snapshotImage: UIImage? = nil
     
@@ -28,7 +30,7 @@ struct MapSnapshotView: View {
         }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-                generateSnapshot(width: 350, height: 220)
+                generateSnapshot(width: width, height: height)
             }
         }
     }

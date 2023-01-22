@@ -55,11 +55,11 @@ struct EventVisibilityView: View {
             }
         }
         .overlay(alignment: .bottom, content: {
-            NavigationLink(destination: EventExtraSettingsView()) {
-                NextButton()
+            NavigationLink(destination: ReviewCreatedEventView()) {
+                NextButton() 
             }
         })
-        .navigationBarTitle(Text("Event Settings"), displayMode: .large)
+        .navigationBarTitle(Text("Visibility Settings"), displayMode: .large)
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
