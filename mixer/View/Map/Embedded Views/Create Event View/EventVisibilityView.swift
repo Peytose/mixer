@@ -51,14 +51,13 @@ struct EventVisibilityView: View {
                 .preferredColorScheme(.dark)
                 .scrollContentBackground(.hidden)
             }
-            
         }
         .overlay(alignment: .bottom, content: {
             NavigationLink(destination: EventFlyerUploadView()) {
                 NextButton()
             }
         })
-        .navigationBarTitle(Text("Event Visibility"), displayMode: .large)
+        .navigationBarTitle(Text("Event Settings"), displayMode: .large)
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {

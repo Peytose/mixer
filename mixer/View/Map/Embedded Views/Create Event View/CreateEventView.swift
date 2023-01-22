@@ -64,22 +64,25 @@ struct CreateEventView: View {
     }
     
     var flyerSection: some View {
-        VStack {
-            Image(uiImage: viewModel.flyer)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .cornerRadius(12)
-                .frame(width: 175, height: 190)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        Section(header: Text("Upload flyer")) {
+            VStack {
+                Image(uiImage: viewModel.flyer)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .cornerRadius(12)
+                    .frame(width: 140, height: 140)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+            .padding()
+            .onTapGesture {
+                let impact = UIImpactFeedbackGenerator(style: .medium)
+                impact.impactOccurred()
+                
+                viewModel.isShowingPhotoPicker = true
+            }
+            .listRowBackground(Color.clear)
         }
-        .padding()
-        .onTapGesture {
-            let impact = UIImpactFeedbackGenerator(style: .medium)
-            impact.impactOccurred()
-            
-            viewModel.isShowingPhotoPicker = true
-        }
-        .listRowBackground(Color.clear)
+        
     }
     
     var mainDetailsSection: some View {
