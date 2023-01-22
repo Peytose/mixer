@@ -15,7 +15,7 @@ struct HostProfileSettingsView: View {
     
     var body: some View {
         List {
-            section
+            imageSection
             
             nameSection
             
@@ -34,7 +34,7 @@ struct HostProfileSettingsView: View {
         .padding(.top, -25)
     }
     
-    var section: some View {
+    var imageSection: some View {
         VStack(alignment: .center) {
             Image("profile-banner-2")
                 .resizable()
@@ -145,6 +145,14 @@ struct HostProfileSettingsView: View {
                 }
             }
             
+            NavigationLink {
+                HostSettingsDescriptionView()
+            } label: {
+                HStack {
+                    Text("Edit Organization Description")
+                        .font(.body)
+                }
+            }
         }
         .listRowBackground(Color.mixerSecondaryBackground)
     }
