@@ -76,60 +76,6 @@ struct EventInsightView: View {
                     } contentView: {
                         PieChart(selectedChart: selectedChart, event: event)
                     }
-
-                    CustomStackView {
-                        Label {
-                            Text("Rings")
-                        } icon: {
-                            Image(systemName: "person")
-                        }
-                    } contentView: {
-                        LazyVGrid(columns: columns,spacing: 30) {
-                            ForEach(1..<5) { x in
-                                VStack(spacing: 32) {
-                                    
-                                    HStack{
-                                        
-                                        Text("Running")
-                                            .font(.system(size: 22))
-                                            .fontWeight(.bold)
-                                            .foregroundColor(.white)
-                                        
-                                        Spacer(minLength: 0)
-                                    }
-                                    
-                                    ZStack {
-                                        
-                                        Circle()
-                                            .trim(from: 0, to: 1)
-                                            .stroke(Color("graphLavendar").opacity(0.05), lineWidth: 10)
-                                            .frame(width: (UIScreen.main.bounds.width - 150) / 2, height: (UIScreen.main.bounds.width - 150) / 2)
-                                        
-                                        Circle()
-                                            .trim(from: 0, to: 7/15)
-                                            .stroke(Color("graphLavendar"), style: StrokeStyle(lineWidth: 10, lineCap: .round))
-                                            .frame(width: (UIScreen.main.bounds.width - 150) / 2, height: (UIScreen.main.bounds.width - 150) / 2)
-                                        
-                                        Text("45 %")
-                                            .font(.system(size: 22))
-                                            .fontWeight(.bold)
-                                            .foregroundColor(Color.blue)
-                                            .rotationEffect(.init(degrees: 90))
-                                    }
-                                    .rotationEffect(.init(degrees: -90))
-                                    
-                                    Text("6.8 KM")
-                                        .font(.system(size: 22))
-                                        .foregroundColor(.white)
-                                        .fontWeight(.bold)
-                                }
-                                .padding()
-                                .background(Color.mixerSecondaryBackground.opacity(0.5))
-                                .cornerRadius(15)
-                                //                            .shadow(color: Color.white.opacity(0.1), radius: 4, x: 0, y: 0)
-                            }
-                        }
-                    }
                 }
                 .padding(.horizontal)
             }

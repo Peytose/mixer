@@ -44,7 +44,7 @@ struct HostOrganizationView: View {
     var body: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
-                cover2
+                cover
                 
                 content
             }
@@ -58,7 +58,7 @@ struct HostOrganizationView: View {
         }
     }
             
-    var cover2: some View {
+    var cover: some View {
         GeometryReader { proxy in
             let scrollY = proxy.frame(in: .named("scroll")).minY
             

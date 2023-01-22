@@ -18,6 +18,8 @@ struct HostDashboardView: View {
     @Binding var tabBarVisibility: TabBarVisibility
     @State var selectedChart: DashboardCharts = .followers
 
+    @Namespace var namespace
+    
     var columns = Array(repeating: GridItem(.flexible(), spacing: 20), count: 2)
     var eventList: [MockEvent] {
         return events
@@ -27,27 +29,21 @@ struct HostDashboardView: View {
         NavigationView {
             ScrollView(showsIndicators: false) {
                 VStack {
+                    cover
+                    
+                    organizationName
+                    
                     quickStatsSection
                     
                     recentEventsSection
                     
-                    Picker("Pie Chart", selection: $selectedChart.animation() ) {
-                        ForEach(DashboardCharts.allCases, id: \.self) {
-                            Text($0.rawValue)
-                        }
-                    }
-                    .pickerStyle(.segmented)
-                    .padding(.horizontal)
-                    
-                    Chart(selectedChart: selectedChart)
-                        .padding()
-
+                    chartsSection
+                        .padding(.bottom, 100)
                 }
                 .padding(.horizontal, 5)
             }
             .background(Color.mixerBackground)
             .preferredColorScheme(.dark)
-            .navigationBarTitle("MIT Theta Chi")
             .toolbar {
                 ToolbarItem() {
                     HStack(spacing: 0) {
@@ -111,8 +107,44 @@ struct HostDashboardView: View {
             .sheet(isPresented: $showSettingsView) {
                 HostSettingsView()
             }
+            .ignoresSafeArea()
         }
     }
+    
+    var cover: some View {
+        GeometryReader { proxy in
+            let scrollY = proxy.frame(in: .named("scroll")).minY
+            
+            VStack {
+                StretchableHeader(imageName: "profile-banner-2")
+                    .mask(Color.profileGradient) /// mask the blurred image using the gradient's alpha values
+                    .matchedGeometryEffect(id: "profileBackground", in: namespace)
+                    .offset(y: scrollY > 0 ? -scrollY : 0)
+                    .scaleEffect(scrollY > 0 ? scrollY / 500 + 1 : 1)
+                    .blur(radius: scrollY > 0 ? scrollY / 40 : 0)
+            }
+        }
+        .padding(.bottom, 270)
+    }
+    
+    var organizationName: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack(spacing: 7) {
+                Text("MIT Theta Chi")
+                    .font(.largeTitle).bold()
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
+                
+                Image(systemName: "checkmark.seal.fill")
+                    .symbolRenderingMode(.palette)
+                    .foregroundStyle(.white, .blue)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.bottom, 2)
+
+    }
+    
     var recentEventsSection: some View {
         CustomStackView {
             Text("Recent Events")
@@ -160,6 +192,21 @@ struct HostDashboardView: View {
                     .font(.headline)
                     .foregroundColor(.secondary)
             }
+        }
+    }
+    
+    var chartsSection: some View {
+        VStack {
+            Picker("Pie Chart", selection: $selectedChart.animation() ) {
+                ForEach(DashboardCharts.allCases, id: \.self) {
+                    Text($0.rawValue)
+                }
+            }
+            .pickerStyle(.segmented)
+            .padding(.horizontal)
+                        
+            Chart(selectedChart: selectedChart)
+                .padding()
         }
     }
 }

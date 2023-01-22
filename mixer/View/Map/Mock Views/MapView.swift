@@ -42,16 +42,6 @@ struct MapView: View {
             .shadow(radius: 5, y: 10)
             .padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 20))
         })
-        .overlay(alignment: .bottomTrailing, content: {
-            AddEventButton()
-                .padding(EdgeInsets(top: 0, leading: 0, bottom: 100, trailing: 20))
-                .onTapGesture {
-                    let impact = UIImpactFeedbackGenerator(style: .medium)
-                    impact.impactOccurred()
-                    
-                    viewModel.isShowingAddEventView.toggle()
-                }
-        })
         .overlay(alignment: .bottom, content: {
             UserQRCodeButton()
                 .onTapGesture {
@@ -70,10 +60,6 @@ struct MapView: View {
         .sheet(isPresented: $showGuestListView, content: {
             GuestListView()
         })
-
-        //        .sheet(isPresented: $viewModel.isShowingHostView, content: { HostOrganizationView(viewModel: HostOrganizationViewModel(host: hostManager.selectedHost!, namespace: namespace)) })
-                .fullScreenCover(isPresented: $viewModel.isShowingAddEventView, content: { CreateEventView() })
-        //        .sheet(isPresented: $viewModel.isShowingEventUsersListView, content: { EventListHostView(viewModel: EventListHostViewModel(host: viewModel.hostOrganization!)) })
     }
 }
 
@@ -84,20 +70,6 @@ struct MapView_Previews: PreviewProvider {
             .preferredColorScheme(.dark)
     }
 }
-
-
-fileprivate struct AddEventButton: View {
-    var body: some View {
-        Image(systemName: "plus")
-            .font(.title.weight(.medium))
-            .foregroundColor(Color.white)
-            .padding(20)
-            .background(Color.mixerPurpleGradient)
-            .clipShape(Circle())
-            .shadow(radius: 5, y: 10)
-    }
-}
-
 
 fileprivate struct EventUsersListButton: View {
     @Binding var action: Bool

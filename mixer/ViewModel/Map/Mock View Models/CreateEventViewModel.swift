@@ -54,7 +54,9 @@ enum isPrivate: String {
         @Published var guestLimit                        = ""
         @Published var guestLimitForGuests               = ""
         @Published var address                           = ""
-        
+        @Published var attireDescription                 = ""
+        @Published var note                              = ""
+
         @Published var flyer                             = PlaceholderImage.event
         
         @Published var showEndDate                       = false
@@ -63,8 +65,11 @@ enum isPrivate: String {
         @Published var isShowingPhotoPicker              = false
         @Published var isLoading                         = false
         @Published var isInviteLimit                     = false
+        @Published var hasAttireDescription              = false
+        @Published var hasNote                           = false
         @Published var isGuestInviteLimit                = false
         @Published var includeInviteList                 = false
+        @Published var showAttendanceCount               = false
         @Published var alertItem: AlertItem?
         
         let coordinates = CLLocationCoordinate2D(latitude: 42.3507046, longitude: -71.0909822)

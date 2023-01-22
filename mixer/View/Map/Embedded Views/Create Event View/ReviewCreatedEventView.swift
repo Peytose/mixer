@@ -26,7 +26,7 @@ struct ReviewCreatedEventView: View {
             
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 15) {
-                    Text("Private Party \(Image(systemName: "lock.fill"))")
+                    Text("\(viewModel.isPrivate.stringVersion) Event \(Image(systemName: viewModel.isPrivate == .yes ? "lock.fill": "globe"))")
                         .font(.title3).fontWeight(.medium)
                         .foregroundColor(.secondary)
                         .padding(.bottom, 5)
@@ -56,7 +56,8 @@ struct ReviewCreatedEventView: View {
                         Text("528 Beacon St, Boston MA 02215")
                             .font(.headline)
                             .foregroundColor(.secondary)
-                            .frame(maxWidth: .infinity)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.4)
 
                     }
                     
@@ -82,11 +83,10 @@ struct ReviewCreatedEventView: View {
                         Text("Event Description:")
                             .font(.title3).fontWeight(.medium)
                         
-                        Text("Neon party at Theta Chi, need we say more?cjhsdbvsjdvvjshdvbsdvsjhdbvsdvjhbsdvkjndsvklnsdkvjnjsdjvnsdvnskdvnsdvskjvsdvnsdkjvnsdkvjndsvskvjndsvsdjnvsvsdjvsdvhbsdvsjdhvbsdvj")
+                        Text("Neon party at Theta Chi, need we say more?")
                             .font(.headline)
                             .foregroundColor(.secondary)
                             .lineLimit(4)
-                            .frame(maxWidth: .infinity)
                     }
                     
                     VStack(alignment: .leading, spacing: 10) {
@@ -114,7 +114,7 @@ struct ReviewCreatedEventView: View {
             
         }
         .overlay(alignment: .bottom, content: {
-            NavigationLink(destination: EventFlyerUploadView()) {
+            NavigationLink(destination: EventExtraSettingsView()) {
                 NextButton(text: "Create Party")
             }
         })
