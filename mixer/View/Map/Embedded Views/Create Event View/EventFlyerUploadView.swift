@@ -9,37 +9,60 @@
 import SwiftUI
 
 struct EventFlyerUploadView: View {
+    
     @StateObject var viewModel = CreateEventViewModel()
     @Environment(\.presentationMode) var presentationMode
+    
+    @State private var selectedColor = "Invite Only"
     
     var body: some View {
         ZStack {
             Color.mixerBackground
                 .ignoresSafeArea()
             
-            VStack(alignment: .center, spacing: 15) {
-                VStack(alignment: .leading) {
-                    Text("A flyer is an effective way to get the word out about your party.")
+            VStack {
+                
+                visibilityToggle
+                
+                VStack(alignment: .leading, spacing: 20) {
+                    Text("Invite only Event Description")
+                        .font(.title).bold()
+                        .padding(.bottom, -15)
+                    
+                    Text(viewModel.isPrivate == .yes ? "Only invited attendees can view and attend a Private Party" : "Anyone can view a Public Party and join its guestlist")
                         .font(.title3).fontWeight(.medium)
-                        .padding(.horizontal, 11)
                 }
-                .padding(.top, 50)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(EdgeInsets(top: 0, leading: 21, bottom: 0, trailing: 10))
                 
-                Text("Touch to Change")
-                    .font(.largeTitle.weight(.bold))
-                    .padding(.top, 0)
-                
-                flyerChooser
+                List {
+                    if viewModel.isPrivate == .yes {
+                        includeInviteListSection
+                        inviteLimitSection
+                        
+                        guestInviteLimitSection
+                    } else {
+                        includeInviteListSection
+                        
+                        if viewModel.includeInviteList {
+                            inviteLimitSection
+                            
+                            guestInviteLimitSection
+                        }
+                    }
+                    
+                }
+                .tint(.mixerIndigo)
+                .preferredColorScheme(.dark)
+                .scrollContentBackground(.hidden)
             }
         }
-        .preferredColorScheme(.dark)
-        .ignoresSafeArea()
         .overlay(alignment: .bottom, content: {
-            NavigationLink(destination: ReviewCreatedEventView()) {
+            NavigationLink(destination: EventFlyerUploadView()) {
                 NextButton()
             }
         })
-        .navigationBarTitle(Text("Upload a flyer"), displayMode: .large)
+        .navigationBarTitle(Text("Event Settings"), displayMode: .large)
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -50,25 +73,57 @@ struct EventFlyerUploadView: View {
                 })
             }
         }
-        .sheet(isPresented: $viewModel.isShowingPhotoPicker) { PhotoPicker(image: $viewModel.flyer) }
     }
     
-    var flyerChooser: some View {
-            VStack {
-                Image(uiImage: viewModel.flyer)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .cornerRadius(20)
-                    .frame(width: 350, height: 420)
-                    
+    var visibilityToggle: some View {
+        Picker("Invite only", selection: self.$viewModel.isPrivate.animation()) {
+            Text("Public").tag(isPrivate.no)
+            Text("Private").tag(isPrivate.yes)
+        }
+        .pickerStyle(.segmented)
+        .padding()
+    }
+    
+    var includeInviteListSection: some View {
+        Section {
+            Toggle("Invite List?", isOn: $viewModel.includeInviteList.animation())
+                .font(.body.weight(.semibold))
+        } header: {
+            Text("Include Invite List")
+        }
+        .listRowBackground(Color.mixerSecondaryBackground)
+    }
+    
+    var inviteLimitSection: some View {
+        Section {
+            Toggle("Invite Limit?", isOn: $viewModel.isInviteLimit.animation())
+                .font(.body.weight(.semibold))
+            
+            if viewModel.isInviteLimit == true {
+                TextField("Invites per brother*", text: $viewModel.guestLimit)
+                    .foregroundColor(Color.mainFont)
+                    .keyboardType(.numberPad)
             }
-            .padding()
-            .onTapGesture {
-                let impact = UIImpactFeedbackGenerator(style: .medium)
-                impact.impactOccurred()
-                
-                viewModel.isShowingPhotoPicker = true
+        } header: {
+            Text("Maximum Invites")
+        }
+        .listRowBackground(Color.mixerSecondaryBackground)
+    }
+    
+    var guestInviteLimitSection: some View {
+        Section {
+            Toggle("Allow guests to invite guests?", isOn: $viewModel.isGuestInviteLimit.animation())
+                .font(.body.weight(.semibold))
+            
+            if viewModel.isGuestInviteLimit {
+                TextField("Invites per Guest*", text: $viewModel.guestLimitForGuests)
+                    .foregroundColor(Color.mainFont)
+                    .keyboardType(.numberPad)
             }
+        } header: {
+            Text("Maximum Guest Invites")
+        }
+        .listRowBackground(Color.mixerSecondaryBackground)
     }
     
 }

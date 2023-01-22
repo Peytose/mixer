@@ -12,8 +12,6 @@ struct HostSettingsView: View {
         NavigationView {
             List {
                 section
-                
-                preferencesSection
             }
             .scrollContentBackground(.hidden)
             .background(Color.mixerBackground)
@@ -51,7 +49,7 @@ struct HostSettingsView: View {
             }
 
             NavigationLink {
-                
+                HostMemberSettingsView()
             } label: {
                 HStack(spacing: -8) {
                     Circle()
@@ -105,30 +103,6 @@ struct HostSettingsView: View {
         }
         .listRowBackground(Color.mixerSecondaryBackground)
 
-    }
-    
-    var preferencesSection: some View {
-        Section(header: Text("Preferences").fontWeight(.semibold)) {
-            NavigationLink {
-                
-            } label: {
-                Text("Event Preferences")
-            }
-
-            NavigationLink {
-                
-            } label: {
-                Text("Event Preferences")
-            }
-            
-            HStack {
-                Text("Phone Number")
-                Spacer()
-                Text("viewModel.phone")
-                    .foregroundColor(.secondary)
-            }
-        }
-        .listRowBackground(Color.mixerSecondaryBackground)
     }
 }
 

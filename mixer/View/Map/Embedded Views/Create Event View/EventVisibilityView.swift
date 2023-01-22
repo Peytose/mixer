@@ -12,16 +12,20 @@ struct EventVisibilityView: View {
     @StateObject var viewModel = CreateEventViewModel()
     @Environment(\.presentationMode) var presentationMode
     
+    var colors = ["Invite Only", "Green", "Blue", "Tartan"]
+    @State private var selectedColor = "Invite Only"
+    
     var body: some View {
         ZStack {
             Color.mixerBackground
                 .ignoresSafeArea()
             
             VStack {
+                
                 visibilityToggle
                 
                 VStack(alignment: .leading, spacing: 20) {
-                    Text("Description")
+                    Text("Invite only Event Description")
                         .font(.title).bold()
                         .padding(.bottom, -15)
                     
@@ -30,9 +34,10 @@ struct EventVisibilityView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(EdgeInsets(top: 0, leading: 21, bottom: 0, trailing: 10))
-
+                
                 List {
                     if viewModel.isPrivate == .yes {
+                        includeInviteListSection
                         inviteLimitSection
                         
                         guestInviteLimitSection
@@ -71,12 +76,12 @@ struct EventVisibilityView: View {
     }
     
     var visibilityToggle: some View {
-            Picker("Invite only", selection: self.$viewModel.isPrivate.animation()) {
-                Text("Public").tag(isPrivate.no)
-                Text("Private").tag(isPrivate.yes)
-            }
-            .pickerStyle(.segmented)
-            .padding()
+        Picker("Invite only", selection: self.$viewModel.isPrivate.animation()) {
+            Text("Public").tag(isPrivate.no)
+            Text("Private").tag(isPrivate.yes)
+        }
+        .pickerStyle(.segmented)
+        .padding()
     }
     
     var includeInviteListSection: some View {
@@ -93,7 +98,7 @@ struct EventVisibilityView: View {
         Section {
             Toggle("Invite Limit?", isOn: $viewModel.isInviteLimit.animation())
                 .font(.body.weight(.semibold))
-
+            
             if viewModel.isInviteLimit == true {
                 TextField("Invites per brother*", text: $viewModel.guestLimit)
                     .foregroundColor(Color.mainFont)
@@ -109,7 +114,7 @@ struct EventVisibilityView: View {
         Section {
             Toggle("Allow guests to invite guests?", isOn: $viewModel.isGuestInviteLimit.animation())
                 .font(.body.weight(.semibold))
-
+            
             if viewModel.isGuestInviteLimit {
                 TextField("Invites per Guest*", text: $viewModel.guestLimitForGuests)
                     .foregroundColor(Color.mainFont)

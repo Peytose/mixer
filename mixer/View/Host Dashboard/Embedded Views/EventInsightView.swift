@@ -152,7 +152,7 @@ enum PieCharts: String, CaseIterable {
     case relationship = "Relationship"
 }
 
-struct PieChart: View {
+private struct PieChart: View {
     var selectedChart: PieCharts
     var event: MockEvent
 

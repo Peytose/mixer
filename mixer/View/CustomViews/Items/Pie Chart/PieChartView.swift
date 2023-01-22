@@ -58,6 +58,10 @@ import SwiftUI
                         PieSlice(pieSliceData: self.slices[i])
                             .scaleEffect(self.activeIndex == i ? 1.1 : 1)
                             .animation(Animation.spring())
+                            .onChange(of: self.activeIndex) { newValue in
+                                let impact = UIImpactFeedbackGenerator(style: .light)
+                                impact.impactOccurred()
+                            }
                     }
                     .frame(width: widthFraction * geometry.size.width, height: widthFraction * geometry.size.width)
                     .gesture(

@@ -13,8 +13,10 @@ struct HostDashboardView: View {
     @State var showEventInsightView = false
     @State var showHostHomePageView = false
     @State var showSettingsView = false
+    @State var showCreateEventView = false
     @StateObject private var viewModel = ExplorePageViewModel()
     @Binding var tabBarVisibility: TabBarVisibility
+    @State var selectedChart: DashboardCharts = .followers
 
     var columns = Array(repeating: GridItem(.flexible(), spacing: 20), count: 2)
     var eventList: [MockEvent] {
@@ -27,64 +29,19 @@ struct HostDashboardView: View {
                 VStack {
                     quickStatsSection
                     
-                    FollowerGraphView(sampleAnalytics: followers, title: "Followers", itemTitle: "Followers")
-                    
                     recentEventsSection
-
-                    CustomStackView {
-                        Label {
-                            Text("Dog")
-                        } icon: {
-                            Image(systemName: "person")
-                        }
-                    } contentView: {
-                        LazyVGrid(columns: columns,spacing: 30) {
-                            ForEach(1..<5) { x in
-                            VStack(spacing: 32) {
-                                
-                                HStack{
-                                    
-                                    Text("Running")
-                                        .font(.system(size: 22))
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.white)
-                                    
-                                    Spacer(minLength: 0)
-                                }
-                                
-                                // Ring...
-                                
-                                ZStack {
-                                    
-                                    Circle()
-                                        .trim(from: 0, to: 1)
-                                        .stroke(Color.blue.opacity(0.05), lineWidth: 10)
-                                        .frame(width: (UIScreen.main.bounds.width - 150) / 2, height: (UIScreen.main.bounds.width - 150) / 2)
-                                    
-                                    Circle()
-                                        .trim(from: 0, to: 7/15)
-                                        .stroke(Color.blue, style: StrokeStyle(lineWidth: 10, lineCap: .round))
-                                        .frame(width: (UIScreen.main.bounds.width - 150) / 2, height: (UIScreen.main.bounds.width - 150) / 2)
-                                    
-                                    Text("45 %")
-                                        .font(.system(size: 22))
-                                        .fontWeight(.bold)
-                                        .foregroundColor(Color.blue)
-                                        .rotationEffect(.init(degrees: 90))
-                                }
-                                .rotationEffect(.init(degrees: -90))
-                                
-                                Text("6.8 KM")
-                                    .font(.system(size: 22))
-                                    .foregroundColor(.white)
-                                    .fontWeight(.bold)
-                            }
-                            .padding()
-                            .background(Color.mixerSecondaryBackground.opacity(0.5))
-                            .cornerRadius(15)
-                        }
+                    
+                    Picker("Pie Chart", selection: $selectedChart.animation() ) {
+                        ForEach(DashboardCharts.allCases, id: \.self) {
+                            Text($0.rawValue)
                         }
                     }
+                    .pickerStyle(.segmented)
+                    .padding(.horizontal)
+                    
+                    Chart(selectedChart: selectedChart)
+                        .padding()
+
                 }
                 .padding(.horizontal, 5)
             }
@@ -94,6 +51,19 @@ struct HostDashboardView: View {
             .toolbar {
                 ToolbarItem() {
                     HStack(spacing: 0) {
+                        Button(action: {
+                            let impact = UIImpactFeedbackGenerator(style: .light)
+                            impact.impactOccurred()
+                            withAnimation(.spring()) {
+                                showCreateEventView.toggle()
+                            }
+                        }, label: {
+                            Image(systemName: "plus")
+                                .foregroundColor(Color.mainFont)
+                                .font(.system(size: 24).weight(.medium))
+                                .shadow(radius: 10)
+                        })
+                        
                         Button(action: {
                             let impact = UIImpactFeedbackGenerator(style: .light)
                             impact.impactOccurred()
@@ -134,6 +104,9 @@ struct HostDashboardView: View {
             }
             .fullScreenCover(isPresented: $showHostHomePageView) {
                 HostOrganizationView(parentViewModel: viewModel, tabBarVisibility: $tabBarVisibility)
+            }
+            .fullScreenCover(isPresented: $showCreateEventView) {
+                CreateEventView()
             }
             .sheet(isPresented: $showSettingsView) {
                 HostSettingsView()
@@ -197,14 +170,21 @@ struct HostDashboardView_Previews: PreviewProvider {
     }
 }
 
+enum DashboardCharts: String, CaseIterable {
+    case followers = "Followers"
+    case attendance = "Event Attendance"
+}
 
-struct RoundedShape : Shape {
-    
-    func path(in rect: CGRect) -> Path {
-        
 
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: [.topLeft,.topRight], cornerRadii: CGSize(width: 5, height: 5))
-        
-        return Path(path.cgPath)
+private struct Chart: View {
+    var selectedChart: DashboardCharts
+    var body: some View {
+        switch selectedChart {
+        case .followers:
+            FollowerGraphView(sampleAnalytics: followers, title: "Followers", itemTitle: "Followers")
+
+        case .attendance:
+            FollowerGraphView(sampleAnalytics: followers, isLineGraph: false, title: "Event Attendance", itemTitle: "Event Attendance")
+        }
     }
 }

@@ -70,6 +70,7 @@
 		A682CC5A2970F60C008EA546 /* EventRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A682CC592970F60C008EA546 /* EventRowView.swift */; };
 		A682CC5C29752463008EA546 /* FollowerGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A682CC5B29752463008EA546 /* FollowerGraphView.swift */; };
 		A682CC5E297524CC008EA546 /* GraphModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A682CC5D297524CC008EA546 /* GraphModels.swift */; };
+		A6831886297CD97D004AF31A /* HostMemberSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6831885297CD97D004AF31A /* HostMemberSettingsView.swift */; };
 		A68971CA296E7E1900289516 /* TabBar in Frameworks */ = {isa = PBXBuildFile; productRef = A68971C9296E7E1900289516 /* TabBar */; };
 		A68971CD296E7E5D00289516 /* CustomTabBarStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68971CC296E7E5D00289516 /* CustomTabBarStyle.swift */; };
 		A68971CF296E7E8D00289516 /* CustomTabItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68971CE296E7E8D00289516 /* CustomTabItemView.swift */; };
@@ -173,6 +174,7 @@
 		A682CC592970F60C008EA546 /* EventRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRowView.swift; sourceTree = "<group>"; };
 		A682CC5B29752463008EA546 /* FollowerGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerGraphView.swift; sourceTree = "<group>"; };
 		A682CC5D297524CC008EA546 /* GraphModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphModels.swift; sourceTree = "<group>"; };
+		A6831885297CD97D004AF31A /* HostMemberSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostMemberSettingsView.swift; sourceTree = "<group>"; };
 		A68971CC296E7E5D00289516 /* CustomTabBarStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarStyle.swift; sourceTree = "<group>"; };
 		A68971CE296E7E8D00289516 /* CustomTabItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabItemView.swift; sourceTree = "<group>"; };
 		A6A731BC2966AC52008DAC17 /* MockEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEvent.swift; sourceTree = "<group>"; };
@@ -568,9 +570,18 @@
 			isa = PBXGroup;
 			children = (
 				A673527E297A683E00AAD32E /* HostSettingsView.swift */,
+				A6831884297CD957004AF31A /* Host Member Settings */,
 				A6CD2C7F297B102100AA0B98 /* Host Profile Settings */,
 			);
 			path = "Host Settings";
+			sourceTree = "<group>";
+		};
+		A6831884297CD957004AF31A /* Host Member Settings */ = {
+			isa = PBXGroup;
+			children = (
+				A6831885297CD97D004AF31A /* HostMemberSettingsView.swift */,
+			);
+			path = "Host Member Settings";
 			sourceTree = "<group>";
 		};
 		A68971CB296E7E2E00289516 /* Tab Bar */ = {
@@ -915,6 +926,7 @@
 				9C93319F2925B0390079E039 /* AuthFlow.swift in Sources */,
 				A682CC5C29752463008EA546 /* FollowerGraphView.swift in Sources */,
 				A6CD2C8C297B46E100AA0B98 /* HostSettingsChangeAddressView.swift in Sources */,
+				A6831886297CD97D004AF31A /* HostMemberSettingsView.swift in Sources */,
 				A6B9E68C29544F21009C936E /* NextButton.swift in Sources */,
 				A6430448294FBEC80058C0F0 /* CreateEventViewModel.swift in Sources */,
 			);
