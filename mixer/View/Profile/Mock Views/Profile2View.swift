@@ -149,7 +149,7 @@ extension UserProfilePrototypeView {
             VStack {
                 StretchableHeader(imageName: "mock-user-1")
                     .mask(Color.profileGradient) /// mask the blurred image using the gradient's alpha values
-                    .matchedGeometryEffect(id: "profileBackground", in: namespace)
+                    .matchedGeometryEffect(id: "profileBackground9", in: namespace)
                     .offset(y: scrollY > 0 ? -scrollY : 0)
                     .scaleEffect(scrollY > 0 ? scrollY / 500 + 1 : 1)
                     .blur(radius: scrollY > 0 ? scrollY / 40 : 0)

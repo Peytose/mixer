@@ -40,7 +40,7 @@ struct MapView: View {
             .labelStyle(.iconOnly)
             .clipShape(Circle())
             .shadow(radius: 5, y: 10)
-            .padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 20))
+            .padding(EdgeInsets(top: 0, leading: 0, bottom: 90, trailing: 6))
         })
         .overlay(alignment: .bottom, content: {
             UserQRCodeButton()
@@ -77,7 +77,7 @@ fileprivate struct EventUsersListButton: View {
         Image(systemName: "list.clipboard")
             .font(.title2.weight(.medium))
             .foregroundColor(Color.mainFont)
-            .padding(12)
+            .padding(10)
             .background(Color.mixerSecondaryBackground)
             .clipShape(Circle())
             .shadow(radius: 5, y: 8)

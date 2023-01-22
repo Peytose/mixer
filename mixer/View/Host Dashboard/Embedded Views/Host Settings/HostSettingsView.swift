@@ -19,6 +19,7 @@ struct HostSettingsView: View {
             .scrollIndicators(.hidden)
             .preferredColorScheme(.dark)
         }
+        .tint(Color.mainFont)
     }
     
     var section: some View {

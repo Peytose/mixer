@@ -80,6 +80,7 @@
 		A6A731C42975FFDF008DAC17 /* EventInsightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A731C32975FFDF008DAC17 /* EventInsightView.swift */; };
 		A6A731C929772D62008DAC17 /* PieSliceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A731C829772D62008DAC17 /* PieSliceView.swift */; };
 		A6A731CB29772DF2008DAC17 /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A731CA29772DF2008DAC17 /* PieChartView.swift */; };
+		A6A731CD297D1989008DAC17 /* AddMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A731CC297D1989008DAC17 /* AddMemberView.swift */; };
 		A6AB6C7C2960E20F007E9BF0 /* PinchZoomImageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AB6C7B2960E20F007E9BF0 /* PinchZoomImageModifier.swift */; };
 		A6AB6C7E2960EFE7007E9BF0 /* CustomPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AB6C7D2960EFE7007E9BF0 /* CustomPopUpView.swift */; };
 		A6B9E64E295185F9009C936E /* SearchPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B9E64D295185F9009C936E /* SearchPageView.swift */; };
@@ -183,6 +184,7 @@
 		A6A731C32975FFDF008DAC17 /* EventInsightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventInsightView.swift; sourceTree = "<group>"; };
 		A6A731C829772D62008DAC17 /* PieSliceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieSliceView.swift; sourceTree = "<group>"; };
 		A6A731CA29772DF2008DAC17 /* PieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
+		A6A731CC297D1989008DAC17 /* AddMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberView.swift; sourceTree = "<group>"; };
 		A6AB6C7B2960E20F007E9BF0 /* PinchZoomImageModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinchZoomImageModifier.swift; sourceTree = "<group>"; };
 		A6AB6C7D2960EFE7007E9BF0 /* CustomPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopUpView.swift; sourceTree = "<group>"; };
 		A6B9E64D295185F9009C936E /* SearchPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPageView.swift; sourceTree = "<group>"; };
@@ -572,6 +574,7 @@
 				A673527E297A683E00AAD32E /* HostSettingsView.swift */,
 				A6831884297CD957004AF31A /* Host Member Settings */,
 				A6CD2C7F297B102100AA0B98 /* Host Profile Settings */,
+				A6A731CC297D1989008DAC17 /* AddMemberView.swift */,
 			);
 			path = "Host Settings";
 			sourceTree = "<group>";
@@ -855,6 +858,7 @@
 				A6B9E6812953E562009C936E /* SocialPageView.swift in Sources */,
 				9C567A9C293116B300EA5FCB /* GetProfilePicture.swift in Sources */,
 				9C93318B29201CA00079E039 /* MapView.swift in Sources */,
+				A6A731CD297D1989008DAC17 /* AddMemberView.swift in Sources */,
 				A6B9E652295189D2009C936E /* UserProfileView.swift in Sources */,
 				A6AB6C7C2960E20F007E9BF0 /* PinchZoomImageModifier.swift in Sources */,
 				A613C362297922D800C4015C /* MockUserDictionary.swift in Sources */,

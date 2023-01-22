@@ -105,7 +105,8 @@ struct GuestListView: View {
                             } label: {
                                 Label("Delete", systemImage: "trash.fill")
                             }
-                            
+                        }
+                        .swipeActions(edge: .leading) {
                             Button() {
                                 showAlert.toggle()
                             } label: {

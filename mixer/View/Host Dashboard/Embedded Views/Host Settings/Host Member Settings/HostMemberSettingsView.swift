@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HostMemberSettingsView: View {
+    @State var showAddMemberView = false
     
     var results: [MockUser] {
         return users
@@ -28,11 +29,17 @@ struct HostMemberSettingsView: View {
             .toolbar {
                 ToolbarItem() {
                     Button(action: {
+                        showAddMemberView.toggle()
                     }, label: {
                         Text("Add Member")
                             .foregroundColor(.blue)
                     })
                 }
+            }
+            .sheet(isPresented: $showAddMemberView) {
+                AddMemberView()
+                    .presentationDetents([.medium])
+                    .background(Color.red)
             }
     }
     
