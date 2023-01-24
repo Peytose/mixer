@@ -54,7 +54,7 @@ struct SearchPageView_Previews: PreviewProvider {
 extension SearchPageView {
     var content: some View {
         ForEach(Array(results.enumerated()), id: \.offset) { index, user in
-            NavigationLink(destination: UserProfileView(user: user)) {
+            NavigationLink(destination: UserProfileView(viewModel: ExplorePageViewModel(), user: user)) {
                 HStack(spacing: 15) {
                     Image(user.image)
                         .resizable()

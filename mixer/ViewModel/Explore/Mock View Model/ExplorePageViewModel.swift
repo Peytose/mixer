@@ -21,6 +21,11 @@ final class EventManager: ObservableObject {
     var selectedEvent: MockEvent?
 }
 
+final class OrganizationMemberManager: ObservableObject {
+    @Published var member: [MockUser] = []
+    var selectedMember: MockUser?
+}
+
 final class GuestManager: ObservableObject {
     @Published var guests: [MockUser] = []
     var selectedGuest: MockUser?
@@ -29,6 +34,7 @@ final class GuestManager: ObservableObject {
 final class ExplorePageViewModel: ObservableObject {
     @Published var showSearchView = false
     @Published var showEventView = false
+    @Published var showUser = false
     @Published var showHostView = false
     @Published var contentHasScrolled = false
     @Published var showCurrentEvent = false

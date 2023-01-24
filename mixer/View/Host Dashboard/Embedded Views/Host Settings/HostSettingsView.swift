@@ -147,7 +147,7 @@ struct HostSettingsView: View {
     var preferencesSection: some View {
         Section(header: Text("Members").fontWeight(.semibold)) {
             ForEach(Array(results.enumerated().prefix(9)), id: \.offset) { index, user in
-                NavigationLink(destination: UserProfileView(user: user)) {
+                NavigationLink(destination: UserProfileView(viewModel: ExplorePageViewModel(), user: user)) {
                     HStack(spacing: 10) {
                         Image(user.image)
                             .resizable()

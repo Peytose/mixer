@@ -402,7 +402,7 @@ struct EventView: View {
 
             ForEach(Array(results.enumerated().prefix(9)), id: \.offset) { index, user in
                 if index != 0 { Divider() }
-                NavigationLink(destination: UserProfileView(user: user)) {
+                NavigationLink(destination: UserProfileView(viewModel: ExplorePageViewModel(), user: user)) {
                     HStack(spacing: 15) {
                         Image(user.image)
                             .resizable()

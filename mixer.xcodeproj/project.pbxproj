@@ -115,6 +115,9 @@
 		A6CD2C8A297B3EB600AA0B98 /* HostSettingsChangeSocialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CD2C89297B3EB600AA0B98 /* HostSettingsChangeSocialsView.swift */; };
 		A6CD2C8C297B46E100AA0B98 /* HostSettingsChangeAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CD2C8B297B46E100AA0B98 /* HostSettingsChangeAddressView.swift */; };
 		A6CD2C8F297B482A00AA0B98 /* MapItemPicker in Frameworks */ = {isa = PBXBuildFile; productRef = A6CD2C8E297B482A00AA0B98 /* MapItemPicker */; };
+		A6F003A82980754B007E8CCA /* CourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F003A72980754B007E8CCA /* CourseView.swift */; };
+		A6F003AA29807646007E8CCA /* CourseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F003A929807646007E8CCA /* CourseItem.swift */; };
+		A6F003AC298078F3007E8CCA /* MockHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F003AB298078F3007E8CCA /* MockHost.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -217,6 +220,9 @@
 		A6CD2C85297B39DF00AA0B98 /* HostSettingsChangeEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostSettingsChangeEmailView.swift; sourceTree = "<group>"; };
 		A6CD2C89297B3EB600AA0B98 /* HostSettingsChangeSocialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostSettingsChangeSocialsView.swift; sourceTree = "<group>"; };
 		A6CD2C8B297B46E100AA0B98 /* HostSettingsChangeAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostSettingsChangeAddressView.swift; sourceTree = "<group>"; };
+		A6F003A72980754B007E8CCA /* CourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseView.swift; sourceTree = "<group>"; };
+		A6F003A929807646007E8CCA /* CourseItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseItem.swift; sourceTree = "<group>"; };
+		A6F003AB298078F3007E8CCA /* MockHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHost.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -391,6 +397,7 @@
 		9C3BADCF291F5572009C8043 /* Explore */ = {
 			isa = PBXGroup;
 			children = (
+				A6F003A629807538007E8CCA /* Random */,
 				A6B9E6702953B4D0009C936E /* Mock Views */,
 				9C93318629201C7B0079E039 /* ExploreView.swift */,
 			);
@@ -662,6 +669,7 @@
 				A6A731BC2966AC52008DAC17 /* MockEvent.swift */,
 				A682CC5D297524CC008EA546 /* GraphModels.swift */,
 				A613C361297922D800C4015C /* MockUserDictionary.swift */,
+				A6F003AB298078F3007E8CCA /* MockHost.swift */,
 			);
 			path = "Mock Models";
 			sourceTree = "<group>";
@@ -737,6 +745,15 @@
 				A6A731D0297DB127008DAC17 /* HostSettingsDescriptionView.swift */,
 			);
 			path = "Embedded Views";
+			sourceTree = "<group>";
+		};
+		A6F003A629807538007E8CCA /* Random */ = {
+			isa = PBXGroup;
+			children = (
+				A6F003A72980754B007E8CCA /* CourseView.swift */,
+				A6F003A929807646007E8CCA /* CourseItem.swift */,
+			);
+			path = Random;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -833,6 +850,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A682CC5A2970F60C008EA546 /* EventRowView.swift in Sources */,
+				A6F003AA29807646007E8CCA /* CourseItem.swift in Sources */,
 				A643044C294FC2960058C0F0 /* ProfileSettingsView.swift in Sources */,
 				A6B9E65729518A3C009C936E /* EventCardView.swift in Sources */,
 				A6AB6C7E2960EFE7007E9BF0 /* CustomPopUpView.swift in Sources */,
@@ -843,10 +861,12 @@
 				9C93318529201C760079E039 /* SearchView.swift in Sources */,
 				9C3BADF8291F5A38009C8043 /* ImageUploader.swift in Sources */,
 				9C567A9A293023B700EA5FCB /* GetGender.swift in Sources */,
+				A6F003A82980754B007E8CCA /* CourseView.swift in Sources */,
 				A6BAEF612955064200410DED /* ReviewCreatedEventView.swift in Sources */,
 				A6B9E6862953E792009C936E /* FeaturedHostCard.swift in Sources */,
 				A6B9E67C2953B9A3009C936E /* XDismissButton.swift in Sources */,
 				9C3BADDF291F57EE009C8043 /* AuthViewModel.swift in Sources */,
+				A6F003AC298078F3007E8CCA /* MockHost.swift in Sources */,
 				A6B9E6812953E562009C936E /* SocialPageView.swift in Sources */,
 				9C567A9C293116B300EA5FCB /* GetProfilePicture.swift in Sources */,
 				9C93318B29201CA00079E039 /* MapView.swift in Sources */,

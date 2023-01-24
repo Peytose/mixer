@@ -22,6 +22,7 @@ struct UserProfileView: View {
     @State var showAlert = false
     @State var isFriends = false
     @State var profileContext: ProfileContext = .current
+    @StateObject var viewModel: ExplorePageViewModel
 
     @Namespace var animation
     @Namespace var namespace
@@ -274,7 +275,7 @@ struct UserProfileView: View {
 
 struct UserProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        UserProfileView(user: users[1])
+        UserProfileView(viewModel: ExplorePageViewModel(), user: users[1])
 
     }
 }
@@ -298,7 +299,13 @@ extension UserProfileView {
     var navigationBarButtons: some View {
         ZStack {
             Button(action: {
-                presentationMode.wrappedValue.dismiss()
+                let impact = UIImpactFeedbackGenerator(style: .light)
+                impact.impactOccurred()
+                
+                withAnimation(.closeCard) {
+                    presentationMode.wrappedValue.dismiss()
+                    viewModel.showUser.toggle()
+                }
             }, label: {
                 BackArrowButton()
             })

@@ -45,7 +45,9 @@ struct MainTabView: View {
     
     var body: some View {
         TabBar(selection: $selection, visibility: .constant(visibility)) {
-            ExplorePageView(tabBarVisibility: $visibility)
+            NavigationView {
+                ExplorePageView(tabBarVisibility: $visibility)
+            }
                 .tabItem(for: Item.first)
             
             MapView()
