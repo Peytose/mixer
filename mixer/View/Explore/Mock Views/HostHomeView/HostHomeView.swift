@@ -18,9 +18,11 @@ import MapKit
 import TabBar
 
 struct HostOrganizationView: View {
+    var namespace: Namespace.ID
+    @State var appear = [false, false, false]
+    
     @StateObject var parentViewModel: ExplorePageViewModel
     @Environment(\.dismiss) var dismiss
-    @State private var appear = [false, false, false]
     @State private var showingOptions = false
     @State private var currentAmount = 0.0
     @State private var finalAmount = 1.0
@@ -28,8 +30,6 @@ struct HostOrganizationView: View {
     @State var showAlert = false
     @State var isFollowing = false
     @Binding var tabBarVisibility: TabBarVisibility
-
-    @Namespace var namespace
     
     let coordinates = CLLocationCoordinate2D(latitude: 42.3507046, longitude: -71.0909822)
     let link = URL(string: "https://mixer.llc")!
@@ -42,39 +42,91 @@ struct HostOrganizationView: View {
     }
     
     var body: some View {
-        NavigationView {
-            ScrollView(showsIndicators: false) {
+        ZStack {
+            ScrollView {
                 cover
                 
-                content
+                content2
+                    .padding(.top, 380)
+//                    .opacity(appear[2] ? 1 : 0)
             }
             .background(Color.mixerBackground)
-            .coordinateSpace(name: "scroll")
-            .preferredColorScheme(.dark)
             .ignoresSafeArea()
-            .overlay {
-                closeButton
-        }
-        }
-    }
             
+            button
+        }
+        .preferredColorScheme(.dark)
+        .onAppear {
+            fadeIn()
+        }
+//        .onChange(of: show) { newValue in
+//            fadeOut()
+//        }
+    }
+    
     var cover: some View {
         GeometryReader { proxy in
             let scrollY = proxy.frame(in: .named("scroll")).minY
-            
             VStack {
-                StretchableHeader(imageName: "profile-banner-2")
-                    .mask(Color.profileGradient) /// mask the blurred image using the gradient's alpha values
-                    .matchedGeometryEffect(id: "profileBackground", in: namespace)
-                    .offset(y: scrollY > 0 ? -scrollY : 0)
-                    .scaleEffect(scrollY > 0 ? scrollY / 500 + 1 : 1)
-                    .blur(radius: scrollY > 0 ? scrollY / 40 : 0)
+                Spacer()
             }
+            .frame(maxWidth: .infinity)
+            .frame(height: 500)
+            .foregroundStyle(.black)
+            .background(
+                    Image("profile-banner-2")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .matchedGeometryEffect(id: "background", in: namespace)
+                        .mask(Color.profileGradient) /// mask the blurred image using the gradient's alpha values
+                        .offset(y: scrollY > 0 ? -scrollY : 0)
+                        .scaleEffect(scrollY > 0 ? scrollY / 500 + 1 : 1)
+                        .blur(radius: scrollY > 0 ? scrollY / 40 : 0)
+            )
+            .mask(
+                RoundedRectangle(cornerRadius: 30, style: .continuous)
+                    .matchedGeometryEffect(id: "mask", in: namespace)
+        )
         }
-        .padding(.bottom, 270)
+//        .overlay(
+//            VStack(alignment: .leading, spacing: 12) {
+//                Text("MIT Theta Chi")
+//                    .font(.largeTitle.weight(.bold))
+//                    .matchedGeometryEffect(id: "title", in: namespace)
+//                    .frame(maxWidth: .infinity, alignment: .leading)
+//
+//                HStack(alignment: .center, spacing: 10) {
+//                    Text("@mitthetachi")
+//                        .font(.subheadline)
+//                        .fontWeight(.semibold)
+//                        .foregroundColor(.white.opacity(0.8))
+//                        .matchedGeometryEffect(id: "subtitle", in: namespace)
+//
+//
+//                    Text("1845 Followers")
+//                        .font(.subheadline)
+//                        .fontWeight(.semibold)
+//                        .foregroundColor(.secondary)
+//                }
+//
+//                Text("Your number one spot for college parties!")
+//                    .font(.body)
+//                    .fontWeight(.semibold)
+//                    .foregroundColor(.white.opacity(0.8))
+//                    .matchedGeometryEffect(id: "text", in: namespace)
+//            }
+//                .padding(20)
+//                .background(
+//                    Rectangle()
+//                        .fill(.ultraThinMaterial)
+//                        .mask(RoundedRectangle(cornerRadius: 30, style: .continuous))
+//                        .matchedGeometryEffect(id: "blur", in: namespace)
+//                )
+//                .offset(y: 250)
+//                .padding(20)
+//        )
     }
-    
-    var content: some View {
+    var content2: some View {
         VStack(alignment: .leading, spacing: 20) {
             VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: 7) {
@@ -82,7 +134,8 @@ struct HostOrganizationView: View {
                         .font(.largeTitle).bold()
                         .lineLimit(1)
                         .minimumScaleFactor(0.6)
-                    
+                        .matchedGeometryEffect(id: "title", in: namespace)
+
                     Image(systemName: "checkmark.seal.fill")
                         .symbolRenderingMode(.palette)
                         .foregroundStyle(.white, .blue)
@@ -91,7 +144,9 @@ struct HostOrganizationView: View {
                             impact.impactOccurred()
                             withAnimation(.spring()) {
                                 showAlert.toggle()
-                            }                        }
+                            }
+                            
+                        }
                         .alert("Verified Host", isPresented: $showAlert, actions: {}) {
                                 Text("Verified badges are awarded to hosts that have provided proof of identity and have demonstrated that they have the necessary experience and qualifications to host a safe event")
                         }
@@ -123,11 +178,14 @@ struct HostOrganizationView: View {
                         .font(.subheadline)
                         .fontWeight(.semibold)
                         .foregroundColor(.white.opacity(0.8))
-                    
+                        .matchedGeometryEffect(id: "subtitle", in: namespace)
+
                     Text("1845 Followers")
                         .font(.subheadline)
                         .fontWeight(.semibold)
                         .foregroundColor(.secondary)
+                        .matchedGeometryEffect(id: "subtitle2", in: namespace)
+
 
                     Spacer()
                     
@@ -162,6 +220,7 @@ struct HostOrganizationView: View {
                     .fontWeight(.semibold)
                     .foregroundColor(.white.opacity(0.8))
                     .padding(.top, 10)
+                    .matchedGeometryEffect(id: "text", in: namespace)
                 
                 HStack {
                     HStack(spacing: -8) {
@@ -217,6 +276,7 @@ struct HostOrganizationView: View {
                     }
                 }
             }
+            
             Text("About this host")
                 .font(.title).bold()
                 .padding(.bottom, -14)
@@ -289,21 +349,19 @@ struct HostOrganizationView: View {
         .padding()
         .padding(.bottom, 120)
     }
-    
-    var closeButton: some View {
+
+    var button: some View {
         Button {
-            withAnimation() {
+            withAnimation(.closeCard) {
                 parentViewModel.showHostView.toggle()
                 parentViewModel.showNavigationBar.toggle()
-                tabBarVisibility = .visible
+                dismiss()
             }
-            dismiss()
-            
-        } label: { XDismissButton() }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-            .padding(20)
-            .padding(.top, 30)
-            .ignoresSafeArea()
+        } label: {XDismissButton()}
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+        .padding(20)
+        .padding(.top, 35)
+        .ignoresSafeArea()
     }
     
     func fadeIn() {
@@ -313,24 +371,22 @@ struct HostOrganizationView: View {
         withAnimation(.easeOut.delay(0.4)) {
             appear[1] = true
         }
-        withAnimation(.easeOut.delay(0.5)) {
+        withAnimation(.easeOut.delay(0.2)) {
             appear[2] = true
         }
     }
     
     func fadeOut() {
-        withAnimation(.easeIn(duration: 0.1)) {
-            appear[0] = false
-            appear[1] = false
-            appear[2] = false
-        }
+        appear[0] = false
+        appear[1] = false
+        appear[2] = false
     }
 }
 
-struct EventView_Previews: PreviewProvider {
+struct HostOrganizationView_Previews: PreviewProvider {
     @Namespace static var namespace
+    
     static var previews: some View {
-        HostOrganizationView(parentViewModel: ExplorePageViewModel(), tabBarVisibility: .constant(.visible))
-            .preferredColorScheme(.dark)
+        HostOrganizationView(namespace: namespace, parentViewModel: ExplorePageViewModel(), tabBarVisibility: .constant(.visible))
     }
 }

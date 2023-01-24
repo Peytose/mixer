@@ -99,7 +99,7 @@ struct HostDashboardView: View {
                     }
             }
             .fullScreenCover(isPresented: $showHostHomePageView) {
-                HostOrganizationView(parentViewModel: viewModel, tabBarVisibility: $tabBarVisibility)
+                HostOrganizationView(namespace: namespace, parentViewModel: ExplorePageViewModel(), tabBarVisibility: .constant(.visible))
             }
             .fullScreenCover(isPresented: $showCreateEventView) {
                 CreateEventView()
