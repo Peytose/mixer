@@ -9,16 +9,14 @@ import SwiftUI
 import TabBar
 
 struct ExplorePageView: View {
-    @State var show = false
-    @State var showStatusBar = true
-    @State var selectedID = UUID()
-    @EnvironmentObject var model: Model
-    @Namespace var namespace
-
     @StateObject private var viewModel = ExplorePageViewModel()
     @StateObject private var eventManager = EventManager()
+
+    @State var selectedID = UUID()
     @Binding var tabBarVisibility: TabBarVisibility
     
+    @Namespace var namespace
+
     var event: [MockEvent] {
         return events
     }
@@ -36,26 +34,25 @@ struct ExplorePageView: View {
                         .padding(EdgeInsets(top: -10, leading: 20, bottom: 0, trailing: 0))
                     
                     featuredHostSection
-                    
-                    eventSection
+                    //MARK: Events Section
+                    eventsSection
                 }
                 .padding(.bottom, 120)
             }
             .padding(.top, 40)
             
             if viewModel.showHostView {
-                HostView
+                hostView
             }
             
             if viewModel.showEventView {
-                EventView(parentViewModel: viewModel, tabBarVisibility: $tabBarVisibility, event: eventManager.selectedEvent!)
-                    .transition(.move(edge: .bottom).combined(with: .scale(scale: 1.3)))
-                    .zIndex(3)
+                eventView
             }
         }
         .ignoresSafeArea()
         .background(Color.mixerBackground)
         .statusBar(hidden: !viewModel.showNavigationBar)
+        .preferredColorScheme(.dark)
     }
     
     var refreshButtonHeader: some View {
@@ -122,7 +119,7 @@ struct ExplorePageView: View {
         }
     }
     
-    var eventSection: some View {
+    var eventsSection: some View {
         LazyVStack(pinnedViews: [.sectionHeaders]) {
             Section(content: {
                 if viewModel.exploreContext == .current {
@@ -165,7 +162,7 @@ struct ExplorePageView: View {
     
     var featuredHostCards: some View {
         ForEach(hosts) { course in
-            FeaturedHostCard(namespace: namespace, host: course, show: $show)
+            FeaturedHostCard(namespace: namespace, host: course)
                 .onTapGesture {
                     withAnimation(.openCard) {
                         viewModel.showHostView.toggle()
@@ -175,10 +172,10 @@ struct ExplorePageView: View {
             }
         }
     }
-    var HostView: some View {
+    var hostView: some View {
         ForEach(hosts) { course in
             if course.id == selectedID {
-                HostOrganizationView(parentViewModel: viewModel, namespace: namespace, host: course, show: $show)
+                HostOrganizationView(viewModel: viewModel, namespace: namespace, host: course)
                     .zIndex(1)
                     .transition(.asymmetric(
                         insertion: .opacity.animation(.easeInOut(duration: 0.1)),
@@ -186,12 +183,16 @@ struct ExplorePageView: View {
             }
         }
     }
+    
+    var eventView: some View {
+        EventView(parentViewModel: viewModel, tabBarVisibility: $tabBarVisibility, event: eventManager.selectedEvent!)
+            .transition(.move(edge: .bottom).combined(with: .scale(scale: 1.3)))
+            .zIndex(3)
+    }
 }
 
 struct ExplorePageView_Previews: PreviewProvider {
     static var previews: some View {
         ExplorePageView(tabBarVisibility: .constant(.visible))
-            .preferredColorScheme(.dark)
-            .environmentObject(Model())
     }
 }

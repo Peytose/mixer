@@ -15,8 +15,6 @@ struct FeaturedHostCard: View {
     @State var showAlert = false
     @State var isFollowing = false
     let link = URL(string: "https://mixer.llc")!
-
-    @Binding var show: Bool
     
     var body: some View {
         VStack {
@@ -157,6 +155,6 @@ struct FeaturedHostCard: View {
 struct FeaturedHostCard_Previews: PreviewProvider {
     @Namespace static var namespace
     static var previews: some View {
-        FeaturedHostCard(namespace: namespace, show: .constant(true))
+        FeaturedHostCard(namespace: namespace)
     }
 }
