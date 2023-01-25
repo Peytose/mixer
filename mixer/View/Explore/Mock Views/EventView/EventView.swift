@@ -52,7 +52,7 @@ struct EventView: View {
                 closeButton
             }
             .sheet(isPresented: $showHost) {
-                HostOrganizationView(namespace: namespace, parentViewModel: ExplorePageViewModel(), tabBarVisibility: .constant(.visible))
+                HostOrganizationView(parentViewModel: ExplorePageViewModel(), namespace: namespace, show: .constant(true))
             }
         }
     }
@@ -319,20 +319,15 @@ struct EventView: View {
                     Button(action: {
                         showHost.toggle()
                     }, label: {
-                        HStack {
-                            Text("Hosted by ")
-                                .fontWeight(.semibold)
-                                .foregroundColor(.secondary) +
-                            
-                            Text(event.fullHostName)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.primary)
-                        }
+                        Text(event.fullHostName)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.primary)
                     })
                 }
                 
                 HStack(spacing: 12) {
                     PaddedImage(image: "clipboard.fill")
+                    
                     Text("\(event.visibility) Event")
                         .fontWeight(.semibold)
                 }
@@ -341,6 +336,7 @@ struct EventView: View {
                     PaddedImage(image: "calendar")
                     VStack(alignment: .leading) {
                         Text(event.date)
+                        
                         Text(event.duration)
                             .foregroundColor(.secondary)
                     }
@@ -363,16 +359,11 @@ struct EventView: View {
                 }
                 
                 HStack(spacing: 12) {
-                    PaddedImage(image: "figure.dance")
-                    HStack {
-                        Text("Event Theme: ")
-                            .fontWeight(.semibold)
-                            .foregroundColor(.secondary) +
-                        
-                        Text(event.theme)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.primary)
-                    }
+                    PaddedImage(image: "party.popper.fill")
+                    
+                    Text(event.theme)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.primary)
                 }
                 
                 HStack(spacing: 12) {
@@ -490,6 +481,7 @@ struct EventView: View {
                 
                 Image(event.flyer)
                     .resizable()
+                    .aspectRatio(contentMode: .fit)
                     .frame(width: 370, height: 435)
                     .frame(width: proxy.size.width, height: proxy.size.height)
                     .aspectRatio(contentMode: .fit)

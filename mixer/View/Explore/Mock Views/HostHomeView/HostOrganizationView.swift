@@ -1,24 +1,18 @@
 //
-//  CourseView.swift
+//  HostOrganizationView.swift
 //  mixer
 //
 //  Created by Jose Martinez on 1/24/23.
 //
 
-//
-//  CourseView.swift
-//  DesignCodeiOS15
-//
-//  Created by Meng To on 2021-12-10.
-//
-
 import SwiftUI
 import MapKit
 
-struct CourseView: View {
+struct HostOrganizationView: View {
     @StateObject var parentViewModel: ExplorePageViewModel
     @StateObject private var memberManager = OrganizationMemberManager()
-
+    @Environment(\.presentationMode) var presentationMode
+    
     @Environment(\.dismiss) var dismiss
     @State private var showingOptions = false
     @State private var currentAmount = 0.0
@@ -26,6 +20,7 @@ struct CourseView: View {
     @State var showMore = false
     @State var showAlert = false
     @State var isFollowing = false
+    @State var showFullFlyer = false
     
     let coordinates = CLLocationCoordinate2D(latitude: 42.3507046, longitude: -71.0909822)
     let link = URL(string: "https://mixer.llc")!
@@ -38,7 +33,7 @@ struct CourseView: View {
     }
     
     var namespace: Namespace.ID
-    var course: Course = courses[0]
+    var host: MockHost = hosts[0]
     @Binding var show: Bool
     @State var appear = [false, false, false]
     @EnvironmentObject var model: Model
@@ -52,8 +47,7 @@ struct CourseView: View {
                 
                 content
                     .padding(.top, -100)
-                    .padding(.bottom, 200)
-//                    .opacity(appear[2] ? 1 : 0)
+                //                    .opacity(appear[2] ? 1 : 0)
             }
             .background(Color.mixerBackground)
             .mask(RoundedRectangle(cornerRadius: viewState.width / 3, style: .continuous))
@@ -64,14 +58,22 @@ struct CourseView: View {
             .gesture(isDraggable ? drag : nil)
             .ignoresSafeArea()
             
-            button
             if parentViewModel.showUser {
                 UserProfileView(viewModel: parentViewModel, user: memberManager.selectedMember!)
                     .transition(.move(edge: .bottom).combined(with: .scale(scale: 1.3)))
                     .zIndex(3)
             }
+            
+            if showFullFlyer {
+                popUp
+                    .transition(.scale(scale: 0.01))
+                    .zIndex(1)
+            }
         }
         .preferredColorScheme(.dark)
+        .overlay {
+            button
+        }
         .onAppear {
             fadeIn()
         }
@@ -89,33 +91,48 @@ struct CourseView: View {
             .frame(maxWidth: .infinity)
             .foregroundStyle(.black)
             .background(
-                Image(course.background)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .matchedGeometryEffect(id: "background\(course.id)", in: namespace)
-                        .mask(Color.profileGradient) /// mask the blurred image using the gradient's alpha values
-                        .offset(y: scrollY > 0 ? -scrollY : 0)
-                        .scaleEffect(scrollY > 0 ? scrollY / 500 + 1 : 1)
-                        .blur(radius: scrollY > 0 ? scrollY / 40 : 0)
+                Image(host.background)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .matchedGeometryEffect(id: "background\(host.id)", in: namespace)
+                    .mask(Color.profileGradient) /// mask the blurred image using the gradient's alpha values
+                    .offset(y: scrollY > 0 ? -scrollY : 0)
+                    .scaleEffect(scrollY > 0 ? scrollY / 500 + 1 : 1)
+                    .blur(radius: scrollY > 0 ? scrollY / 40 : 0)
+                    .onLongPressGesture(minimumDuration: 0.5) {
+                        let impact = UIImpactFeedbackGenerator(style: .heavy)
+                        impact.impactOccurred()
+                        withAnimation() {
+                            showFullFlyer.toggle()
+                        }
+                    }
+                    .onTapGesture(count: 2) {
+                        let impact = UIImpactFeedbackGenerator(style: .heavy)
+                        impact.impactOccurred()
+                        withAnimation() {
+                            showFullFlyer.toggle()
+                        }
+                    }
+                    .zIndex(2)
             )
             .mask(
                 RoundedRectangle(cornerRadius: 30, style: .continuous)
-                    .matchedGeometryEffect(id: "mask\(course.id)", in: namespace)
-        )
+                    .matchedGeometryEffect(id: "mask\(host.id)", in: namespace)
+            )
         }
         .frame(height: 500)
     }
     
     var content: some View {
         VStack(alignment: .leading, spacing: 20) {
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 5) {
                 HStack(spacing: 7) {
-                    Text(course.title)
+                    Text(host.name)
                         .font(.largeTitle).bold()
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.6)
-                        .matchedGeometryEffect(id: "title\(course.id)", in: namespace)
-
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.5)
+                        .matchedGeometryEffect(id: "title\(host.id)", in: namespace)
+                    
                     Image(systemName: "checkmark.seal.fill")
                         .symbolRenderingMode(.palette)
                         .foregroundStyle(.white, .blue)
@@ -128,10 +145,10 @@ struct CourseView: View {
                             
                         }
                         .alert("Verified Host", isPresented: $showAlert, actions: {}) {
-                                Text("Verified badges are awarded to hosts that have provided proof of identity and have demonstrated that they have the necessary experience and qualifications to host a safe event")
+                            Text("Verified badges are awarded to hosts that have provided proof of identity and have demonstrated that they have the necessary experience and qualifications to host a safe event")
                         }
-                        .matchedGeometryEffect(id: "checkmark\(course.id)", in: namespace)
-
+                        .matchedGeometryEffect(id: "checkmark\(host.id)", in: namespace)
+                    
                     Spacer()
                     
                     Text(isFollowing ? "Following" : "Follow")
@@ -149,45 +166,41 @@ struct CourseView: View {
                                 isFollowing.toggle()
                             }
                         }
-                        .matchedGeometryEffect(id: "follow\(course.id)", in: namespace)
-
+                        .matchedGeometryEffect(id: "follow\(host.id)", in: namespace)
+                    
                 }
                 
-
+                
                 HStack(alignment: .center, spacing: 10) {
-                    Text(course.subtitle)
+                    Text(host.username)
                         .font(.subheadline)
                         .fontWeight(.semibold)
                         .foregroundColor(.white.opacity(0.8))
-                        .matchedGeometryEffect(id: "subtitle\(course.id)", in: namespace)
-
-                    Text("1845 Followers")
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.secondary)
-                        .matchedGeometryEffect(id: "subtitle2\(course.id)", in: namespace)
-
-
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                        .matchedGeometryEffect(id: "subtitle\(host.id)", in: namespace)
+                    
+                    
                     Spacer()
                     
-                    Link(destination: URL(string: "https://instagram.com/mitthetachi?igshid=Zjc2ZTc4Nzk=")!) {
+                    Link(destination: URL(string: host.instagramLink)!) {
                         Image("Instagram-Icon")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .foregroundColor(Color.white)
                             .frame(width: 22, height: 22)
                     }
-                    .matchedGeometryEffect(id: "instagram\(course.id)", in: namespace)
-
-                    Link(destination: URL(string: "http://ox.mit.edu/main/")!) {
+                    .matchedGeometryEffect(id: "instagram\(host.id)", in: namespace)
+                    
+                    Link(destination: URL(string: host.websiteLink)!) {
                         Image(systemName: "globe")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .foregroundColor(Color.white)
                             .frame(width: 22, height: 22)
                     }
-                    .matchedGeometryEffect(id: "website\(course.id)", in: namespace)
-
+                    .matchedGeometryEffect(id: "website\(host.id)", in: namespace)
+                    
                     ShareLink(item: link) {
                         Image(systemName: "square.and.arrow.up")
                             .resizable()
@@ -196,17 +209,24 @@ struct CourseView: View {
                             .frame(width: 22, height: 22)
                     }
                     .buttonStyle(.plain)
-                    .matchedGeometryEffect(id: "share\(course.id)", in: namespace)
-
+                    .matchedGeometryEffect(id: "share\(host.id)", in: namespace)
+                    
                 }
                 
-                Text(course.text)
+                Text("\(host.followerCount) Followers")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.secondary)
+                    .matchedGeometryEffect(id: "subtitle2\(host.id)", in: namespace)
+                
+                Text(host.oneLiner)
                     .font(.body)
                     .fontWeight(.semibold)
                     .foregroundColor(.white.opacity(0.8))
-                    .padding(.top, 10)
-                    .matchedGeometryEffect(id: "text\(course.id)", in: namespace)
-                
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                    .matchedGeometryEffect(id: "text\(host.id)", in: namespace)
+
                 HStack {
                     HStack(spacing: -8) {
                         Circle()
@@ -266,14 +286,14 @@ struct CourseView: View {
                 .font(.title).bold()
                 .padding(.bottom, -14)
                 .padding(.top, -10)
-
+            
             VStack {
-                Text("Established in 1902, Theta Chi Beta Chapter is the oldest active Theta Chi chapter in the country, and is one of the first fraternities founded at MIT. We have a storied history of developing leaders: our alumni go on to start companies, build self-driving cars, cure diseases, get involved in politics, serve in the military, and change the world. The brothers of Theta Chi are dedicated to helping each other achieve their goals and give back to the community.")
+                Text(host.description)
                     .font(.body)
                     .foregroundColor(.secondary)
                     .lineLimit(showMore ? nil : 4)
                 
-                Text("Read more")
+                Text(showMore ? "Show less" : "Show more")
                     .fontWeight(.semibold)
                     .foregroundColor(.blue)
                     .frame(maxWidth: .infinity,maxHeight: .infinity, alignment: .leading)
@@ -338,12 +358,38 @@ struct CourseView: View {
         .padding(.bottom, 120)
     }
     
+    var popUp: some View {
+        GeometryReader { proxy in
+            ZStack {
+                Rectangle()
+                    .fill(Color.clear)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                    .backgroundBlur(radius: 10, opaque: true)
+                    .ignoresSafeArea()
+                
+                Image(host.background)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 370, height: 435)
+                    .frame(width: proxy.size.width, height: proxy.size.height)
+                    .aspectRatio(contentMode: .fit)
+                    .modifier(ImageModifier(contentSize: CGSize(width: proxy.size.width, height: proxy.size.height)))
+            }
+        }
+    }
+    
     var button: some View {
         Button {
-            withAnimation(.closeCard) {
-                show.toggle()
-//                model.showDetail.toggle()
-                parentViewModel.showHostView.toggle()
+            if showFullFlyer {
+                withAnimation() {
+                    showFullFlyer.toggle()
+                }
+            } else {
+                withAnimation(.closeCard) {
+                    parentViewModel.showHostView.toggle()
+                    parentViewModel.showNavigationBar.toggle()
+                    presentationMode.wrappedValue.dismiss()
+                }
             }
         } label: {
             Image(systemName: "xmark")
@@ -360,17 +406,17 @@ struct CourseView: View {
     
     var overlayContent: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(course.title)
+            Text(host.name)
                 .font(.largeTitle.weight(.bold))
-                .matchedGeometryEffect(id: "title\(course.id)", in: namespace)
+                .matchedGeometryEffect(id: "title\(host.id)", in: namespace)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            Text(course.subtitle.uppercased())
+            Text(host.username.uppercased())
                 .font(.footnote.weight(.semibold))
-                .matchedGeometryEffect(id: "subtitle\(course.id)", in: namespace)
-            Text(course.text)
+                .matchedGeometryEffect(id: "subtitle\(host.id)", in: namespace)
+            Text(host.oneLiner)
                 .font(.footnote)
-                .matchedGeometryEffect(id: "text\(course.id)", in: namespace)
+                .matchedGeometryEffect(id: "text\(host.id)", in: namespace)
             Divider()
                 .opacity(appear[0] ? 1 : 0)
             HStack {
@@ -385,15 +431,15 @@ struct CourseView: View {
             }
             .opacity(appear[1] ? 1 : 0)
         }
-            .padding(20)
-            .background(
-                Rectangle()
-                    .fill(.ultraThinMaterial)
-                    .mask(RoundedRectangle(cornerRadius: 30, style: .continuous))
-                    .matchedGeometryEffect(id: "blur\(course.id)", in: namespace)
-            )
-            .offset(y: 250)
-            .padding(20)
+        .padding(20)
+        .background(
+            Rectangle()
+                .fill(.ultraThinMaterial)
+                .mask(RoundedRectangle(cornerRadius: 30, style: .continuous))
+                .matchedGeometryEffect(id: "blur\(host.id)", in: namespace)
+        )
+        .offset(y: 250)
+        .padding(20)
     }
     
     var drag: some Gesture {
@@ -444,6 +490,7 @@ struct CourseView: View {
         withAnimation(.closeCard.delay(0.3)) {
             show.toggle()
             model.showDetail.toggle()
+            presentationMode.wrappedValue.dismiss()
         }
         
         withAnimation(.closeCard) {
@@ -454,11 +501,11 @@ struct CourseView: View {
     }
 }
 
-struct CourseView_Previews: PreviewProvider {
+struct HostOrganizationView_Previews: PreviewProvider {
     @Namespace static var namespace
     
     static var previews: some View {
-        CourseView(parentViewModel: ExplorePageViewModel(), namespace: namespace, show: .constant(true))
+        HostOrganizationView(parentViewModel: ExplorePageViewModel(), namespace: namespace, show: .constant(true))
             .environmentObject(Model())
     }
 }

@@ -61,7 +61,7 @@ struct MainTabView: View {
             UserProfilePrototypeView()
                 .tabItem(for: Item.fourth)
             
-            HostDashboardView(tabBarVisibility: $visibility)
+            HostDashboardView()
                 .tabItem(for: Item.fifth)
         }
         .tabBar(style: CustomTabBarStyle(height: selection == .second ? 300 : 370))

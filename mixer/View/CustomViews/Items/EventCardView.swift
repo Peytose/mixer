@@ -49,6 +49,7 @@ struct EventCard: View {
                                 Image(systemName: "square.and.arrow.up")
                                 .imageScale(.medium)
                                 .fontWeight(.medium)
+                                .offset(y: -1)
                                 .padding(6)
                                 .background(.ultraThinMaterial)
                                 .clipShape(Circle())

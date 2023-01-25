@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import TabBar
 
 struct HostDashboardView: View {
     @StateObject private var eventManager = EventManager()
@@ -15,9 +14,8 @@ struct HostDashboardView: View {
     @State var showSettingsView = false
     @State var showCreateEventView = false
     @StateObject private var viewModel = ExplorePageViewModel()
-    @Binding var tabBarVisibility: TabBarVisibility
     @State var selectedChart: DashboardCharts = .followers
-
+    @State var show = false
     @Namespace var namespace
     
     var columns = Array(repeating: GridItem(.flexible(), spacing: 20), count: 2)
@@ -99,7 +97,8 @@ struct HostDashboardView: View {
                     }
             }
             .fullScreenCover(isPresented: $showHostHomePageView) {
-                HostOrganizationView(namespace: namespace, parentViewModel: ExplorePageViewModel(), tabBarVisibility: .constant(.visible))
+                HostOrganizationView(parentViewModel: viewModel, namespace: namespace, host: hosts[0], show: $show)
+
             }
             .fullScreenCover(isPresented: $showCreateEventView) {
                 CreateEventView()
@@ -213,7 +212,7 @@ struct HostDashboardView: View {
 
 struct HostDashboardView_Previews: PreviewProvider {
     static var previews: some View {
-        HostDashboardView(tabBarVisibility: .constant(.visible))
+        HostDashboardView()
     }
 }
 
