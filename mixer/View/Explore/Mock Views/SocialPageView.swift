@@ -185,7 +185,7 @@ struct ExplorePageView: View {
     }
     
     var eventView: some View {
-        EventView(parentViewModel: viewModel, tabBarVisibility: $tabBarVisibility, event: eventManager.selectedEvent!)
+        EventView(viewModel: viewModel, tabBarVisibility: $tabBarVisibility, event: eventManager.selectedEvent!)
             .transition(.move(edge: .bottom).combined(with: .scale(scale: 1.3)))
             .zIndex(3)
     }

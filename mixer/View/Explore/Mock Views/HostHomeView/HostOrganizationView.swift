@@ -52,6 +52,8 @@ struct HostOrganizationView: View {
             .background(Color.mixerBackground)
             .ignoresSafeArea()
             
+            closeButton
+
             if viewModel.showUser {
                 UserProfileView(viewModel: viewModel, user: memberManager.selectedMember!)
                     .transition(.move(edge: .bottom).combined(with: .scale(scale: 1.3)))
@@ -65,9 +67,6 @@ struct HostOrganizationView: View {
             }
         }
         .preferredColorScheme(.dark)
-        .overlay {
-            closeButton
-        }
         .onAppear {
             fadeIn()
         }

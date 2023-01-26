@@ -21,6 +21,8 @@ struct DetailRow: View {
                 .backgroundStyle(cornerRadius: 10, opacity: 0.5)
             
             Text(text)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
         }
     }
 }

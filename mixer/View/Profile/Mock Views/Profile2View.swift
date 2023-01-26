@@ -16,10 +16,6 @@ struct UserProfilePrototypeView: View {
         case upcoming = "Events attended"
     }
     
-    var event: [MockEvent] {
-        return events
-    }
-    
     @State var profileContext: ProfilePrototypeContext = .current
 
     @State var shareUsername = false
@@ -27,6 +23,10 @@ struct UserProfilePrototypeView: View {
     
     @Namespace var animation
     @Namespace var namespace
+    
+    var event: [MockEvent] {
+        return events
+    }
     
     let link = URL(string: "https://mixer.llc")!
     
