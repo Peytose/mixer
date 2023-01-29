@@ -43,7 +43,6 @@ struct EventLocationView: View {
                         
                             Section(header: Text("Map Preview")) {
                                 MapSnapshotView(location: viewModel.coordinates, span: 0.002, delay: 0, width: (proxy.size.width - 50), height: (proxy.size.height * 0.5))
-                                    .cornerRadius(20)
                             }
                             .listRowBackground(Color.clear)
                     }

@@ -17,11 +17,11 @@ struct HostSettingsView: View {
     var body: some View {
         NavigationView {
             List {
-                section
+                profileSection
                 
                 membersHeaderSection
                 
-                preferencesSection
+                membersSections
             }
             .scrollContentBackground(.hidden)
             .background(Color.mixerBackground)
@@ -44,15 +44,15 @@ struct HostSettingsView: View {
                     .background(Color.red)
             }
         }
-        .tint(Color.mainFont)
+        .accentColor(.mainFont)
     }
     
-    var section: some View {
+    var profileSection: some View {
         Section {
             NavigationLink {
                 HostProfileSettingsView()
             } label: {
-                HStack(alignment: .top, spacing: 15) {
+                HStack(alignment: .center, spacing: 15) {
                     Image("profile-banner-2")
                         .resizable()
                         .aspectRatio(contentMode: .fill)
@@ -62,15 +62,16 @@ struct HostSettingsView: View {
                     VStack(alignment: .leading) {
                         Text("MIT Theta Chi")
                             .font(.title2.weight(.medium))
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.5)
                         
                         Text("@mitthetachi")
                             .font(.body.weight(.medium))
                             .foregroundColor(.secondary)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.5)
+
+                        Text("Edit name, links, address and more ")
+                            .font(.callout)
                     }
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
                 }
             }
         }
@@ -144,7 +145,7 @@ struct HostSettingsView: View {
         .padding(.vertical, -6)
     }
     
-    var preferencesSection: some View {
+    var membersSections: some View {
         Section(header: Text("Members").fontWeight(.semibold)) {
             ForEach(Array(results.enumerated().prefix(9)), id: \.offset) { index, user in
                 NavigationLink(destination: UserProfileView(viewModel: ExplorePageViewModel(), user: user)) {

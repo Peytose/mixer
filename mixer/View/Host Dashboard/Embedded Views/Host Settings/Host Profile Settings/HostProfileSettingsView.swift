@@ -9,17 +9,15 @@ import SwiftUI
 import MapKit
 
 struct HostProfileSettingsView: View {
-    @State var showAddress = false
-    
-    let coordinates = CLLocationCoordinate2D(latitude: 42.3507046, longitude: -71.0909822)
-    
     var body: some View {
         List {
             imageSection
             
             nameSection
             
-            preferencesSection
+            aboutSection
+            
+            affiliationSection
             
             emailSection
             
@@ -89,7 +87,7 @@ struct HostProfileSettingsView: View {
         .listRowBackground(Color.mixerSecondaryBackground)
     }
     
-    var preferencesSection: some View {
+    var aboutSection: some View {
         Section(header: Text("About").fontWeight(.semibold)) {
             HStack {
                 Text("Username")
@@ -157,6 +155,16 @@ struct HostProfileSettingsView: View {
         .listRowBackground(Color.mixerSecondaryBackground)
     }
     
+    var affiliationSection: some View {
+        Section(header: Text("Affiliation").fontWeight(.semibold)) {
+            Text("Massachusetts Institute of Technology")
+                .font(.body)
+                .lineLimit(1)
+                .minimumScaleFactor(0.2)
+        }
+        .listRowBackground(Color.mixerSecondaryBackground)
+    }
+    
     var emailSection: some View {
         Section(header: Text("Email"), footer: Text("This information is not public")) {
             NavigationLink {
@@ -174,7 +182,7 @@ struct HostProfileSettingsView: View {
     }
     
     var addressSection: some View {
-        Section(header: Text("Address"), footer: Text("Choosing public allows mixer to display your organization's location on the map and on your profile")) {
+        Section(header: Text("Address"), footer: Text("")) {
             NavigationLink {
                 HostSettingsChangeAddressView()
             } label: {
@@ -186,19 +194,6 @@ struct HostProfileSettingsView: View {
                 }
             }
             .listRowBackground(Color.mixerSecondaryBackground)
-            
-            Toggle(showAddress ? "Public" : "Private", isOn: $showAddress.animation())
-                .font(.body.weight(.medium))
-                .foregroundColor(showAddress ? .white : .secondary)
-                .listRowBackground(Color.mixerSecondaryBackground)
-            
-            if showAddress {
-                MapSnapshotView(location: coordinates)
-                    .frame(width: 300, height: 200)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .cornerRadius(12)
-                    .listRowBackground(Color.mixerSecondaryBackground)
-            }
         }
     }
 }

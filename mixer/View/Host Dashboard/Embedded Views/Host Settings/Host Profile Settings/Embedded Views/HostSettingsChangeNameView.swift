@@ -15,7 +15,7 @@ struct HostSettingsChangeNameView: View {
         }
         .scrollContentBackground(.hidden)
         .background(Color.mixerBackground)
-        .navigationTitle("Change Name")
+        .navigationTitle("Edit Name")
         .navigationBarTitleDisplayMode(.inline)
         .scrollIndicators(.hidden)
         .preferredColorScheme(.dark)

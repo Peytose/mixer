@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct HostDashboardView: View {
+    @StateObject private var viewModel = ExplorePageViewModel()
     @StateObject private var eventManager = EventManager()
+    
     @State var showEventInsightView = false
     @State var showHostHomePageView = false
     @State var showSettingsView = false
     @State var showCreateEventView = false
-    @StateObject private var viewModel = ExplorePageViewModel()
     @State var selectedChart: DashboardCharts = .followers
-    @State var show = false
+    
     @Namespace var namespace
     
-    var columns = Array(repeating: GridItem(.flexible(), spacing: 20), count: 2)
     var eventList: [MockEvent] {
         return events
     }
@@ -54,7 +54,7 @@ struct HostDashboardView: View {
                         }, label: {
                             Image(systemName: "plus")
                                 .foregroundColor(Color.mainFont)
-                                .font(.system(size: 24).weight(.medium))
+                                .font(.system(size: 22).weight(.medium))
                                 .shadow(radius: 10)
                         })
                         
@@ -67,7 +67,7 @@ struct HostDashboardView: View {
                         }, label: {
                             Image(systemName: "person.crop.circle")
                                 .foregroundColor(Color.mainFont)
-                                .font(.system(size: 24))
+                                .font(.system(size: 22))
                                 .shadow(radius: 10)
                         })
                         
@@ -80,7 +80,7 @@ struct HostDashboardView: View {
                         }, label: {
                             Image(systemName: "gearshape.fill")
                                 .foregroundColor(Color.mainFont)
-                                .font(.system(size: 24))
+                                .font(.system(size: 22))
                                 .shadow(radius: 10)
                         })
                     }

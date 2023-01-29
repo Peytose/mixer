@@ -22,6 +22,7 @@ struct MapSnapshotView: View {
         Group {
             if let image = snapshotImage {
                 Image(uiImage: image)
+                    .cornerRadius(16)
             } else {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle())

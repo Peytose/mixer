@@ -49,17 +49,9 @@ extension Color {
     static let systemGray5 = Color(UIColor.systemGray5)
     static let systemGray6 = Color(UIColor.systemGray6)
     
-    // MARK: - Other Colors
-    static let separator = Color(UIColor.separator)
-    static let opaqueSeparator = Color(UIColor.opaqueSeparator)
-    static let link = Color(UIColor.link)
-    
-    static let DesignCodeWhite = Color(red: 242/255, green: 246/255, blue: 255/255)
-    static let Offwhite2 = Color(red: 245/255, green: 246/255, blue: 250/255)
-    static let QRCodeBackground = Color(red: 15/255, green: 18/255, blue: 28/255)
-
     //MARK: - Chosen Gradients
     static let mixerPurpleGradient = LinearGradient(gradient: Gradient(colors: [Color.gradientPurple1, Color.gradientPurple2]), startPoint: .top, endPoint: .bottom)
+    static let neonGradient = LinearGradient(gradient: Gradient(colors: [Color.neonIndigo, Color.neonPink]), startPoint: .leading, endPoint: .trailing)
 //    static let mixerPurpleGradient2 = LinearGradient(gradient: Gradient(colors: [Color.mixerIndigo, Color.mixerPurple]), startPoint: .top, endPoint: .bottom)
     static let profileGradient = LinearGradient(gradient: Gradient(stops: [.init(color: Color.mixerBackground, location: 0), .init(color: .clear, location: 1)]), startPoint:.top, endPoint: .bottom)
     
@@ -82,6 +74,16 @@ extension Color {
     //MARK: Other Colors
     static let harvardCrimson = Color(red: 165/255, green: 28/255, blue: 48/255)
     static let girlPink = Color(red: 255/255, green: 105/255, blue: 180/255)
+    static let separator = Color(UIColor.separator)
+    static let opaqueSeparator = Color(UIColor.opaqueSeparator)
+    static let link = Color(UIColor.link)
+    
+    static let DesignCodeWhite = Color(red: 242/255, green: 246/255, blue: 255/255)
+    static let Offwhite2 = Color(red: 245/255, green: 246/255, blue: 250/255)
+    static let QRCodeBackground = Color(red: 15/255, green: 18/255, blue: 28/255)
+    static let neonIndigo = Color(red: 97/255, green: 87/255, blue: 255/255)
+    static let neonPink = Color(red: 238/255, green: 73/255, blue: 253/255)
+
     
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)

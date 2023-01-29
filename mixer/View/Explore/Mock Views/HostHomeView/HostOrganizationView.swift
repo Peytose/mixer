@@ -293,7 +293,6 @@ struct HostOrganizationView: View {
                 .font(.title).bold()
             
             MapSnapshotView(location: coordinates)
-                .cornerRadius(12)
             
             VStack(alignment: .leading) {
                 Text("Events hosted")

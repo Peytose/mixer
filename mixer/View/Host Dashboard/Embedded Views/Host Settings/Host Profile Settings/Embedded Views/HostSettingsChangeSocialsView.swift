@@ -17,7 +17,7 @@ struct HostSettingsChangeSocialsView: View {
         }
         .scrollContentBackground(.hidden)
         .background(Color.mixerBackground)
-        .navigationTitle("Change Social Links")
+        .navigationTitle("Edit Social Links")
         .navigationBarTitleDisplayMode(.inline)
         .scrollIndicators(.hidden)
         .preferredColorScheme(.dark)

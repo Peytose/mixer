@@ -15,8 +15,6 @@ struct AddMemberView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color.mixerBackground
-                    .ignoresSafeArea()
                 
                 List {
                     content
@@ -83,7 +81,6 @@ struct AddMemberView: View {
                 }
             }
             .listRowSeparator(.hidden)
-            .listRowBackground(Color.mixerBackground)
             .onTapGesture {
                 showAlert.toggle()
             }

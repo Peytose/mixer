@@ -339,7 +339,6 @@ struct EventView: View {
                 .font(.title).bold()
             
             MapSnapshotView(location: coordinates)
-                .cornerRadius(12)
             
             Text("Friends Attending")
                 .font(.title).bold()

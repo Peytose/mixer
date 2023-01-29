@@ -15,7 +15,7 @@ struct HostSettingsChangeEmailView: View {
         }
         .scrollContentBackground(.hidden)
         .background(Color.mixerBackground)
-        .navigationTitle("Change Name")
+        .navigationTitle("Edit Email Address")
         .navigationBarTitleDisplayMode(.inline)
         .scrollIndicators(.hidden)
         .preferredColorScheme(.dark)
